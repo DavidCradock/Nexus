@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_build\CMakeFiles\82c3b5a65a44f1a2d8433bbf400af59e\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1D57EA88-313E-3B5F-A083-A66A0443E98B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

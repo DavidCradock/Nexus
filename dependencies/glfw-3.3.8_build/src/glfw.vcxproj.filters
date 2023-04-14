@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\vulkan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\wgl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\egl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\osmesa_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\mappings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_build\src\glfw_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\win32_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\wgl_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\egl_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\osmesa_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{D157ADCF-274D-33CC-B9E7-5FC8BD0644FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B9DCB7BA-DF5E-32A4-BFB3-290851EDFA9E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

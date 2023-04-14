@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sourcecode">
+      <UniqueIdentifier>{1b86117f-8a16-4ad7-8aed-6f383d55a8a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\applications">
+      <UniqueIdentifier>{98668f9d-33ff-4f86-957b-ff5dfbf3dc1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\math">
+      <UniqueIdentifier>{95bfd03a-48c0-436c-8617-eb0dd26e40eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\input">
+      <UniqueIdentifier>{7a0a0c2f-552d-4aab-90c0-e24265d2978a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\AI">
+      <UniqueIdentifier>{f83261dd-8242-461d-892d-bab3ecccd325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\AI\NeuralNetworks">
+      <UniqueIdentifier>{29b3c5b9-332b-40be-8606-c5ae19aed7da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{71049073-7f70-4185-aeaa-137e4f86c985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{e055f83b-5fcd-4a8f-b9d3-b1715373257c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\GLAD">
+      <UniqueIdentifier>{815e5b74-bd41-43c2-99ff-11dc6f1b38e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\OpenGL">
+      <UniqueIdentifier>{e0128ad7-83f9-45f7-9180-9473eddff01d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\ZLib">
+      <UniqueIdentifier>{dfca7900-8020-4a01-aaf6-234d0f722b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\graphics">
+      <UniqueIdentifier>{5a49ada3-58a5-479c-b7fe-72dbdb8d97b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sourcecode\graphics\sprites">
+      <UniqueIdentifier>{c2f230c6-a8e1-40e3-b4d4-12165045157c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sourcecode\main.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\precompiled_header.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\settings.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\log.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\archiveData.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\archiveManager.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\utils.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\adler32.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\compress.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\crc32.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\deflate.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\gzio.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infblock.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infcodes.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inffast.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inflate.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inftrees.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infutil.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\minigzip.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\trees.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\uncompr.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\unzip.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\zip.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\zutil.c">
+      <Filter>dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applications\applicationManager.cpp">
+      <Filter>sourcecode\applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applications\applicationBase.cpp">
+      <Filter>sourcecode\applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\applications\applicationDevelopment.cpp">
+      <Filter>sourcecode\applications</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\matrix.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\quaternion.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\vector2.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\vector3.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\vector4.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\input\inputManager.cpp">
+      <Filter>sourcecode\input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\input\inputJoystick.cpp">
+      <Filter>sourcecode\input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\input\inputKeyboard.cpp">
+      <Filter>sourcecode\input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\input\inputMouse.cpp">
+      <Filter>sourcecode\input</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\timing.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetwork.cpp">
+      <Filter>sourcecode\AI\NeuralNetworks</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.cpp">
+      <Filter>sourcecode\AI\NeuralNetworks</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\math\line2d.cpp">
+      <Filter>sourcecode\math</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\system.cpp">
+      <Filter>sourcecode</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\glad4.6_core\src\glad.c">
+      <Filter>dependencies\GLAD</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\image.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\imagePacker.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\renderDevice.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\renderTexture.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\shader.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\textFont.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\texture.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\sprites\spriteDescription.cpp">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\sprites\spriteEntity.cpp">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\sprites\spriteLayer.cpp">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\sprites\spriteManager.cpp">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\sprites\sprites.cpp">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sourcecode\precompiled_header.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\settings.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\singleton.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\log.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\archiveData.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\archiveManager.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\utils.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\deflate.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\infblock.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\infcodes.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\inffast.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\inffixed.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\inftrees.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\infutil.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\trees.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\unzip.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\zconf.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\zip.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\zlib.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\ZLib\zutil.h">
+      <Filter>dependencies\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\glext.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wgl.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\OpenGL\wglext.h">
+      <Filter>dependencies\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applications\applicationManager.h">
+      <Filter>sourcecode\applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applications\applicationBase.h">
+      <Filter>sourcecode\applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\applications\applicationDevelopment.h">
+      <Filter>sourcecode\applications</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\matrix.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\quaternion.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\vector2.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\vector3.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\vector4.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\input\inputManager.h">
+      <Filter>sourcecode\input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\input\inputJoystick.h">
+      <Filter>sourcecode\input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\input\inputKeyboard.h">
+      <Filter>sourcecode\input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\input\inputMouse.h">
+      <Filter>sourcecode\input</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\timing.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetwork.h">
+      <Filter>sourcecode\AI\NeuralNetworks</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.h">
+      <Filter>sourcecode\AI\NeuralNetworks</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\todo.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\line2d.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\system.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\glad4.6_core\include\glad\glad.h">
+      <Filter>dependencies\GLAD</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\glad4.6_core\include\KHR\khrplatform.h">
+      <Filter>dependencies\GLAD</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\math\rect2d.h">
+      <Filter>sourcecode\math</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\colour.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\image.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\imagePacker.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\renderDevice.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\renderTexture.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\shader.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\textFont.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\texture.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\vertexBuffer.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\sprites\spriteDescription.h">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\sprites\spriteEntity.h">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\sprites\spriteLayer.h">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\sprites\spriteManager.h">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\sprites\sprites.h">
+      <Filter>sourcecode\graphics\sprites</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="dependencies\ZLib\readme.txt">
+      <Filter>dependencies\ZLib</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\simple.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\simple.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\sprites.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\sprites.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\textFont.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\textFont.vs">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

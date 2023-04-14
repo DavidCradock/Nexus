@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\tests\windows.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\deps\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\deps\glad_gl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\deps\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\deps\glad\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="X:\MyProjects\c++\2023\Nexus\dependencies\glfw-3.3.8_source\tests\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{D157ADCF-274D-33CC-B9E7-5FC8BD0644FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B9DCB7BA-DF5E-32A4-BFB3-290851EDFA9E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

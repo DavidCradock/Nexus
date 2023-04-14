@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nexus", "Nexus.vcxproj", "{3EAA4575-DC1D-4A50-B2E5-F05A28E1A79D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EAA4575-DC1D-4A50-B2E5-F05A28E1A79D}.Debug|x64.ActiveCfg = Debug|x64
+		{3EAA4575-DC1D-4A50-B2E5-F05A28E1A79D}.Debug|x64.Build.0 = Debug|x64
+		{3EAA4575-DC1D-4A50-B2E5-F05A28E1A79D}.Release|x64.ActiveCfg = Release|x64
+		{3EAA4575-DC1D-4A50-B2E5-F05A28E1A79D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {696E85A4-6AAC-412D-803B-E60C5575849D}
+	EndGlobalSection
+EndGlobal

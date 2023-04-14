@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dependencies\glad4.6_core\src\glad.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\adler32.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\compress.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\crc32.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\deflate.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\gzio.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infblock.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infcodes.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inffast.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inflate.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\inftrees.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\infutil.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\minigzip.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\trees.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\uncompr.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\unzip.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\zip.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dependencies\ZLib\zutil.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetwork.cpp" />
+    <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.cpp" />
+    <ClCompile Include="sourcecode\applications\applicationBase.cpp" />
+    <ClCompile Include="sourcecode\applications\applicationDevelopment.cpp" />
+    <ClCompile Include="sourcecode\applications\applicationManager.cpp" />
+    <ClCompile Include="sourcecode\archiveData.cpp" />
+    <ClCompile Include="sourcecode\archiveManager.cpp" />
+    <ClCompile Include="sourcecode\graphics\image.cpp" />
+    <ClCompile Include="sourcecode\graphics\imagePacker.cpp" />
+    <ClCompile Include="sourcecode\graphics\renderDevice.cpp" />
+    <ClCompile Include="sourcecode\graphics\renderTexture.cpp" />
+    <ClCompile Include="sourcecode\graphics\shader.cpp" />
+    <ClCompile Include="sourcecode\graphics\sprites\spriteDescription.cpp" />
+    <ClCompile Include="sourcecode\graphics\sprites\spriteEntity.cpp" />
+    <ClCompile Include="sourcecode\graphics\sprites\spriteLayer.cpp" />
+    <ClCompile Include="sourcecode\graphics\sprites\spriteManager.cpp" />
+    <ClCompile Include="sourcecode\graphics\sprites\sprites.cpp" />
+    <ClCompile Include="sourcecode\graphics\textFont.cpp" />
+    <ClCompile Include="sourcecode\graphics\texture.cpp" />
+    <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp" />
+    <ClCompile Include="sourcecode\input\inputManager.cpp" />
+    <ClCompile Include="sourcecode\input\inputJoystick.cpp" />
+    <ClCompile Include="sourcecode\input\inputKeyboard.cpp" />
+    <ClCompile Include="sourcecode\input\inputMouse.cpp" />
+    <ClCompile Include="sourcecode\log.cpp" />
+    <ClCompile Include="sourcecode\main.cpp" />
+    <ClCompile Include="sourcecode\math\line2d.cpp" />
+    <ClCompile Include="sourcecode\math\matrix.cpp" />
+    <ClCompile Include="sourcecode\math\quaternion.cpp" />
+    <ClCompile Include="sourcecode\math\vector2.cpp" />
+    <ClCompile Include="sourcecode\math\vector3.cpp" />
+    <ClCompile Include="sourcecode\math\vector4.cpp" />
+    <ClCompile Include="sourcecode\precompiled_header.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="sourcecode\settings.cpp" />
+    <ClCompile Include="sourcecode\system.cpp" />
+    <ClCompile Include="sourcecode\timing.cpp" />
+    <ClCompile Include="sourcecode\utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dependencies\glad4.6_core\include\glad\glad.h" />
+    <ClInclude Include="dependencies\glad4.6_core\include\KHR\khrplatform.h" />
+    <ClInclude Include="dependencies\OpenGL\glcorearb.h" />
+    <ClInclude Include="dependencies\OpenGL\glext.h" />
+    <ClInclude Include="dependencies\OpenGL\khrplatform.h" />
+    <ClInclude Include="dependencies\OpenGL\wgl.h" />
+    <ClInclude Include="dependencies\OpenGL\wglext.h" />
+    <ClInclude Include="dependencies\ZLib\deflate.h" />
+    <ClInclude Include="dependencies\ZLib\infblock.h" />
+    <ClInclude Include="dependencies\ZLib\infcodes.h" />
+    <ClInclude Include="dependencies\ZLib\inffast.h" />
+    <ClInclude Include="dependencies\ZLib\inffixed.h" />
+    <ClInclude Include="dependencies\ZLib\inftrees.h" />
+    <ClInclude Include="dependencies\ZLib\infutil.h" />
+    <ClInclude Include="dependencies\ZLib\trees.h" />
+    <ClInclude Include="dependencies\ZLib\unzip.h" />
+    <ClInclude Include="dependencies\ZLib\zconf.h" />
+    <ClInclude Include="dependencies\ZLib\zip.h" />
+    <ClInclude Include="dependencies\ZLib\zlib.h" />
+    <ClInclude Include="dependencies\ZLib\zutil.h" />
+    <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetwork.h" />
+    <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.h" />
+    <ClInclude Include="sourcecode\applications\applicationBase.h" />
+    <ClInclude Include="sourcecode\applications\applicationDevelopment.h" />
+    <ClInclude Include="sourcecode\applications\applicationManager.h" />
+    <ClInclude Include="sourcecode\archiveData.h" />
+    <ClInclude Include="sourcecode\archiveManager.h" />
+    <ClInclude Include="sourcecode\graphics\colour.h" />
+    <ClInclude Include="sourcecode\graphics\image.h" />
+    <ClInclude Include="sourcecode\graphics\imagePacker.h" />
+    <ClInclude Include="sourcecode\graphics\renderDevice.h" />
+    <ClInclude Include="sourcecode\graphics\renderTexture.h" />
+    <ClInclude Include="sourcecode\graphics\shader.h" />
+    <ClInclude Include="sourcecode\graphics\sprites\spriteDescription.h" />
+    <ClInclude Include="sourcecode\graphics\sprites\spriteEntity.h" />
+    <ClInclude Include="sourcecode\graphics\sprites\spriteLayer.h" />
+    <ClInclude Include="sourcecode\graphics\sprites\spriteManager.h" />
+    <ClInclude Include="sourcecode\graphics\sprites\sprites.h" />
+    <ClInclude Include="sourcecode\graphics\textFont.h" />
+    <ClInclude Include="sourcecode\graphics\texture.h" />
+    <ClInclude Include="sourcecode\graphics\vertexBuffer.h" />
+    <ClInclude Include="sourcecode\input\inputManager.h" />
+    <ClInclude Include="sourcecode\input\inputJoystick.h" />
+    <ClInclude Include="sourcecode\input\inputKeyboard.h" />
+    <ClInclude Include="sourcecode\input\inputMouse.h" />
+    <ClInclude Include="sourcecode\log.h" />
+    <ClInclude Include="sourcecode\math\line2d.h" />
+    <ClInclude Include="sourcecode\math\matrix.h" />
+    <ClInclude Include="sourcecode\math\quaternion.h" />
+    <ClInclude Include="sourcecode\math\rect2d.h" />
+    <ClInclude Include="sourcecode\math\vector2.h" />
+    <ClInclude Include="sourcecode\math\vector3.h" />
+    <ClInclude Include="sourcecode\math\vector4.h" />
+    <ClInclude Include="sourcecode\precompiled_header.h" />
+    <ClInclude Include="sourcecode\settings.h" />
+    <ClInclude Include="sourcecode\singleton.h" />
+    <ClInclude Include="sourcecode\system.h" />
+    <ClInclude Include="sourcecode\timing.h" />
+    <ClInclude Include="sourcecode\todo.h" />
+    <ClInclude Include="sourcecode\utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="dependencies\ZLib\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\sprites.fs" />
+    <None Include="shaders\sprites.vs" />
+    <None Include="shaders\simple.fs" />
+    <None Include="shaders\simple.vs" />
+    <None Include="shaders\textFont.fs" />
+    <None Include="shaders\textFont.vs" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{3eaa4575-dc1d-4a50-b2e5-f05a28e1a79d}</ProjectGuid>
+    <RootNamespace>Nexus</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompiled_header.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm-master\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompiled_header.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\glm-master\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -413,11 +413,14 @@
     <ClInclude Include="sourcecode\core\timing.h">
       <Filter>sourcecode\core</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\core\todo.h">
-      <Filter>sourcecode\core</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\core\utils.h">
       <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\todo.h">
+      <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\Nexus.h">
+      <Filter>sourcecode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

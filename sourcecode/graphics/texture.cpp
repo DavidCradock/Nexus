@@ -110,7 +110,7 @@ namespace Nexus
 
 	TextureManager::TextureManager()
 	{
-		addNewGroup("default");
+		
 	}
 
 	
@@ -126,7 +126,7 @@ namespace Nexus
 			std::string err("TextureManager::getNumResInGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
 		size_t iTotal = itg->second->_mmapResource.size();
@@ -141,7 +141,7 @@ namespace Nexus
 			std::string err("TextureManager::getNumResInGroupLoaded(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
 
@@ -166,7 +166,7 @@ namespace Nexus
 			err.append(std::to_string(iGroupIndex));
 			err.append(") failed. Invalid index given. Number of groups is ");
 			err.append(std::to_string(getNumGroups()));
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, TextureGroup*>::iterator itg = group.begin();
 		unsigned int i = 0;
@@ -185,7 +185,7 @@ namespace Nexus
 			std::string err("TextureManager::addNewGroup() has been given the new group name of \"");
 			err.append(strNewGroupName);
 			err.append("\" but it already exists! Only new groups can be added.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		TextureGroup* pNewGroup = new TextureGroup;
@@ -208,7 +208,7 @@ namespace Nexus
 			std::string err("TextureManager::loadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Load any unloaded resources within the group
@@ -236,7 +236,7 @@ namespace Nexus
 			std::string err("TextureManager::loadGroupSingle(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Load any unloaded resources within the group
@@ -266,7 +266,7 @@ namespace Nexus
 			std::string err("TextureManager::unloadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Unload any loaded resources within the group
@@ -298,7 +298,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the new resource was to be placed into, doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource already exists in the group?
@@ -328,7 +328,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -343,7 +343,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" exists, the named resource couldn't be found!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Is the resource in an unloaded state?
@@ -383,7 +383,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -398,7 +398,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, exists, the named resource couldn't be found!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we've found the resource in the group

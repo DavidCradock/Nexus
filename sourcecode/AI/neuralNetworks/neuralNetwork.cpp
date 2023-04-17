@@ -79,20 +79,19 @@ namespace Nexus
 		err.append(filename);
 		err.append("\" failed.");
 		if (!ad.loadZipDisk(filename))
-			Log::getPointer()->addException(err);
-
+			throw std::runtime_error(err);
 
 		if (!ad.read(numInputs))
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		if (!ad.read(numOutputs))
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		if (!ad.read(numLayers))
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		if (!ad.read(numNeuronsPerLayer))
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		// create the neural network, ready to load in the values
 		create(numInputs, numOutputs, numLayers, numNeuronsPerLayer);
@@ -100,7 +99,7 @@ namespace Nexus
 		// Read in number of weights
 		int size = 0;
 		if (!ad.read(size))
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		// Read in weights
 		std::vector<double> weights;
@@ -108,7 +107,7 @@ namespace Nexus
 		for (int i = 0; i < size; i++)
 		{
 			if (!ad.read(temp))
-				Log::getPointer()->addException(err);
+				throw std::runtime_error(err);
 			weights.push_back(temp);
 		}
 
@@ -124,7 +123,7 @@ namespace Nexus
 		FILE* f = NULL;
 		fopen_s(&f, filename.c_str(), "wb");
 		if (f == NULL)
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 
 		fwrite(&numInputs, 1, sizeof(int), f);
 		fwrite(&numOutputs, 1, sizeof(int), f);
@@ -163,7 +162,7 @@ namespace Nexus
 			err.append(" inputs but was given ");
 			err.append(std::to_string(inputs.size()));
 
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// For each layer....
@@ -288,7 +287,7 @@ namespace Nexus
 					if (cWeight >= (int)weights.size())
 					{
 						break;
-						Log::getPointer()->addException("NeuralNet error.");
+						throw std::runtime_error("Neuralnet error");
 					}
 					layers[i].mvecNeuron[j].mvecWeight[k] = weights[cWeight];
 					cWeight++;

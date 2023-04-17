@@ -43,19 +43,3 @@
 // DirectX for direct input
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-
-
-//#include <array>
-
-//#include <cstdint>
-//#include <cstdlib>
-//#include <cstring>
-//#include <fstream>
-//#include <limits>
-//#include <optional>
-//#include <random>
-//#include <set>
-//#include <stdexcept>
-//#include <string>
-
-//#include <vector>

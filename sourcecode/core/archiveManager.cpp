@@ -87,7 +87,7 @@ namespace Nexus
 						std::string err("Found file in archive \"");
 						err.append(strFilename);
 						err.append("\" but unable to allocate memory for it.");
-						Log::getPointer()->addException(err);
+						throw std::runtime_error(err);
 					}
 
 					// Decompressed the data into the data stream
@@ -101,7 +101,7 @@ namespace Nexus
 						std::string err("Found file in archive \"");
 						err.append(strFilename);
 						err.append("\", also allocated memory for it, but an error occured during decompression.");
-						Log::getPointer()->addException(err);
+						throw std::runtime_error(err);
 					}
 					return true;	// Success!
 				}

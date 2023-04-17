@@ -182,12 +182,12 @@ namespace Nexus
 		// Compute aspect ratio
 		if (_miDesktopDim[1] < 1)
 		{
-			std::string strTemp("SCSystem::_setDesktopDims() Has wrongly detected desktop dimensions (");
-			strTemp.append(std::to_string(_miDesktopDim[0]));
-			strTemp.append("x");
-			strTemp.append(std::to_string(_miDesktopDim[1]));
-			strTemp.append(")");
-			Log::getPointer()->addException(strTemp);
+			std::string err("SCSystem::_setDesktopDims() Has wrongly detected desktop dimensions (");
+			err.append(std::to_string(_miDesktopDim[0]));
+			err.append("x");
+			err.append(std::to_string(_miDesktopDim[1]));
+			err.append(")");
+			throw std::runtime_error(err);
 		}
 
 		_mfDesktopRatio = float(_miDesktopDim[0]) / float(_miDesktopDim[1]);
@@ -425,9 +425,7 @@ namespace Nexus
 		dm.dmDisplayFrequency = iFrequency;
 		dm.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_DISPLAYFREQUENCY;
 		if (ChangeDisplaySettings(&dm, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
-		{
-			Log::getPointer()->addException("changeScreenmode() failed to change display settings.");
-		}
+			throw std::runtime_error("changeScreenmode() failed to change display settings.");
 	}
 
 	void System::_setUserAppDataDir(void)

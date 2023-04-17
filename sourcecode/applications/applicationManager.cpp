@@ -15,11 +15,10 @@ namespace Nexus
 		std::map<std::string, ApplicationBase*>::iterator it = applications.find(applicationName);
 		if (it != applications.end())
 		{
-			std::string str("ApplicationManager::addApp(");
-			str.append(applicationName);
-			str.append(" failed. Name already exists");
-			Log log;
-			log.addException(str);
+			std::string err("ApplicationManager::addApp(");
+			err.append(applicationName);
+			err.append(" failed. Name already exists");
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we can add it
@@ -39,12 +38,11 @@ namespace Nexus
 	{
 		if (index >= applications.size())
 		{
-			std::string str("ApplicationManager::getAppName(");
-			str.append(std::to_string(index));
-			str.append(") failed. Invalid index given, maximum number of added applications is ");
-			str.append(std::to_string(applications.size()));
-			Log log;
-			log.addException(str);
+			std::string err("ApplicationManager::getAppName(");
+			err.append(std::to_string(index));
+			err.append(") failed. Invalid index given, maximum number of added applications is ");
+			err.append(std::to_string(applications.size()));
+			throw std::runtime_error(err);
 		}
 
 		std::map<std::string, ApplicationBase*>::iterator it = applications.begin();
@@ -61,23 +59,21 @@ namespace Nexus
 		std::map<std::string, ApplicationBase*>::iterator itNewApp = applications.find(applicationToSwitchTo);
 		if (itNewApp == applications.end())
 		{
-			std::string str("ApplicationManager::switchToApp(\"");
-			str.append(applicationToSwitchTo);
-			str.append("\") failed. Application by given name doesn't exist.");
-			Log log;
-			log.addException(str);
+			std::string err("ApplicationManager::switchToApp(\"");
+			err.append(applicationToSwitchTo);
+			err.append("\") failed. Application by given name doesn't exist.");
+			throw std::runtime_error(err);
 		}
 		// Attempt to find the application that's currently set as current
 		std::map<std::string, ApplicationBase*>::iterator itOldApp = applications.find(currentApp);
 		if (itOldApp == applications.end())
 		{
-			std::string str("ApplicationManager::switchToApp(");
-			str.append(applicationToSwitchTo);
-			str.append(" failed. Prior to changing to the new application, the old application called ");
-			str.append(currentApp);
-			str.append(" doesn't exist which is mental!");
-			Log log;
-			log.addException(str);
+			std::string err("ApplicationManager::switchToApp(");
+			err.append(applicationToSwitchTo);
+			err.append(" failed. Prior to changing to the new application, the old application called ");
+			err.append(currentApp);
+			err.append(" doesn't exist which is mental!");
+			throw std::runtime_error(err);
 		}
 
 		// Change current app name and call the various methods for each

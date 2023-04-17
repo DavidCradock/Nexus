@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "gui_window.h"
-#include "../log.h"
+#include "../core/log.h"
 
 namespace Nexus
 {
@@ -137,7 +137,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -159,7 +159,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return (GUIButton*)itr->second;
 	}
@@ -181,7 +181,7 @@ namespace Nexus
 			std::string err("GUIWindow::removeButton(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Destroy the resource

@@ -32,7 +32,6 @@ namespace Nexus
 	// add sprite entities using a layer, parsing a sprite description.
 	class SpriteManager : public Singleton<SpriteManager>
 	{
-		friend class SC2DManager;
 	public:
 
 		// Constructor, one time init
@@ -148,14 +147,15 @@ namespace Nexus
 		// position in screen space and return the result
 //		CVector2 convertWorldspaceToScreenspace(const CVector2& vWorldSpacePosition);
 //	private:
-		// Called by SC2DManager to update everything
-		void _update(void);
+		
+		// Called from main
+		void update(void);
 
-		// Called by SC2DManager to render all the sprites
-		void _render(void);
+		// Called from main
+		void render(void);
 
 		// Called by SC2DManager to determine if there is anything which needs rendering
-		bool _hasStuffToRender(void);
+		bool hasStuffToRender(void);
 
 		std::map<std::string, SpriteLayer*> _mmapLayers;		// Each named layer which holds sprite entities
 		std::map<std::string, SpriteDescription*> _mmapDescriptions;	// Each named sprite description

@@ -22,3 +22,17 @@ ERROR: 3 compilation errors.  No code generated.
 
 
 TextureManager::get2DTexture("gui/gui_window.png", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::loadGroup("fonts") failed. As the given named group doesn't exist
+TextureManager::get2DTexture("", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+TextureManager::get2DTexture("", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.

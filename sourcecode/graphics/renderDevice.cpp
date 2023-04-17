@@ -24,16 +24,16 @@ namespace Nexus
 			settings.save();	// Save the defaults to file for next run
 		
 		if (0 != pWindow)
-			Log::getPointer()->addException("RenderDevice::createWindow() called, but window already exists.");
+			throw std::runtime_error("RenderDevice::createWindow() called, but window already exists.");
 		if (!glfwInit())
-			Log::getPointer()->addException("RenderDevice::createWindow() failed. Failed to init window system.");
+			throw std::runtime_error("RenderDevice::createWindow() failed. Failed to init window system.");
 
 
 		// Get primary monitor and it's dimensions
 		GLFWmonitor* pPrimaryMonitor = glfwGetPrimaryMonitor();
 		if (!pPrimaryMonitor)
 		{
-			Log::getPointer()->addException("RenderDevice::createWindow() failed. Unable to find primary monitor!");
+			throw std::runtime_error("RenderDevice::createWindow() failed. Unable to find primary monitor!");
 		}
 		int iMonitorWidth = 0;
 		int iMonitorHeight = 0;
@@ -61,7 +61,7 @@ namespace Nexus
 		if (0 == pWindow)
 		{
 			glfwTerminate();
-			Log::getPointer()->addException("RenderDevice::createWindow() failed. Failure to create window.");
+			throw std::runtime_error("RenderDevice::createWindow() failed. Failure to create window.");
 		}
 		glfwMakeContextCurrent(pWindow);
 		glfwSetFramebufferSizeCallback(pWindow, framebuffer_size_callback);
@@ -79,7 +79,7 @@ namespace Nexus
 		// Obtain all extensions using the GLAD library
 		// No more "glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREARBPROC)wglGetProcAddress("glClientActiveTexture");" etc!
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-			Log::getPointer()->addException("RenderDevice::createWindow() failed to obtain OpenGL extensions");
+			throw std::runtime_error("RenderDevice::createWindow() failed to obtain OpenGL extensions");
 
 		glViewport(0, 0, settings.screenWidth, settings.screenHeight);	// Set OpenGL viewport based on window size
 
@@ -94,7 +94,7 @@ namespace Nexus
 	bool RenderDevice::updateWindow(void)
 	{
 		if (!pWindow)
-			Log::getPointer()->addException("RenderDevice::updateWindow called, but window hasn't been created.");
+			throw std::runtime_error("RenderDevice::updateWindow called, but window hasn't been created.");
 		if (glfwWindowShouldClose(pWindow))
 		{
 			return false;
@@ -108,7 +108,7 @@ namespace Nexus
 	void RenderDevice::swapBuffers(void)
 	{
 		if (!pWindow)
-			Log::getPointer()->addException("RenderDevice::swapBuffers() called, but window doesn't exist.");
+			throw std::runtime_error("RenderDevice::swapBuffers() called, but window doesn't exist.");
 		glfwSwapBuffers(pWindow);
 	}
 

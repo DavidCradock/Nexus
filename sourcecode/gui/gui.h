@@ -50,9 +50,10 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeWindow(const std::string& name);
 
-		
+		// Sets the current theme
+		void setCurrentTheme(const std::string& name);
 
-		std::string strCurrentTheme;						// Name of the currently set theme
+		
 
 		// Returns true is the mouse is over a gui window that is enabled
 		bool getMouseOverGUIWindow(void) { return bMouseIsOverGUI; }
@@ -62,6 +63,7 @@ namespace Nexus
 		VertexBuffer vertexBuffer;							// Vertex buffer used for rendering
 		Shader* pShader;									// Shader used for rendering.
 		bool bMouseIsOverGUI;								// Is the mouse cursor over a GUI window that's enabled
+		std::string strCurrentTheme;						// Name of the currently set theme
 	};
 
 }

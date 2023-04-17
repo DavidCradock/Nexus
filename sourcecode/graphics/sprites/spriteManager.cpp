@@ -25,7 +25,7 @@ namespace Nexus
 	}
 
 
-	void SpriteManager::_update(void)
+	void SpriteManager::update(void)
 	{
 		_mcTimer.update();
 
@@ -68,7 +68,7 @@ namespace Nexus
 		_mfCameraPositionSpeed = fSpeed;
 	}
 
-	void SpriteManager::_render(void)
+	void SpriteManager::render(void)
 	{
 
 		// For each layer
@@ -87,7 +87,7 @@ namespace Nexus
 		}
 	}
 
-	bool SpriteManager::_hasStuffToRender(void)
+	bool SpriteManager::hasStuffToRender(void)
 	{
 		// For each layer
 		for (size_t i = 0; i < _mvecLayerNameZOrder.size(); ++i)
@@ -113,12 +113,12 @@ namespace Nexus
 			std::string err("SpriteManger::addLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		SpriteLayer* pNewLayer = new SpriteLayer;
 		if (!pNewLayer)
-			Log::getPointer()->addException("Memory allocation error.");
+			throw std::runtime_error("Memory allocation error.");
 
 		// Add layer to hash map
 		_mmapLayers[strUniqueName] = pNewLayer;
@@ -144,7 +144,7 @@ namespace Nexus
 			std::string err("SpriteManager::getLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. Layer name doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return itlayer->second;
 	}
@@ -158,7 +158,7 @@ namespace Nexus
 			std::string err("SpriteManger::removeLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		SpriteLayer* pLayer = itlayer->second;
@@ -206,7 +206,7 @@ namespace Nexus
 			std::string err("SpriteManager::getLayerName(");
 			err.append(std::to_string(iZorder));
 			err.append(") failed. Invalid iZorder value given!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return _mvecLayerNameZOrder[iZorder];
 	}
@@ -231,7 +231,7 @@ namespace Nexus
 			std::string err("SpriteManager::getLayerZorder(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return iCurrentIndex;
 	}
@@ -256,7 +256,7 @@ namespace Nexus
 			std::string err("SpriteManager::moveLayerUpOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If it's already at the front, do nothing
@@ -288,7 +288,7 @@ namespace Nexus
 			std::string err("SpriteManager::moveLayerToBackByOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If it's already at the back, do nothing
@@ -318,7 +318,7 @@ namespace Nexus
 			std::string err("SpriteManager::moveLayerToBack(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		while (getLayerZorder(strLayerName) != 0)
 		{
@@ -344,7 +344,7 @@ namespace Nexus
 			std::string err("SpriteManager::moveLayerToFront(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		while (getLayerZorder(strLayerName) != getLayerCount() - 1)
 		{
@@ -373,7 +373,7 @@ namespace Nexus
 			err.append("\") failed. The given layer name couldn't be found. (");
 			err.append(strLayerName);
 			err.append(")");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		bFound = false;
 		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
@@ -393,7 +393,7 @@ namespace Nexus
 			err.append("\") failed. The given layer name couldn't be found. (");
 			err.append(strLayerNameOther);
 			err.append(")");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If this layer is before other, then move until it's just before
@@ -427,7 +427,7 @@ namespace Nexus
 			err.append("\") failed. The given layer name couldn't be found. (");
 			err.append(strLayerName);
 			err.append(")");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		bFound = false;
 		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
@@ -447,7 +447,7 @@ namespace Nexus
 			err.append("\") failed. The given layer name couldn't be found. (");
 			err.append(strLayerNameOther);
 			err.append(")");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If this layer is after other, then move until it's just before
@@ -468,12 +468,12 @@ namespace Nexus
 			std::string err("SpriteManger::addDescription(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The description already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		SpriteDescription* pNewDesc = new SpriteDescription;
 		if (!pNewDesc)
-			Log::getPointer()->addException("Memory allocation error.");
+			throw std::runtime_error("Memory allocation error.");
 
 		// Add layer to hash map
 		_mmapDescriptions[strUniqueName] = pNewDesc;

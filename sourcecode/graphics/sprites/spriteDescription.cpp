@@ -46,7 +46,7 @@ namespace Nexus
 			err.append(std::to_string(iFrameNumber));
 			err.append(") failed. Invalid iFrameNumber given. Must be at most x-1 where x is the total number of frames, which in this case is ");
 			err.append(std::to_string(mvFrameTextures.size()));
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return mvFrameTextures[iFrameNumber];
 	}
@@ -59,7 +59,7 @@ namespace Nexus
 			err.append(std::to_string(iFrameNumber));
 			err.append(") failed. Invalid iFrameNumber given. Must be at most x-1 where x is the total number of frames, which in this case is ");
 			err.append(std::to_string(mvFrameTextures.size()));
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return mvfFrameDelay[iFrameNumber];
 	}

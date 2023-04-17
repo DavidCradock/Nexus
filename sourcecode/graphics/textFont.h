@@ -3,6 +3,7 @@
 #include "colour.h"
 #include "../math/vector2.h"
 #include "vertexBuffer.h"
+#include "../core/singleton.h"
 
 namespace Nexus
 {
@@ -11,15 +12,12 @@ namespace Nexus
 	// If the text doesn't change, use the GUI to render text... it caches text to a RT, greatly increasing speed.
 	class TextFont
 	{
+		friend class TextFontManager;
 	public:
 		// Called when added to resource manager
-		// strFontFilename is the name of the font filename
 		TextFont();
 
 		~TextFont();
-
-		// Returns the maximum height of a character within this font
-		//int getMaxHeight(void);
 
 		// Prints the given text to the current RT.
 		// This is single line, left aligned.
@@ -30,67 +28,25 @@ namespace Nexus
 		// colour is the RGB and alpha colour to use to render the text.
 		void print(const std::string& strText, int iPosX, int iPosY, const CColouruc& colour = CColouruc(255, 255, 255, 255));
 
-		// Prints the given text to the current RT.
-		// This is the more robust version of print
-		// strText is the text to be rendered.
-		// iPosX is the left position of the clip rect
-		// iPosY is the top position of the clip rect
-		// iWidth is the width of the clip rect
-		// iHeight is the height of the clip rect
-		// dwFormat can be any COMBINATION of the following...
-		// DT_BOTTOM Justifies the text to the bottom of the rectangle. This value must be combined with DT_SINGLELINE.
-		// DT_CALCRECT Determines the width and height of the rectangle. If there are multiple lines of text, ID3DXFont::DrawText uses the width of the rectangle pointed to by the pRect parameter and extends the base of the rectangle to bound the last line of text. If there is only one line of text, ID3DXFont::DrawText modifies the right side of the rectangle so that it bounds the last character in the line. In either case, ID3DXFont::DrawText returns the height of the formatted text but does not draw the text.
-		// DT_CENTER Centers text horizontally in the rectangle.
-		// DT_EXPANDTABS Expands tab characters. The default number of characters per tab is eight.
-		// DT_LEFT Aligns text to the left.
-		// DT_NOCLIP Draws without clipping. ID3DXFont::DrawText is somewhat faster when DT_NOCLIP is used.
-		// DT_RIGHT Aligns text to the right.
-		// DT_RTLREADING Displays text in right-to-left reading order for bidirectional text when a Hebrew or Arabic font is selected. The default reading order for all text is left-to-right.
-		// DT_SINGLELINE Displays text on a single line only. Carriage returns and line feeds do not break the line.
-		// DT_TOP Top-justifies text.
-		// DT_VCENTER Centers text vertically (single line only).
-		// DT_WORDBREAK Breaks words. Lines are automatically broken between words if a word would extend past the edge of the rectangle specified by the pRect parameter. A carriage return/line feed sequence also breaks the line.
-		// iTextNumChars Is the number of character within strText to render. If set to -1, all characters in strText will be rendered
-		// colour is the RGB and alpha colour to use to render the text.
-		// if bCalcHeight is true, then, instead of rendering the text, the height of the text is returned
-		//int printex(const CText& strText, int iPosX, int iPosY, int iWidth, int iHeight, DWORD dwFormat = DT_LEFT, int iTextNumChars = -1, const CColouruc& colour = CColouruc(255, 255,255, 255), bool bCalculateHeight = false);
-
-
-		// Computes width and height of rendered text
-		//CVector2 getPrintcodesDims(const CText& strText);
-
-		// Prints the parsed strText inside a rectangular area defined by the parsed parameters.
-		// This automatically word wraps text and also supports text codes.
-		// The text codes should be included within the strText to be rendered
-		// Here's an example of their usage...
-		// printcodes("Line0[!nl]Line1", 0, 0, 100, 100);	// Prints "Line0", then goes down a line and prints "Line1"
-		// "[!b]bold";										// Prints "bold" where the word "bold" is rendered with increased weight
-		// "[!i]italic"										// Prints "italic" where the word "italic" is rendered italic
-		// "[!ul]Underlined text!"							// Underlined text
-		// "[!n]normal text!"								// Normal text
-		// "[!colff000099]Red![!col00ff00ff]Blue!"			// RGBA colour of text in hexidecimal form. If the colour is missing a value, or typed wrong, it is ignored.
-		// if bComputeHeight = true, the text isn't rendered, but the height coverage if rendered is returned
-		//int printcodes(const CText& strText, int iPosX, int iPosY, int iWidth, int iHeight, const CColouruc& defaultColour, bool bComputeHeight = false);
-
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
 		float getTextWidth(const std::string& strText);
 
 		// Get the maximum height in pixels, of the font
 		float getTextHeight(void) { return fontTypes.mfMaxCharHeight; }
 
-		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by this classes load() method in the future.
-		// The output file names (the font.fnt and font.tga files) are named based upon the strOutputBaseName.
-		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12_Normal.tga, BASE_12_Bold.tga, BASE_12_Italic.tga, BASE_12_Underlined.tga and BASE_12_Strikeout.tga
-		// If an error occurred, an error message is shown and execution ends.
-		// This doesn't alter anything within this object.
-		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName = "arial", unsigned int iFontHeight = 12, bool bAntialiased = true, bool bBold = false, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false);
-
+		
+	private:
 		// loads the text font from the file pair.
 		// Only adds the texture name to the texture manager, so don't forget to call the manager's load method, for the "fonts" group
+		// If already added, nothing happens
 		void load(const std::string& strFontFilePairName);
-	
+
+		// Removes the texture used by the text font from texture manager
+		// If already unloaded, nothing happens
 		void unload(void);
-	private:
+
+		bool bLoaded;	// Whether the resource is loaded or not
+
 		// Each character description (width, height, offset etc
 		struct SCharDesc
 		{
@@ -109,7 +65,38 @@ namespace Nexus
 
 		};
 		SFontTypes fontTypes;
-
 		VertexBuffer vertexBuffer;		// Used during rendering
+	};
+
+	class TextFontManager : public Singleton<TextFontManager>
+	{
+	public:
+		// Creates a new object
+		// You'll need to call loadAll() afterwards
+		TextFont* create(const std::string& name);
+
+		// Returns a pointer to the named object.
+		// Throws an exception if the object couldn't be found
+		TextFont* get(const std::string& name);
+
+		// Returns true if the named object exists, else false.
+		bool getExists(const std::string& name);
+
+		// Removes an object.
+		// Throws an exception if the named object doesn't exist.
+		void remove(const std::string& name);
+
+		// Loads all added objects if they haven't already
+		void loadAll(void);
+
+		// Builds a font and saves it to disk using font files installed on the current OS which can then be used by this classes load() method in the future.
+		// The output file names (the font.fnt and font.tga files) are named based upon the strOutputBaseName.
+		// For example, if the basename was BASE, the font height 12, then the output files would be BASE_12.fnt and BASE_12.tga
+		// If an error occurred, an error message is shown and execution ends.
+		// This doesn't alter anything within this object.
+		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName = "arial", unsigned int iFontHeight = 12, bool bAntialiased = true, bool bBold = false, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false);
+
+	private:
+		std::map<std::string, TextFont*> mapTextFonts;	// Hash map holding named TextFont object
 	};
 }

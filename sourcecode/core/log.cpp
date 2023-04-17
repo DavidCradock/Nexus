@@ -33,12 +33,6 @@ namespace Nexus
 		logEntry.push_back(string);
 	}
 
-	void Log::addException(const std::string& string, bool bAddNewLine)
-	{
-		add(string, bAddNewLine);
-		throw std::runtime_error(string);
-	}
-
 	size_t Log::getNumEntries(void)
 	{
 		return logEntry.size();

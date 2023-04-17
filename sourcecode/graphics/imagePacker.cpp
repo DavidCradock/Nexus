@@ -25,18 +25,18 @@ namespace Nexus
 		SImagePackerImg* pNew = new SImagePackerImg;
 		if (!pNew)
 		{
-			std::string strError("ImagePacker::addImage(const Image &newImage, \"");
-			strError.append(strID);
-			strError.append("\") failed. Unable to allocate memory.");
-			Log::getPointer()->addException(strError);
+			std::string err("ImagePacker::addImage(const Image &newImage, \"");
+			err.append(strID);
+			err.append("\") failed. Unable to allocate memory.");
+			throw std::runtime_error(err);
 		}
 		pNew->pImage = new Image;
 		if (!pNew->pImage)
 		{
-			std::string strError("ImagePacker::addImage(const Image &newImage, \"");
-			strError.append(strID);
-			strError.append("\") failed. Unable to allocate memory.");
-			Log::getPointer()->addException(strError);
+			std::string err("ImagePacker::addImage(const Image &newImage, \"");
+			err.append(strID);
+			err.append("\") failed. Unable to allocate memory.");
+			throw std::runtime_error(err);
 		}
 		addedImages[strID] = pNew;
 
@@ -185,7 +185,7 @@ namespace Nexus
 
 		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.find(ID[iIndex]);
 		if (it == addedImages.end())
-			Log::getPointer()->addException("ImagePacker::packInsertImg() Critical error (this should never happen)");
+			throw std::runtime_error("ImagePacker::packInsertImg() Critical error (this should never happen)");
 		it->second->position.set(float(iPosX), float(iPosY));
 
 		// Compute texture coordinates

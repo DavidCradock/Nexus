@@ -169,7 +169,6 @@
     <ClInclude Include="sourcecode\core\singleton.h" />
     <ClInclude Include="sourcecode\core\system.h" />
     <ClInclude Include="sourcecode\core\timing.h" />
-    <ClInclude Include="sourcecode\core\todo.h" />
     <ClInclude Include="sourcecode\core\utils.h" />
     <ClInclude Include="sourcecode\graphics\colour.h" />
     <ClInclude Include="sourcecode\graphics\image.h" />
@@ -200,7 +199,9 @@
     <ClInclude Include="sourcecode\math\vector2.h" />
     <ClInclude Include="sourcecode\math\vector3.h" />
     <ClInclude Include="sourcecode\math\vector4.h" />
+    <ClInclude Include="sourcecode\Nexus.h" />
     <ClInclude Include="sourcecode\precompiled_header.h" />
+    <ClInclude Include="sourcecode\todo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="dependencies\ZLib\readme.txt" />

@@ -3,16 +3,12 @@
 #include "../core/log.h"
 #include "../graphics/texture.h"
 #include "../graphics/renderDevice.h"
+#include "../graphics/textFont.h"
 
 namespace Nexus
 {
 	GUIManager::GUIManager()
 	{
-		// Create default theme
-		GUITheme* pTheme = createTheme("default");
-		strCurrentTheme = "default";
-		TextureManager::getPointer()->add2DTexture(pTheme->strTexturenameWindow, pTheme->strTexturenameWindow, "default", false);
-
 		pShader = ShaderManager::getPointer()->getShader("gui", "default");
 	}
 
@@ -23,6 +19,7 @@ namespace Nexus
 			return;
 
 		TextureManager* pTM = TextureManager::getPointer();
+		TextFontManager* pTFM = TextFontManager::getPointer();
 
 		// Get currently set theme
 		GUITheme* pTheme = getTheme(strCurrentTheme);
@@ -33,20 +30,8 @@ namespace Nexus
 		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
 		vWndTexDimsDiv3.multiply(0.3333333f);
 
-		// Prepare rendering
 		RenderDevice* pRD = RenderDevice::getPointer();
-		pTexture->bind();
-		Shader* pShader = ShaderManager::getPointer()->getShader("gui");
-		pShader->use();
-		pShader->setInt("texture1", pTexture->getID());
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glDisable(GL_DEPTH_TEST);
 
-		Matrix matrixOrtho;
-		matrixOrtho.setOrthographic();
-		Matrix matrixTransform;
-		matrixTransform.setIdentity();
 		
 		// For each window
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.begin();
@@ -61,6 +46,20 @@ namespace Nexus
 				itr++;
 				continue;
 			}
+
+			// Prepare rendering of background
+			pTexture->bind();
+			Shader* pShader = ShaderManager::getPointer()->getShader("gui");
+			pShader->use();
+			pShader->setInt("texture1", pTexture->getID());
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDisable(GL_DEPTH_TEST);
+
+			Matrix matrixOrtho;
+			matrixOrtho.setOrthographic();
+			Matrix matrixTransform;
+			matrixTransform.setIdentity();
 
 			vertexBuffer.reset();
 
@@ -133,9 +132,16 @@ namespace Nexus
 			vFinalPos.y = vWndTexDimsDiv3.y;
 			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), itr->second->vTexCoordsR.vTCBL, itr->second->vTexCoordsR.vTCBR, itr->second->vTexCoordsR.vTCTR, itr->second->vTexCoordsR.vTCTL);
 
+			// Render the background cells
 			vertexBuffer.upload();
 			vertexBuffer.draw();
 
+			// Now render the text for the titlebar
+			if (itr->second->strTitlebarText.length())
+			{
+				TextFont* pTextFont = pTFM->get(pTheme->strFontnameWindowTitlebar);
+				pTextFont->print(itr->second->strTitlebarText, (int)vWndTexDimsDiv3.x + 5, (int)vWndTexDimsDiv3.y);
+			}
 			itr++;
 		}
 
@@ -153,12 +159,18 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
 		GUITheme* pNewRes = new GUITheme();
 		mapGUIThemes[name] = pNewRes;
+
+		// If this is the first theme, set it as the currently used theme
+		if (1 == mapGUIThemes.size())
+		{
+			setCurrentTheme(name);
+		}
 
 		// Find the object to return a pointer to it
 		itr = mapGUIThemes.find(name);
@@ -175,7 +187,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return (GUITheme*)itr->second;
 	}
@@ -197,7 +209,7 @@ namespace Nexus
 			std::string err("GUIManager::removeTheme(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Destroy the resource
@@ -215,7 +227,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -224,6 +236,7 @@ namespace Nexus
 
 		// Find the object to return a pointer to it
 		itr = mapGUIWindows.find(name);
+		itr->second->setWindowTitlebarText(name);	// Also set a default name used when rendering the window's titlebar text
 		return (GUIWindow*)itr->second;
 	}
 
@@ -237,7 +250,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return (GUIWindow*)itr->second;
 	}
@@ -259,7 +272,7 @@ namespace Nexus
 			std::string err("GUIManager::removeWindow(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Destroy the resource
@@ -267,4 +280,8 @@ namespace Nexus
 		mapGUIWindows.erase(itr);
 	}
 
+	void GUIManager::setCurrentTheme(const std::string& name)
+	{
+		strCurrentTheme = name;
+	}
 }

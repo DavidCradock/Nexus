@@ -13,6 +13,7 @@ namespace Nexus
 
 	TextFont::TextFont()
 	{
+		bLoaded = false;
 	}
 
 	TextFont::~TextFont()
@@ -23,6 +24,9 @@ namespace Nexus
 
 	void TextFont::load(const std::string& strFontFilePairName)
 	{
+		if (bLoaded)
+			return;
+
 		// Compute file pair filenames
 		std::string strFontFNTFilename = strFontFilePairName;
 		strFontFNTFilename.append(".fnt");
@@ -38,31 +42,39 @@ namespace Nexus
 		ArchiveData archiveData;
 		if (!archiveData.loadZipDisk(strFontFNTFilename))
 		{
-			std::string strError("TextFont::load() failed. Unable to load font data file: ");
-			strError.append(strFontFNTFilename);
-			Log::getPointer()->addException(strError.c_str());
+			std::string err("TextFont::load() failed. Unable to load font data file: ");
+			err.append(strFontFNTFilename);
+			throw std::runtime_error(err);
 		}
 
 		// Read in max char height of each of the fonts
 		if (!archiveData.read(fontTypes.mfMaxCharHeight))
-			Log::getPointer()->addException("TextFont::load() failed.");
+			throw std::runtime_error("TextFont::load() failed.");
 
 		for (int i = 0; i < 256; ++i)
 		{
 			if (!archiveData.read(fontTypes.mCharDesc[i]))
-				Log::getPointer()->addException("TextFont::load() failed. Error whilst loading in data from font data file");
+				throw std::runtime_error("TextFont::load() failed. Error whilst loading in data from font data file");
 		}
 
+		bLoaded = true;
 	}
 
 	void TextFont::unload(void)
 	{
+		if (!bLoaded)
+			return;
+
 		TextureManager* pTM = TextureManager::getPointer();
 		pTM->remove2DTexture(fontTypes.mstrTextureName, "fonts");
+		bLoaded = false;
 	}
 
 	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const CColouruc& colour)
 	{
+		if (!bLoaded)
+			return;
+
 		RenderDevice* pRD = RenderDevice::getPointer();
 		TextureManager* pTM = TextureManager::getPointer();
 		Texture* pTexture = pTM->get2DTexture(fontTypes.mstrTextureName, "fonts");
@@ -130,6 +142,9 @@ namespace Nexus
 
 	float TextFont::getTextWidth(const std::string& strText)
 	{
+		if (!bLoaded)
+			return 0;
+
 		float fWidth = 0;
 		unsigned char ch;
 		for (int i = 0; i < (int)strText.length(); ++i)
@@ -142,13 +157,96 @@ namespace Nexus
 		return fWidth;
 	}
 
-	void TextFont::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
+
+
+	TextFont* TextFontManager::create(const std::string& name)
+	{
+		// Resource already exists?
+		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
+		if (mapTextFonts.end() != itr)
+		{
+			std::string err("TextFontManager::create(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object already exists.");
+			throw std::runtime_error(err);
+		}
+
+		// If we get here, we have got to create, then add the resource
+		TextFont* pNewRes = new TextFont();
+		mapTextFonts[name] = pNewRes;
+
+		// Find the object to return a pointer to it
+		itr = mapTextFonts.find(name);
+		return (TextFont*)itr->second;
+	}
+
+	TextFont* TextFontManager::get(const std::string& name)
+	{
+		// Resource doesn't exist?
+		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
+		if (mapTextFonts.end() == itr)
+		{
+			std::string err("TextFontManager::get(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object doesn't exist.");
+			throw std::runtime_error(err);
+		}
+		return (TextFont*)itr->second;
+	}
+
+	bool TextFontManager::getExists(const std::string& name)
+	{
+		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
+		if (itr == mapTextFonts.end())
+			return false;
+		return true;
+	}
+
+	void TextFontManager::remove(const std::string& name)
+	{
+		// Resource doesn't exist in the group?
+		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
+		if (mapTextFonts.end() == itr)
+		{
+			std::string err("TextFontManager::remove(\"");
+			err.append(name);
+			err.append("\") failed because the named object couldn't be found.");
+			throw std::runtime_error(err);
+		}
+
+		// Destroy the resource
+		delete itr->second;
+		mapTextFonts.erase(itr);
+	}
+
+	void TextFontManager::loadAll(void)
+	{
+		// Make sure the "fonts" group exists in the texture manager, if not, create it
+		TextureManager* pTM = TextureManager::getPointer();
+		if (!pTM->groupExists("fonts"))
+			pTM->addNewGroup("fonts");
+
+		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.begin();
+		// If nothing to load
+		if (itr == mapTextFonts.end())
+			return;
+		while (itr != mapTextFonts.end())
+		{
+			itr->second->load(itr->first);
+			itr++;
+		}
+
+		pTM->loadGroup("fonts");
+	}
+
+	void TextFontManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create textures holding each type of font (Normal, Bold, Italic, Underlined and Strikeout) and save them to disk.
 		// We also save all the character information to a .fnt file
 		// This does NOT initialise any textures or fonts ready for use, it just builds the required files for the TextFont object in it's load method.
-
 
 		HFONT font;
 		HFONT oldFont;
@@ -181,15 +279,14 @@ namespace Nexus
 			strFontName.c_str());		// Font Name
 		if (font == NULL)	// Unable to generate new font?
 		{
-			std::string str("TextRenderer::buildFontFiles() failed upon call to Win32 API call CreateFont()");
-			Log::getPointer()->addException(str.c_str());
+			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateFont()");
 		}
 
 		hDC = CreateCompatibleDC(0);
 		if (0 == hDC)
 		{
 			DeleteObject(font);
-			Log::getPointer()->addException("TextRenderer::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
+			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
 		}
 
 		SetTextColor(hDC, RGB(255, 255, 255));
@@ -302,7 +399,7 @@ namespace Nexus
 			SelectObject(hDC, oldFont);
 			DeleteObject(font);
 			DeleteDC(hDC);
-			Log::getPointer()->addException("TextRenderer::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
+			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
 		}
 		// Draw chars into bitmap
 		SelectObject(hDC, hBMP);
@@ -377,18 +474,18 @@ namespace Nexus
 		strOutputNameBase.append(".fnt");
 		fopen_s(&f, strOutputNameBase.c_str(), "wb");
 		if (!f)
-			Log::getPointer()->addException("TextRenderer::buildFontFiles() failed. Unable to open file for saving.");
+			throw std::runtime_error("TextFontManager::buildFontFiles() failed. Unable to open file for saving.");
 
 		// Write out max char height of each of the fonts
 		if (1 != fwrite(&fMaxHeight, sizeof(float), 1, f))
-			Log::getPointer()->addException("TextRenderer::buildFontFiles() failed. Error while saving.");
+			throw std::runtime_error("TextFontManager::buildFontFiles() failed. Error while saving.");
 
 		// Write out each of the characters' info, for the normal font
 		if (256 != fwrite(charDesc, sizeof(TextFont::SCharDesc), 256, f))
 		{
 			fclose(f);
 			if (!f)
-				Log::getPointer()->addException("TextRenderer::buildFontFiles() failed. Error while saving.");
+				throw std::runtime_error("TextFontManager::buildFontFiles() failed. Error while saving.");
 		}
 
 		fclose(f);
@@ -399,564 +496,4 @@ namespace Nexus
 		DeleteObject(font);
 		DeleteDC(hDC);
 	}
-
 }
-
-
-
-
-
-/*  ALL COMMENTS BELOW!!!
-*
-	int CResFont::printex(const CText& strText, int iPosX, int iPosY, int iWidth, int iHeight, DWORD dwFormat, int iTextNumChars, const CColouruc& colour, bool bCalculateHeight)
-	{
-		/*
-		if (!mFontNormal)
-			CRITICAL_ERROR_CLASS("CResFont::printex() failed. The font isn't in the loaded state.");
-
-		int iNumChars = iTextNumChars;
-		if (-1 == iNumChars)
-			iNumChars = strText.length();
-		if (iNumChars > (int)strText.length())
-			iNumChars = strText.length();
-		RECT rect;
-		rect.left = iPosX;
-		rect.right = iPosX + iWidth;
-		rect.top = iPosY;
-		rect.bottom = iPosY + iHeight;
-
-		DWORD format = dwFormat;
-		if (bCalculateHeight)
-			format |= DT_CALCRECT;
-
-		return mFontNormal->DrawText(NULL, strText.c_str(), iTextNumChars, &rect, format, colour);
-		return 0;
-	}
-	*/
-	/*
-		int CResFont::getMaxHeight(void)
-		{
-			/*
-			if (!mFontNormal)
-				CRITICAL_ERROR_CLASS("CResFont::getMaxHeight() failed. The font isn't in the loaded state.");
-
-			TEXTMETRIC tm;
-			mFontNormal->GetTextMetricsA(&tm);
-			LONG maxHeight = tm.tmHeight;
-			mFontBold->GetTextMetricsA(&tm);
-			if (maxHeight < tm.tmHeight)
-				maxHeight = tm.tmHeight;
-			mFontItalic->GetTextMetricsA(&tm);
-			if (maxHeight < tm.tmHeight)
-				maxHeight = tm.tmHeight;
-
-			return int(maxHeight);
-			return 0;
-		}
-	*/
-
-	/*
-	int CResFont::printcodes(const CText& strText, int iPosX, int iPosY, int iWidth, int iHeight, const CColouruc& defaultColour, bool bComputeHeight)
-	{
-
-		if (!mFontNormal)
-			CRITICAL_ERROR_CLASS("CResFont::printcodes() failed. The font isn't in the loaded state.");
-
-		// Deal with extracting render commands from the text
-		_createPrintCommands(strText, iPosX, iPosY, iWidth, iHeight, defaultColour);
-
-		if (bComputeHeight)	// Just compute and return height
-		{
-			int iHeight = 0;
-			if (_mvPC.size() == 0)
-				return iHeight;
-			iHeight = int(_mvPC[_mvPC.size() - 1].vPos.y) + getMaxHeight() - iPosX;
-			return iHeight;
-		}
-
-		// Loop through each SPrintCommand and render them
-		RECT rect;
-		for (int i = 0; i < (int)_mvPC.size(); ++i)
-		{
-			// Compute bounds rect for this print command
-			rect.left = (LONG)_mvPC[i].vPos.x;
-			rect.top = (LONG)_mvPC[i].vPos.y;
-			rect.right = LONG(iWidth + _mvPC[i].vPos.x);
-			rect.bottom = LONG(iHeight + _mvPC[i].vPos.y);
-
-			// Print text using correct type (normal, bold, italic)
-			switch (_mvPC[i].iType)
-			{
-			case 0:
-				mFontNormal->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, _mvPC[i].col);
-				break;
-			case 1:
-				mFontBold->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, _mvPC[i].col);
-				break;
-			case 2:
-				mFontItalic->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP, _mvPC[i].col);
-				break;
-			}
-		}
-
-		return 0;
-	}
-	*/
-
-	/*
-	CVector2 CResFont::getPrintcodesDims(const CText& strText)
-	{
-		CVector2 vDims;
-		vDims.x = 0;
-		vDims.y = 0;
-
-//		if (!mFontNormal)
-//			CRITICAL_ERROR_CLASS("CResFont::getPrintcodesDims() failed. The font isn't in the loaded state.");
-
-		// Deal with extracting render commands from the text
-		_createPrintCommands(strText, 0, 0, 4096, 4096, CColouruc());
-
-		// Compute height
-		int iHeight = 0;
-		if (_mvPC.size() == 0)
-			return vDims;
-		iHeight = int(_mvPC[_mvPC.size() - 1].vPos.y) + getMaxHeight();
-		vDims.y = float(iHeight);
-
-		// Loop through each SPrintCommand
-		RECT rect;
-		for (int i = 0; i < (int)_mvPC.size(); ++i)
-		{
-			// Compute bounds rect for this print command
-			rect.left = (LONG)_mvPC[i].vPos.x;
-			rect.top = (LONG)_mvPC[i].vPos.y;
-			rect.right = rect.left;
-			rect.bottom = rect.top;
-
-			switch (_mvPC[i].iType)
-			{
-			case 0:
-//				mFontNormal->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP | DT_CALCRECT, _mvPC[i].col);
-				break;
-			case 1:
-//				mFontBold->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP | DT_CALCRECT, _mvPC[i].col);
-				break;
-			case 2:
-//				mFontItalic->DrawText(NULL, _mvPC[i].txt.c_str(), _mvPC[i].txt.getLength(), &rect, DT_LEFT | DT_SINGLELINE | DT_NOCLIP | DT_CALCRECT, _mvPC[i].col);
-				break;
-			}
-			if (rect.right > (int)vDims.x)
-				vDims.x = float(rect.right);
-		}
-
-		//	vDims.x += 10;
-		//	vDims.y += 10;
-
-		return vDims;
-	}
-	*/
-
-	/*
-	int CResFont::_extractColCode(CText& strText, CColouruc& col)
-	{
-		// Try to find a position of a colour code
-		int iPos = strText.findSubtext("[!col");
-		if (iPos != -1)	// Found one! (Possibly, it might be invalid)
-		{
-			// Based on position of the found "[col" substring, see if we have a valid colour code...
-			CText strCol;	// Will hold colour as hexidecimal, IE "FFFFFFFF"
-			// Make sure that there's enough chars to even hold a [!colffffffff] code
-			if (iPos + 13 > (int)strText.getLength())
-				return -1;	// Not enough room to even store the full colour code
-			if (strText.c_str()[iPos + 13] != ']')	// Code doesn't end in expected ']'
-				return -1;
-			// Copy colour to strCol
-			for (int i = iPos + 5; i < iPos + 13; ++i)
-			{
-				char ch[2];
-				ch[1] = 0;
-				ch[0] = strText.c_str()[i];
-				strCol.append(ch);
-			}
-
-			CColouruc colTmp;
-			if (!strCol.convertHexToCol(colTmp))	// Isn't a valid hex value
-				return -1;
-			else
-			{
-				col = colTmp;
-				return iPos;
-			}
-		}
-		return -1;
-	}
-	*/
-
-	/*
-		void CResFont::_createPrintCommands(const CText& strText, int iPosX, int iPosY, int iWidth, int iHeight, const CColouruc& defaultColour)
-		{
-			// This will hold print commands
-			std::vector<SPrintCommand> vPCTmp;
-
-			// Make working copy of parsed text string
-			CText txtTmp = strText;
-
-			// Convert all "\n" to "[!nl]"
-			txtTmp.replaceAllSubtext("\n", "[!nl]");
-
-			// Insert default text settings at front of text
-			CText strDefaultColAsHex;	strDefaultColAsHex.convertColToHex(defaultColour);
-			CText txtDefaultCodes("[!n][!col");	txtDefaultCodes.append(strDefaultColAsHex);
-			txtDefaultCodes.append("]");
-			txtTmp.insertChars(0, txtDefaultCodes);
-
-			// Add a code (doesn't matter what type) to the end
-			// This is to reduce additional testing in the while loop below...
-			txtTmp.append("[!n]");
-
-			SPrintCommand pcCur;	// Current font rendering settings
-			pcCur.col = defaultColour;
-			//	pcCur.vPos.set(float(iPosX), float(iPosY));
-			pcCur.iType = 0;
-
-			// Find first code position and store the code in strCode
-			CText strCode;
-			int iCodePos = _findFirstCode(txtTmp, strCode);
-			while (iCodePos != -1)
-			{
-				// Extract code and adjust current rendering settings
-				if (-1 != strCode.findSubtext("[!n]"))
-				{
-					// Change font type
-					pcCur.iType = 0;
-					pcCur.bNewline = false;	// Not a forced new line
-
-					// Remove code from text
-					txtTmp.removeChars(0, 4);
-
-					// Find position of next code in text (Ready for next loop)
-					iCodePos = _findFirstCode(txtTmp, strCode);
-
-					// If the next code isn't at position zero, then there's normal text between now and the the next
-					if (iCodePos != 0)
-					{
-						// Add text upto point of next code to the render command
-						pcCur.txt.clear();
-						pcCur.txt.insertChars(0, txtTmp, iCodePos);
-
-						// Push the render command onto the array ready for rendering
-						vPCTmp.push_back(pcCur);
-
-						// Remove from text string we just pushed
-						txtTmp.removeChars(0, iCodePos);
-
-						// Find position of next code in text (Ready for next loop)
-						iCodePos = _findFirstCode(txtTmp, strCode);
-					}
-				}
-				else if (-1 != strCode.findSubtext("[!b]"))
-				{
-					// Change font type
-					pcCur.iType = 1;
-					pcCur.bNewline = false;	// Not a forced new line
-
-					// Remove code from text
-					txtTmp.removeChars(0, 4);
-
-					// Find position of next code in text (Ready for next loop)
-					iCodePos = _findFirstCode(txtTmp, strCode);
-
-					// If the next code isn't at position zero, then there's normal text between now and the the next
-					if (iCodePos != 0)
-					{
-						// Add text upto point of next code to the render command
-						pcCur.txt.clear();
-						pcCur.txt.insertChars(0, txtTmp, iCodePos);
-
-						// Push the render command onto the array ready for rendering
-						vPCTmp.push_back(pcCur);
-
-						// Remove from text string we just pushed
-						txtTmp.removeChars(0, iCodePos);
-
-						// Find position of next code in text (Ready for next loop)
-						iCodePos = _findFirstCode(txtTmp, strCode);
-					}
-				}
-				else if (-1 != strCode.findSubtext("[!i]"))
-				{
-					// Change font type
-					pcCur.iType = 2;
-					pcCur.bNewline = false;	// Not a forced new line
-
-					// Remove code from text
-					txtTmp.removeChars(0, 4);
-
-					// Find position of next code in text (Ready for next loop)
-					iCodePos = _findFirstCode(txtTmp, strCode);
-
-					// If the next code isn't at position zero, then there's normal text between now and the the next
-					if (iCodePos != 0)
-					{
-						// Add text upto point of next code to the render command
-						pcCur.txt.clear();
-						pcCur.txt.insertChars(0, txtTmp, iCodePos);
-
-						// Push the render command onto the array ready for rendering
-						vPCTmp.push_back(pcCur);
-
-						// Remove from text string we just pushed
-						txtTmp.removeChars(0, iCodePos);
-
-						// Find position of next code in text (Ready for next loop)
-						iCodePos = _findFirstCode(txtTmp, strCode);
-					}
-				}
-				else if (-1 != _extractColCode(strCode, pcCur.col))
-				{
-					// Colour already stored in pCur.col
-					pcCur.bNewline = false;	// Not a forced new line
-
-					// Remove code from text ([!colffffffff])
-					txtTmp.removeChars(0, 14);
-
-					// Find position of next code in text (Ready for next loop)
-					iCodePos = _findFirstCode(txtTmp, strCode);
-
-					// If the next code isn't at position zero, then there's normal text between now and the the next
-					if (iCodePos != 0)
-					{
-						// Add text upto point of next code to the render command
-						pcCur.txt.clear();
-						pcCur.txt.insertChars(0, txtTmp, iCodePos);
-
-						// Push the render command onto the array ready for rendering
-						vPCTmp.push_back(pcCur);
-
-						// Remove from text string we just pushed
-						txtTmp.removeChars(0, iCodePos);
-
-						// Find position of next code in text (Ready for next loop)
-						iCodePos = _findFirstCode(txtTmp, strCode);
-					}
-
-				}
-				else if (-1 != strCode.findSubtext("[!nl]"))
-				{
-					pcCur.bNewline = true;	// Forced new line
-
-					// Remove code from text
-					txtTmp.removeChars(0, 5);
-
-					// Find position of next code in text (Ready for next loop)
-					iCodePos = _findFirstCode(txtTmp, strCode);
-
-					// If the next code isn't at position zero, then there's normal text between now and the the next
-					if (iCodePos != 0)
-					{
-						// Add text upto point of next code to the render command
-						pcCur.txt.clear();
-						pcCur.txt.insertChars(0, txtTmp, iCodePos);
-
-						// Push the render command onto the array ready for rendering
-						vPCTmp.push_back(pcCur);
-
-						// Remove from text string we just pushed
-						txtTmp.removeChars(0, iCodePos);
-
-						// Find position of next code in text (Ready for next loop)
-						iCodePos = _findFirstCode(txtTmp, strCode);
-					}
-				}
-			}
-
-			// Copy vPCTmp containing the print commands to _mvPC, computing positions and splitting if required as we go
-			_mvPC.clear();
-			CVector2 vCurPos;
-			vCurPos.set(float(iPosX), float(iPosY));					// Holds current position
-			float fRightEdge = float(iPosX) + float(iWidth);			// Right edge bounding rect pos
-			float fLineHeight = (float)getMaxHeight();							// Amount to offset Y pos when newline needed
-			std::vector<SPrintCommand>::iterator it = vPCTmp.begin();	// Loop through each current render command
-			while (it != vPCTmp.end())
-			{
-				if (it->bNewline)
-				{
-					vCurPos.x = float(iPosX);
-					vCurPos.y += fLineHeight;
-				}
-
-				float fTextWidth = _getTextWidth(it->txt, it->iType);
-				if (vCurPos.x + fTextWidth < fRightEdge)	// If the render command fits within rect bounds
-				{
-					it->vPos = vCurPos;
-					_mvPC.push_back((SPrintCommand)*it);
-					vCurPos.x += fTextWidth;
-				}
-				else	// Doesn't fit, gonna have to split the thing
-				{
-					SPrintCommand pcNew;
-
-					pcNew.col = it->col;
-					pcNew.iType = it->iType;
-					pcNew.vPos = vCurPos;
-
-					CText strWord;
-					float fWordWidth;
-					// While there are still characters/words in the print command
-					while (it->txt.getLength() > 0)
-					{
-						fTextWidth = _getTextWidth(pcNew.txt, pcNew.iType);
-
-						it->txt.extractFirstWord(strWord);
-						// Add the word back
-						it->txt.insertChars(0, strWord, -1);
-
-						fWordWidth = _getTextWidth(strWord, pcNew.iType);
-
-						if (fWordWidth + fTextWidth + pcNew.vPos.x >= fRightEdge)	// New word, when added, wouldn't fit
-						{
-							// But if there are no characters in the new pc, that's because the first word is just too big, add it anyway...
-							if (pcNew.txt.getLength() == 0)
-							{
-								it->txt.removeChars(0, strWord.getLength());
-								pcNew.txt.append(strWord);
-							}
-
-							_mvPC.push_back(pcNew);
-							pcNew.txt.clear();
-							vCurPos.x = float(iPosX);
-							vCurPos.y += fLineHeight;
-							pcNew.vPos = vCurPos;
-						}
-						else	// The word added, will fit
-						{
-							pcNew.txt.append(strWord);
-							it->txt.removeChars(0, strWord.getLength());
-						}
-					}
-					// Now we've run out of words, we may still have some text to render...
-					if (pcNew.txt.getLength() != 0)
-					{
-						if (it->bNewline)
-						{
-							pcNew.vPos.x = float(iPosX);
-							pcNew.vPos.y = vCurPos.y;
-							vCurPos.y += fLineHeight;
-						}
-						_mvPC.push_back(pcNew);
-					}
-				}	// Doesn't fit, gonna have to split the thing
-				it++;	// Next print code
-			}	// while (it != vPCTmp.end())
-
-		}
-		*/
-
-		/*
-		// Finds the next complete code in the given strText, stores it in strCode and returns it's position
-		// Returns -1 if no command found in strText
-		int CResFont::_findFirstCode(CText& strText, CText& strCode)
-		{
-			int iCodePos_NL = strText.findSubtext("[!nl]");
-			int iCodePos_B = strText.findSubtext("[!b]");
-			int iCodePos_N = strText.findSubtext("[!n]");
-			int iCodePos_I = strText.findSubtext("[!i]");
-			CColouruc col;
-			int iCodePos_Col = _extractColCode(strText, col);
-
-			int iStrLen = (int)strText.getLength();
-
-			int iFirstResPos = iStrLen;
-			if (iCodePos_NL != -1)
-			{
-				if (iCodePos_NL < iFirstResPos)
-				{
-					iFirstResPos = iCodePos_NL;
-					strCode = "[!nl]";
-				}
-			}
-			if (iCodePos_B != -1)
-			{
-				if (iCodePos_B < iFirstResPos)
-				{
-					iFirstResPos = iCodePos_B;
-					strCode = "[!b]";
-				}
-			}
-			if (iCodePos_N != -1)
-			{
-				if (iCodePos_N < iFirstResPos)
-				{
-					iFirstResPos = iCodePos_N;
-					strCode = "[!n]";
-				}
-			}
-			if (iCodePos_I != -1)
-			{
-				if (iCodePos_I < iFirstResPos)
-				{
-					iFirstResPos = iCodePos_I;
-					strCode = "[!i]";
-				}
-			}
-			if (iCodePos_Col != -1)
-			{
-				if (iCodePos_Col < iFirstResPos)
-				{
-					iFirstResPos = iCodePos_Col;
-					strCode.clear();
-					for (int i = 0; i < 14; ++i)
-					{
-						char ch[2];
-						ch[1] = 0;
-						ch[0] = strText.c_str()[iCodePos_Col + i];
-						strCode.append(ch);
-					}
-				}
-			}
-
-			if (iFirstResPos == iStrLen)
-				return -1;
-			return iFirstResPos;
-		}
-
-		*/
-
-		/*
-		float CResFont::_getTextWidth(const CText& txt, int iType)
-		{
-	//		if (!mFontNormal)
-	//			CRITICAL_ERROR_CLASS("CResFont::_getTextWidth() failed. The font isn't in the loaded state.");
-	//		if (iType < 0 || iType > 2)
-	//			CRITICAL_ERROR_CLASS("CResFont::_getTextWidth() failed. Invalid iType value given.");
-
-	//		D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, 255);
-			RECT rct;
-			rct.left = 0;
-			rct.right = 10000;
-			rct.top = 0;
-			rct.bottom = 100;
-			// Add a '.' to end of txt to make sure DirectX takes into consideration any spaces
-			CText txtTmp = txt;
-			if (txtTmp.c_str()[txtTmp.size() - 1] == ' ')
-				txtTmp.append(".");
-
-			float fWidth = 0.0f;
-
-			switch (iType)
-			{
-			case 0:
-	//			mFontNormal->DrawText(NULL, txtTmp.c_str(), -1, &rct, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOCLIP, col);
-				break;
-			case 1:
-	//			mFontBold->DrawText(NULL, txtTmp.c_str(), -1, &rct, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOCLIP, col);
-				break;
-			case 2:
-	//			mFontItalic->DrawText(NULL, txtTmp.c_str(), -1, &rct, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOCLIP, col);
-				break;
-			};
-
-			fWidth = float(rct.right - rct.left);
-			return fWidth;
-		}
-		*/

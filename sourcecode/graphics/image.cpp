@@ -36,13 +36,13 @@ namespace Nexus
 	{
 		free();
 		if (iWidth < 1)
-			Log::getPointer()->addException("Image::createBlank() failed as given width < 1.");
+			throw std::runtime_error("Image::createBlank() failed as given width < 1.");
 		if (iHeight < 1)
-			Log::getPointer()->addException("Image::createBlank() failed as given height < 1.");
+			throw std::runtime_error("Image::createBlank() failed as given height < 1.");
 		if (iNumChannels < 3)
-			Log::getPointer()->addException("Image::createBlank() failed as given number of channels < 1. (Only 3 or 4 is valid)");
+			throw std::runtime_error("Image::createBlank() failed as given number of channels < 1. (Only 3 or 4 is valid)");
 		if (iNumChannels > 4)
-			Log::getPointer()->addException("Image::createBlank() failed as given number of channels > 4. (Only 3 or 4 is valid)");
+			throw std::runtime_error("Image::createBlank() failed as given number of channels > 4. (Only 3 or 4 is valid)");
 
 		width = iWidth;
 		height = iHeight;
@@ -50,9 +50,7 @@ namespace Nexus
 		dataSize = width * height * numChannels;
 		pData = new unsigned char[dataSize];
 		if (!pData)
-		{
-			Log::getPointer()->addException("OUT OF MEMORY");
-		}
+			throw std::runtime_error("OUT OF MEMORY");
 
 		// Zero out the new memory all to zero
 		for (int i = 0; i < dataSize; ++i)
@@ -68,9 +66,7 @@ namespace Nexus
 			stbi_set_flip_vertically_on_load(true);
 		stbi_uc* pixels = stbi_load(strFilename.c_str(), &width, &height, &numChannels, STBI_rgb_alpha);
 		if (!pixels)
-		{
-			Log::getPointer()->addException("Image::load() failed to load texture image!");
-		}
+			throw std::runtime_error("Image::load() failed to load texture image!");
 
 		dataSize = width * height * 4;
 		pData = new unsigned char[dataSize];
@@ -93,7 +89,7 @@ namespace Nexus
 	void Image::fill(unsigned char ucRed, unsigned char ucGreen, unsigned char ucBlue, unsigned char ucAlpha)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::fill() failed. Image not yet created.");
+			throw std::runtime_error("Image::fill() failed. Image not yet created.");
 
 		int i = 0;
 
@@ -139,7 +135,7 @@ namespace Nexus
 	void Image::swapRedAndBlue(void)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::swapRedAndBlue() failed. Image not yet created.");
+			throw std::runtime_error("Image::swapRedAndBlue() failed. Image not yet created.");
 
 		int i = 0;
 		int i2;
@@ -157,18 +153,18 @@ namespace Nexus
 	void Image::saveAsTGA(const std::string& strFilename, bool bFlipOnSave)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::saveAsTGA() failed. Image not yet created.");
+			throw std::runtime_error("Image::saveAsTGA() failed. Image not yet created.");
 
 		stbi_flip_vertically_on_write(bFlipOnSave); // flag is non-zero to flip data vertically
 
 		if(!stbi_write_tga(strFilename.c_str(), width, height, numChannels, pData))
-			Log::getPointer()->addException("Image::saveAsTGA() failed. Image failed to be written.");
+			throw std::runtime_error("Image::saveAsTGA() failed. Image failed to be written.");
 	}
 
 	void Image::saveAsTGA_OLDWAY(const std::string&strFilename)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::saveAsTGA() failed. Image not yet created.");
+			throw std::runtime_error("Image::saveAsTGA_OLDWAY() failed. Image not yet created.");
 
 		std::string cString(strFilename);
 
@@ -177,7 +173,7 @@ namespace Nexus
 		if (!f)
 		{
 			// Unable to open file for saving.
-			Log::getPointer()->addException("Image::saveAsTGA_OLDWAY() failed to open file for saving,");
+			throw std::runtime_error("Image::saveAsTGA_OLDWAY() failed to open file for saving,");
 		}
 
 		unsigned char byteSkip = 0;
@@ -252,7 +248,7 @@ namespace Nexus
 	void Image::flipVertically(void)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::flipVertically() failed. Image not yet created.");
+			throw std::runtime_error("Image::flipVertically() failed. Image not yet created.");
 
 		// Size of a row
 		unsigned int iRowSize = width * numChannels;
@@ -261,7 +257,7 @@ namespace Nexus
 		unsigned char *pNewImageStartAddress = new unsigned char[dataSize];
 		unsigned char *pNewImage = pNewImageStartAddress;
 		if (0==pNewImage)
-			Log::getPointer()->addException("OUT OF MEMORY");
+			throw std::runtime_error("OUT OF MEMORY");
 
 		// Get pointer to current image
 		unsigned char *pOldImage = pData;
@@ -285,7 +281,7 @@ namespace Nexus
 	bool Image::invert(bool bInvertColour, bool bInvertAlpha)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::invert() failed. Image not yet created.");
+			throw std::runtime_error("Image::invert() failed. Image not yet created.");
 
 		int i = 0;
 		int iIndex;
@@ -316,7 +312,7 @@ namespace Nexus
 	bool Image::greyscaleSimple(void)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::greyscaleSimple() failed. Image not yet created.");
+			throw std::runtime_error("Image::greyscaleSimple() failed. Image not yet created.");
 
 		int i = 0;
 		float f1Over3 = 1.0f / 3.0f;
@@ -341,7 +337,7 @@ namespace Nexus
 	bool Image::greyscale(float fRedSensitivity, float fGreenSensitivity, float fBlueSensitivity)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::greyscale() failed. Image not yet created.");
+			throw std::runtime_error("Image::greyscale() failed. Image not yet created.");
 
 		Vector3 vCol(fRedSensitivity, fGreenSensitivity, fBlueSensitivity);
 
@@ -366,7 +362,7 @@ namespace Nexus
 	bool Image::adjustBrightness(int iAmount)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::adjustBrightness() failed. Image not yet created.");
+			throw std::runtime_error("Image::adjustBrightness() failed. Image not yet created.");
 
 		int i = 0;
 		int iCol;
@@ -391,7 +387,7 @@ namespace Nexus
 	bool Image::adjustContrast(int iAmount)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::adjustContrast() failed. Image not yet created.");
+			throw std::runtime_error("Image::adjustContrast() failed. Image not yet created.");
 
 		clamp(iAmount, -100, 100);
 		double dPixel;
@@ -437,7 +433,7 @@ namespace Nexus
 	void Image::copyTo(Image &destImage) const
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::copyTo() failed. Source image not yet created.");
+			throw std::runtime_error("Image::copyTo() failed. Source image not yet created.");
 
 		// If destination image is the same as this one, do nothing
 		if (destImage.pData == this->pData)
@@ -453,9 +449,9 @@ namespace Nexus
 	{
 		// Check that both images have data
 		if (!pData)
-			Log::getPointer()->addException("Image::copyRectTo() failed. Source image not yet created.");
+			throw std::runtime_error("Image::copyRectTo() failed. Source image not yet created.");
 		if (!destImage.pData)
-			Log::getPointer()->addException("Image::copyRectTo() failed. Destination image not yet created.");
+			throw std::runtime_error("Image::copyRectTo() failed. Destination image not yet created.");
 
 		// Compute source rect
 		int iSrcLeft = iSrcPosX;
@@ -571,9 +567,9 @@ namespace Nexus
 	void Image::removeAlphaChannel(void)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::removeAlphaChannel() failed. Image data doesn't exist.");
+			throw std::runtime_error("Image::removeAlphaChannel() failed. Image data doesn't exist.");
 		if (numChannels != 4)
-			Log::getPointer()->addException("Image::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+			throw std::runtime_error("Image::removeAlphaChannel() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		// Copy this image to a new tmp image
 		Image old;
@@ -598,9 +594,9 @@ namespace Nexus
 	void Image::copyAlphaChannelToRGB(void)
 	{
 		if (!pData)
-			Log::getPointer()->addException("Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
+			throw std::runtime_error("Image::copyAlphaChannelToRGB() failed. Image data doesn't exist.");
 		if (numChannels != 4)
-			Log::getPointer()->addException("Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
+			throw std::runtime_error("Image::copyAlphaChannelToRGB() failed. Some image data exists, but the alpha data doesn't exist (Image doesn't hold 4 channels)");
 
 		int iIndex = 0;
 		while (iIndex < dataSize)

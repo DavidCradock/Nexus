@@ -62,7 +62,7 @@ namespace Nexus
 			std::string err("Failed to find file \"");
 			err.append(strFilename);
 			err.append("\" in zip archive, but found on disk, but failed to allocate memory for it");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		fseek(f, 0, SEEK_SET);
 		size_t amountRead = fread_s(pData, sizeof(unsigned char) * datasize, sizeof(unsigned char), datasize, f);
@@ -72,7 +72,7 @@ namespace Nexus
 			std::string err("Failed to find file \"");
 			err.append(strFilename);
 			err.append("\" in zip archive, but found on disk and allocated memory for it, but there was a file I/O error.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		if (bReadInTextMode)
 		{

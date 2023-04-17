@@ -18,8 +18,9 @@ namespace Nexus
 	// Implement archiveManager to all
 	// Add printDetail() to System, using a default font. Add this to GUI manager
 	// Add logging all over the place
-	//
+	// Add TextFontManager
 	
+	// 17/04/2023	Move Log::addException out of all classes and replace with exception throw. Example FROM Log::getPointer()->addException(err); TO throw std::runtime_error(strExceptionText);
 	// 17/04/2023	Put files from root into core subfolder
 	// 14/04/2023	Added font generation and rendering
 	

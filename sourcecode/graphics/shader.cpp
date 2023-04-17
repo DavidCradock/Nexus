@@ -39,7 +39,7 @@ namespace Nexus
         }
         catch (std::ifstream::failure e)
         {
-            Log::getPointer()->addException("Shader::compile() failed to read in program code.");
+			throw std::runtime_error("Shader::compile() failed to read in program code.");
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
@@ -59,7 +59,7 @@ namespace Nexus
             glGetShaderInfoLog(vertex, 512, NULL, infoLog);
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-            Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
         };
 
         // Fragment Shader
@@ -72,7 +72,7 @@ namespace Nexus
             glGetShaderInfoLog(fragment, 512, NULL, infoLog);
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-            Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
         };
 
         // Shader Program
@@ -86,7 +86,7 @@ namespace Nexus
         {
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-            Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
         }
 
         // Delete the shaders as they're linked into our program now and no longer necessary
@@ -138,7 +138,7 @@ namespace Nexus
 
 	ShaderManager::ShaderManager()
 	{
-		addNewGroup("default");
+		
 	}
 
 
@@ -154,7 +154,7 @@ namespace Nexus
 			std::string err("ShaderManager::getNumResInGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, ShaderGroup*>::iterator itg = group.find(strGroupName);
 		size_t iTotal = itg->second->_mmapResource.size();
@@ -169,7 +169,7 @@ namespace Nexus
 			std::string err("ShaderManager::getNumResInGroupLoaded(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, ShaderGroup*>::iterator itg = group.find(strGroupName);
 
@@ -194,7 +194,7 @@ namespace Nexus
 			err.append(std::to_string(iGroupIndex));
 			err.append(") failed. Invalid index given. Number of groups is ");
 			err.append(std::to_string(getNumGroups()));
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		std::map<std::string, ShaderGroup*>::iterator itg = group.begin();
 		unsigned int i = 0;
@@ -213,7 +213,7 @@ namespace Nexus
 			std::string err("ShaderManager::addNewGroup() has been given the new group name of \"");
 			err.append(strNewGroupName);
 			err.append("\" but it already exists! Only new groups can be added.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		ShaderGroup* pNewGroup = new ShaderGroup;
@@ -236,7 +236,7 @@ namespace Nexus
 			std::string err("ShaderManager::loadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Load any unloaded resources within the group
@@ -264,7 +264,7 @@ namespace Nexus
 			std::string err("ShaderManager::loadGroupSingle(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Load any unloaded resources within the group
@@ -294,7 +294,7 @@ namespace Nexus
 			std::string err("ShaderManager::unloadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Unload any loaded resources within the group
@@ -326,7 +326,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the new resource was to be placed into, doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource already exists in the group?
@@ -356,7 +356,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -371,7 +371,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" exists, the named resource couldn't be found!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Is the resource in an unloaded state?
@@ -411,7 +411,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, doesn't exist!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -426,7 +426,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, exists, the named resource couldn't be found!");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		// If we get here, we've found the resource in the group

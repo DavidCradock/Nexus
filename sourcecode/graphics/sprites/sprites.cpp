@@ -54,7 +54,7 @@ namespace Nexus
 			std::string err("SpriteManager::addSprite(\"");
 			err.append(strSpriteName);
 			err.append("\") failed. As the given named sprite already exists.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		Sprite* pNewSprite = new Sprite;
 		pNewSprite->setTexture(strTextureFilename);
@@ -70,7 +70,7 @@ namespace Nexus
 			std::string err("SpriteManager::getSprite(\"");
 			err.append(strSpriteName);
 			err.append("\"\" failed. The sprite doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 		return (Sprite*)itr->second;
 	}
@@ -91,7 +91,7 @@ namespace Nexus
 			std::string err("SpriteManager::removeSprite(\"");
 			err.append(strSpriteName);
 			err.append("\"\" failed. The sprite doesn't exist.");
-			Log::getPointer()->addException(err);
+			throw std::runtime_error(err);
 		}
 
 		delete itr->second;

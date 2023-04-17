@@ -18,9 +18,6 @@ namespace Nexus
 		// Add text to the log file
 		void add(const std::string& string, bool bAddNewLine = true);
 
-		// Add text to the log file and throw an exception
-		void addException(const std::string& string, bool bAddNewLine = true);
-
 		// Return number of entries added via add()
 		size_t getNumEntries(void);
 

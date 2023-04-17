@@ -35,10 +35,8 @@ namespace Nexus
 		// Return false if the app wants to shutdown
 		bool onUpdate(void);
 	private:
-		VertexBuffer vertexBuffer;
 		Timing timing;
-		Sprite sprite;
-		TextFont textFont;
+
 	};
 
 }

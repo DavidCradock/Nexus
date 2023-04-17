@@ -79,6 +79,11 @@ namespace Nexus
 
 	void VertexBuffer::upload(void)
 	{
+		if (!vertices.size())
+			return;
+		if (!indices.size())
+			return;
+
 		glBindVertexArray(vertexArrayObject);
 
 		// GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.

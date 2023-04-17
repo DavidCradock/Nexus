@@ -111,6 +111,10 @@
     <ClCompile Include="sourcecode\graphics\textFont.cpp" />
     <ClCompile Include="sourcecode\graphics\texture.cpp" />
     <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp" />
+    <ClCompile Include="sourcecode\gui\gui.cpp" />
+    <ClCompile Include="sourcecode\gui\gui_button.cpp" />
+    <ClCompile Include="sourcecode\gui\gui_theme.cpp" />
+    <ClCompile Include="sourcecode\gui\gui_window.cpp" />
     <ClCompile Include="sourcecode\input\inputManager.cpp" />
     <ClCompile Include="sourcecode\input\inputJoystick.cpp" />
     <ClCompile Include="sourcecode\input\inputKeyboard.cpp" />
@@ -174,6 +178,10 @@
     <ClInclude Include="sourcecode\graphics\textFont.h" />
     <ClInclude Include="sourcecode\graphics\texture.h" />
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h" />
+    <ClInclude Include="sourcecode\gui\gui.h" />
+    <ClInclude Include="sourcecode\gui\gui_button.h" />
+    <ClInclude Include="sourcecode\gui\gui_theme.h" />
+    <ClInclude Include="sourcecode\gui\gui_window.h" />
     <ClInclude Include="sourcecode\input\inputManager.h" />
     <ClInclude Include="sourcecode\input\inputJoystick.h" />
     <ClInclude Include="sourcecode\input\inputKeyboard.h" />
@@ -198,6 +206,8 @@
     <Text Include="dependencies\ZLib\readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\gui.fs" />
+    <None Include="shaders\gui.vs" />
     <None Include="shaders\sprites.fs" />
     <None Include="shaders\sprites.vs" />
     <None Include="shaders\simple.fs" />

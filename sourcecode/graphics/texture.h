@@ -4,13 +4,20 @@
 
 namespace Nexus
 {
+	enum TextureFiltering
+	{
+		nearest,
+		linear,
+		mipmaps
+	};
+
 	// A single texture
 	class Texture
 	{
 		friend class TextureManager;
 
 	public:
-		Texture(const std::string& imageFilenameUsed, bool bImageFlipOnLoadIN = false);
+		Texture(const std::string& imageFilenameUsed, bool bImageFlipOnLoadIN = false, TextureFiltering filter = mipmaps);
 		bool getLoaded(void);
 		void load(void);
 		void unload(void);
@@ -33,6 +40,7 @@ namespace Nexus
 		bool bImageFlipOnLoad;
 		int imageWidth;
 		int imageHeight;
+		TextureFiltering textureFilter;
 	};
 
 	// A resource group holding resources
@@ -93,7 +101,7 @@ namespace Nexus
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		void add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName = "default", bool bImageFlipOnLoad = true);
+		void add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName = "default", bool bImageFlipOnLoad = true, TextureFiltering filter = mipmaps);
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs

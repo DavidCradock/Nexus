@@ -16,7 +16,8 @@ namespace Nexus
 	// Put files from root into their own folders
 	// Add additional save formats to Image
 	// Implement archiveManager to all
-	// Add printDetail() to System, using a default font
+	// Add printDetail() to System, using a default font. Add this to GUI manager
+	// Add logging all over the place
 	//
 	// 14/04/2023	Added font generation and rendering
 	*/

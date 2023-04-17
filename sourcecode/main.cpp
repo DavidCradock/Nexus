@@ -5,6 +5,7 @@
 #include "graphics/texture.h"
 #include "input/inputManager.h"
 #include "graphics/shader.h"
+#include "gui/gui.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, INT iShowCmd)
 {
@@ -22,11 +23,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
         Nexus::ShaderManager* pSM = Nexus::ShaderManager::getPointer();
         pSM->addShader("sprites", "shaders/sprites.vs", "shaders/sprites.fs", "default");
         pSM->addShader("textFont", "shaders/textFont.vs", "shaders/textFont.fs", "default");
+        pSM->addShader("gui", "shaders/gui.vs", "shaders/gui.fs", "default");
         pSM->loadGroup("default");
 
         // Texture manager groups
         Nexus::TextureManager* pTM = Nexus::TextureManager::getPointer();
         pTM->addNewGroup("fonts");
+        
+        // GUI
+        Nexus::GUIManager* pGUI = Nexus::GUIManager::getPointer();
+        
 
         // Initialise all applications
         Nexus::ApplicationManager* pAM = Nexus::ApplicationManager::getPointer();
@@ -34,13 +40,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
         Nexus::ApplicationDevelopment applicationDevelopment(applicationName);
         pAM->callAllApps_initOnce();
 
+        // Load all textures
+        pTM->loadGroup("default");
+        pTM->loadGroup("fonts");
+
         // Main loop
         while (pRD->updateWindow())
         {
             pIM->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
             if (!pAM->callCurrentApp_onUpdate())
                 break;
-
+            pGUI->render();
             pRD->swapBuffers();
             Sleep(0);
         }

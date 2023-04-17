@@ -85,6 +85,8 @@ namespace Nexus
 		// This doesn't alter anything within this object.
 		void buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName = "arial", unsigned int iFontHeight = 12, bool bAntialiased = true, bool bBold = false, bool bItalic = false, bool bUnderlined = false, bool bStrikeout = false);
 
+		// loads the text font from the file pair.
+		// Only adds the texture name to the texture manager, so don't forget to call the manager's load method, for the "fonts" group
 		void load(const std::string& strFontFilePairName);
 	
 		void unload(void);

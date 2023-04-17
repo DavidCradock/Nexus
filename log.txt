@@ -21,3 +21,4 @@ ERROR: 0:10: '' : compilation terminated
 ERROR: 3 compilation errors.  No code generated.
 
 
+TextureManager::get2DTexture("gui/gui_window.png", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!

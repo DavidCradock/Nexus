@@ -32,7 +32,7 @@ namespace Nexus
 
 		// Add textures to texture manager
 		TextureManager* pTM = TextureManager::getPointer();
-		pTM->add2DTexture(fontTypes.mstrTextureName, fontTypes.mstrTextureName, "fonts", false);	// Should filter to nearest for perfect non-scaled text
+		pTM->add2DTexture(fontTypes.mstrTextureName, fontTypes.mstrTextureName, "fonts", false, TextureFiltering::nearest);
 
 		// Load in font data
 		ArchiveData archiveData;

@@ -6,7 +6,7 @@
 namespace Nexus
 {
 
-	Texture::Texture(const std::string& imageFilenameUsed, bool bImageFlipOnLoadIN)
+	Texture::Texture(const std::string& imageFilenameUsed, bool bImageFlipOnLoadIN, TextureFiltering filter)
 	{
 		bImageFlipOnLoad = bImageFlipOnLoadIN;
 		loaded = false;
@@ -14,6 +14,7 @@ namespace Nexus
 		imageFilename = imageFilenameUsed;
 		textureID = 0;
 		imageWidth = imageHeight = 0;
+		textureFilter = filter;
 	}
 
 	bool Texture::getLoaded(void)
@@ -44,10 +45,25 @@ namespace Nexus
 		// Set the texture wrapping/filtering options
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
-		glGenerateMipmap(GL_TEXTURE_2D);
+		if (textureFilter == TextureFiltering::mipmaps)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+		else if (textureFilter == TextureFiltering::linear)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
+		}
+		else if (textureFilter == TextureFiltering::nearest)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.getData());
+		}
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
@@ -270,7 +286,7 @@ namespace Nexus
 	}
 
 
-	void TextureManager::add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName, bool bImageFlipOnLoad)
+	void TextureManager::add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName, bool bImageFlipOnLoad, TextureFiltering filter)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
@@ -296,7 +312,7 @@ namespace Nexus
 		}
 
 		// If we get here, we have got to create, then add the resource to the existing named group
-		Texture* pNewRes = new Texture(strTextureFilename, bImageFlipOnLoad);
+		Texture* pNewRes = new Texture(strTextureFilename, bImageFlipOnLoad, filter);
 		itg->second->_mmapResource[strNewResourceName] = pNewRes;
 	}
 

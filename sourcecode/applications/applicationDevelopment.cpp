@@ -6,6 +6,7 @@
 #include "../graphics/renderDevice.h"
 #include "../graphics/sprites/spriteManager.h"
 #include "../graphics/textFont.h"
+#include "../gui/gui.h"
 
 namespace Nexus
 {
@@ -25,6 +26,7 @@ namespace Nexus
 
 		vertexBuffer.upload();
 
+		timing.setStatFPSSrate(5.0f);
 		// Load textures
 		TextureManager* pTM = TextureManager::getPointer();
 		pTM->add2DTexture("logo", "textures/logo.png");
@@ -63,11 +65,21 @@ namespace Nexus
 		//textFont.buildFontFiles("fonts/arial", "arial", 48, true, false, false, false, false);
 
 		// Build "built-in" fonts
-		textFont.buildFontFiles("fonts/Bitstream_Vera_Sans_Mono", "Bitstream Vera Sans Mono", 48, true, false, false, false, false);
+		textFont.buildFontFiles("fonts/PublicSans", "Public Sans", 40, true, false, false, false, false);
 
 		// Now load a font in
-		textFont.load("fonts/Bitstream_Vera_Sans_Mono_48");
+		textFont.load("fonts/PublicSans_40");
 		pTM->loadGroup("fonts");
+
+		// GUI
+		GUIManager* pGUI = GUIManager::getPointer();
+		GUIWindow *pWindow = pGUI->createWindow("Test Window1");
+		pWindow->setWindowPosition(Vector2(320, 240));
+		pWindow->setWindowDimensions(640, 480);
+
+		pWindow = pGUI->createWindow("Test Window2");
+//		pWindow->setWindowPosition(Vector2(650, 240));
+//		pWindow->setWindowDimensions(640, 480);
 
 	}
 

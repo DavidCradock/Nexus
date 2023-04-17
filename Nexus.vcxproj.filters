@@ -40,6 +40,9 @@
     <Filter Include="sourcecode\graphics\sprites">
       <UniqueIdentifier>{c2f230c6-a8e1-40e3-b4d4-12165045157c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sourcecode\gui">
+      <UniqueIdentifier>{5f786c8e-3606-48b3-8585-1629b324ccef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\main.cpp">
@@ -206,6 +209,18 @@
     </ClCompile>
     <ClCompile Include="sourcecode\graphics\sprites\sprites.cpp">
       <Filter>sourcecode\graphics\sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui.cpp">
+      <Filter>sourcecode\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui_theme.cpp">
+      <Filter>sourcecode\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui_window.cpp">
+      <Filter>sourcecode\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui_button.cpp">
+      <Filter>sourcecode\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +404,18 @@
     <ClInclude Include="sourcecode\graphics\sprites\sprites.h">
       <Filter>sourcecode\graphics\sprites</Filter>
     </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui.h">
+      <Filter>sourcecode\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui_theme.h">
+      <Filter>sourcecode\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui_window.h">
+      <Filter>sourcecode\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui_button.h">
+      <Filter>sourcecode\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="dependencies\ZLib\readme.txt">
@@ -412,6 +439,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\textFont.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\gui.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\gui.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

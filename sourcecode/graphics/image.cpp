@@ -1,8 +1,8 @@
 #include "precompiled_header.h"
 #include "image.h"
-#include "../log.h"
-#include "../archiveManager.h"
-#include "../utils.h"
+#include "../core/log.h"
+#include "../core/archiveManager.h"
+#include "../core/utils.h"
 #include "../math/vector3.h"
 
 

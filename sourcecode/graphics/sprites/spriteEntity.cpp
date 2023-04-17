@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "spriteEntity.h"
-#include "../../log.h"
+#include "../../core/log.h"
 #include "spriteManager.h"
 #include "../texture.h"
 

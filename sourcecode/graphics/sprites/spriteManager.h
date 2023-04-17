@@ -1,11 +1,11 @@
 #pragma once
 #include "../../precompiled_header.h"
-#include "../../singleton.h"
-#include "../../timing.h"
+#include "../../core/singleton.h"
+#include "../../core/timing.h"
 #include "spriteDescription.h"
 #include "spriteEntity.h"
 #include "spriteLayer.h"
-#include "../../utils.h"
+#include "../../core/utils.h"
 
 namespace Nexus
 {

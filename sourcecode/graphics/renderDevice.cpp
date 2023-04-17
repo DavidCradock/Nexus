@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "renderDevice.h"
-#include "../log.h"
+#include "../core/log.h"
 
 
 namespace Nexus

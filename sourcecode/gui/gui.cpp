@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "gui.h"
-#include "../log.h"
+#include "../core/log.h"
 #include "../graphics/texture.h"
 #include "../graphics/renderDevice.h"
 

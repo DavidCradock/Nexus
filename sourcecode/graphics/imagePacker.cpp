@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "imagePacker.h"
-#include "../log.h"
+#include "../core/log.h"
 
 namespace Nexus
 {

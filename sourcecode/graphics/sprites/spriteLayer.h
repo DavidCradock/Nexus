@@ -3,7 +3,7 @@
 #include "../../math/vector2.h"
 #include "spriteEntity.h"
 #include "../../math/vector3.h"
-#include "../../timing.h"
+#include "../../core/timing.h"
 
 namespace Nexus
 {

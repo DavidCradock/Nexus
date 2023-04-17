@@ -9,10 +9,12 @@ namespace Nexus
 	// A button is a GUI object which may be clicked upon by the user
 	class GUIButton
 	{
+		friend class GUIManager;
 	public:
 		// Sets default settings for the window
 		GUIButton();
 
+	private:
 		Vector2 vDimensions;	// Width and height of the object
 		Vector2 vPosition;		// Position of this object relative to it's parent window.
 		std::string strText;	// Text rendered on top of the object.

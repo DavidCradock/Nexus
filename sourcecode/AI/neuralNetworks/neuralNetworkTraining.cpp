@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "neuralNetworkTraining.h"
-#include "../../utils.h"
-#include "../../log.h"
+#include "../../core/utils.h"
+#include "../../core/log.h"
 
 namespace Nexus
 {

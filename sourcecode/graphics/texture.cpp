@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "texture.h"
-#include "../log.h"
+#include "../core/log.h"
 #include "image.h"
 
 namespace Nexus

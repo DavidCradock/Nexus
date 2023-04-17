@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "archiveManager.h"
-#include "../dependencies/ZLib/zlib.h"
-#include "../dependencies/ZLib/unzip.h"
+#include "../../dependencies/ZLib/zlib.h"
+#include "../../dependencies/ZLib/unzip.h"
 #include "utils.h"
 #include "log.h"
 

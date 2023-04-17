@@ -43,27 +43,15 @@
     <Filter Include="sourcecode\gui">
       <UniqueIdentifier>{5f786c8e-3606-48b3-8585-1629b324ccef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sourcecode\core">
+      <UniqueIdentifier>{5027b4b9-a1a5-4fe5-9153-b92972c4d088}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\main.cpp">
       <Filter>sourcecode</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\precompiled_header.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\settings.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\log.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\archiveData.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\archiveManager.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\utils.cpp">
       <Filter>sourcecode</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\ZLib\adler32.c">
@@ -153,9 +141,6 @@
     <ClCompile Include="sourcecode\input\inputMouse.cpp">
       <Filter>sourcecode\input</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\timing.cpp">
-      <Filter>sourcecode</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetwork.cpp">
       <Filter>sourcecode\AI\NeuralNetworks</Filter>
     </ClCompile>
@@ -164,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="sourcecode\math\line2d.cpp">
       <Filter>sourcecode\math</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\system.cpp">
-      <Filter>sourcecode</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\glad4.6_core\src\glad.c">
       <Filter>dependencies\GLAD</Filter>
@@ -222,27 +204,30 @@
     <ClCompile Include="sourcecode\gui\gui_button.cpp">
       <Filter>sourcecode\gui</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\core\archiveData.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\archiveManager.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\log.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\settings.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\system.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\timing.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\core\utils.cpp">
+      <Filter>sourcecode\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\settings.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\singleton.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\log.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\archiveData.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\archiveManager.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\utils.h">
       <Filter>sourcecode</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\ZLib\deflate.h">
@@ -335,23 +320,14 @@
     <ClInclude Include="sourcecode\input\inputMouse.h">
       <Filter>sourcecode\input</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\timing.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetwork.h">
       <Filter>sourcecode\AI\NeuralNetworks</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.h">
       <Filter>sourcecode\AI\NeuralNetworks</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\todo.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\math\line2d.h">
       <Filter>sourcecode\math</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\system.h">
-      <Filter>sourcecode</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\glad4.6_core\include\glad\glad.h">
       <Filter>dependencies\GLAD</Filter>
@@ -415,6 +391,33 @@
     </ClInclude>
     <ClInclude Include="sourcecode\gui\gui_button.h">
       <Filter>sourcecode\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\archiveData.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\archiveManager.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\log.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\settings.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\singleton.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\system.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\timing.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\todo.h">
+      <Filter>sourcecode\core</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\core\utils.h">
+      <Filter>sourcecode\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

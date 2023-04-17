@@ -96,8 +96,13 @@
     <ClCompile Include="sourcecode\applications\applicationBase.cpp" />
     <ClCompile Include="sourcecode\applications\applicationDevelopment.cpp" />
     <ClCompile Include="sourcecode\applications\applicationManager.cpp" />
-    <ClCompile Include="sourcecode\archiveData.cpp" />
-    <ClCompile Include="sourcecode\archiveManager.cpp" />
+    <ClCompile Include="sourcecode\core\archiveData.cpp" />
+    <ClCompile Include="sourcecode\core\archiveManager.cpp" />
+    <ClCompile Include="sourcecode\core\log.cpp" />
+    <ClCompile Include="sourcecode\core\settings.cpp" />
+    <ClCompile Include="sourcecode\core\system.cpp" />
+    <ClCompile Include="sourcecode\core\timing.cpp" />
+    <ClCompile Include="sourcecode\core\utils.cpp" />
     <ClCompile Include="sourcecode\graphics\image.cpp" />
     <ClCompile Include="sourcecode\graphics\imagePacker.cpp" />
     <ClCompile Include="sourcecode\graphics\renderDevice.cpp" />
@@ -119,7 +124,6 @@
     <ClCompile Include="sourcecode\input\inputJoystick.cpp" />
     <ClCompile Include="sourcecode\input\inputKeyboard.cpp" />
     <ClCompile Include="sourcecode\input\inputMouse.cpp" />
-    <ClCompile Include="sourcecode\log.cpp" />
     <ClCompile Include="sourcecode\main.cpp" />
     <ClCompile Include="sourcecode\math\line2d.cpp" />
     <ClCompile Include="sourcecode\math\matrix.cpp" />
@@ -131,10 +135,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="sourcecode\settings.cpp" />
-    <ClCompile Include="sourcecode\system.cpp" />
-    <ClCompile Include="sourcecode\timing.cpp" />
-    <ClCompile Include="sourcecode\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\glad4.6_core\include\glad\glad.h" />
@@ -162,8 +162,15 @@
     <ClInclude Include="sourcecode\applications\applicationBase.h" />
     <ClInclude Include="sourcecode\applications\applicationDevelopment.h" />
     <ClInclude Include="sourcecode\applications\applicationManager.h" />
-    <ClInclude Include="sourcecode\archiveData.h" />
-    <ClInclude Include="sourcecode\archiveManager.h" />
+    <ClInclude Include="sourcecode\core\archiveData.h" />
+    <ClInclude Include="sourcecode\core\archiveManager.h" />
+    <ClInclude Include="sourcecode\core\log.h" />
+    <ClInclude Include="sourcecode\core\settings.h" />
+    <ClInclude Include="sourcecode\core\singleton.h" />
+    <ClInclude Include="sourcecode\core\system.h" />
+    <ClInclude Include="sourcecode\core\timing.h" />
+    <ClInclude Include="sourcecode\core\todo.h" />
+    <ClInclude Include="sourcecode\core\utils.h" />
     <ClInclude Include="sourcecode\graphics\colour.h" />
     <ClInclude Include="sourcecode\graphics\image.h" />
     <ClInclude Include="sourcecode\graphics\imagePacker.h" />
@@ -186,7 +193,6 @@
     <ClInclude Include="sourcecode\input\inputJoystick.h" />
     <ClInclude Include="sourcecode\input\inputKeyboard.h" />
     <ClInclude Include="sourcecode\input\inputMouse.h" />
-    <ClInclude Include="sourcecode\log.h" />
     <ClInclude Include="sourcecode\math\line2d.h" />
     <ClInclude Include="sourcecode\math\matrix.h" />
     <ClInclude Include="sourcecode\math\quaternion.h" />
@@ -195,12 +201,6 @@
     <ClInclude Include="sourcecode\math\vector3.h" />
     <ClInclude Include="sourcecode\math\vector4.h" />
     <ClInclude Include="sourcecode\precompiled_header.h" />
-    <ClInclude Include="sourcecode\settings.h" />
-    <ClInclude Include="sourcecode\singleton.h" />
-    <ClInclude Include="sourcecode\system.h" />
-    <ClInclude Include="sourcecode\timing.h" />
-    <ClInclude Include="sourcecode\todo.h" />
-    <ClInclude Include="sourcecode\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="dependencies\ZLib\readme.txt" />

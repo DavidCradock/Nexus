@@ -7,7 +7,7 @@ namespace Nexus
 	GUITheme::GUITheme()
 	{
 		strTexturenameWindow = "gui/gui_window.png";
-		strFontnameWindow = "fonts/publicsans_20";
+		strFontnameWindowTitlebar = "fonts/publicsans_20";
 
 		strTexturenameButton[0] = "gui/gui_button_up.png";
 		strTexturenameButton[1] = "gui/gui_button_over.png";

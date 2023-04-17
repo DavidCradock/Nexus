@@ -1,5 +1,6 @@
 #pragma once
 #include "../precompiled_header.h"
+#include "../graphics/textFont.h"
 
 namespace Nexus
 {
@@ -11,12 +12,15 @@ namespace Nexus
 	// The cells of the four edges are stretched
 	class GUITheme
 	{
+		friend class GUIManager;
 	public:
 		// Sets default settings for the theme using default texture names etc.
 		GUITheme();
 
+	private:
 		std::string strTexturenameWindow;			// Name of the texture containing image data used to render a window.
-		std::string strFontnameWindow;				// Name of the font used to render text for a window.
+		std::string strFontnameWindowTitlebar;		// Name of the font used to render text for a window.
+		TextFont textFontWindowTitlebar;			// TextFont object used to render the window's titlebar text
 		std::string strTexturenameButton[3];		// Name of the texture containing image data used to render a button in it's up, over and down states.
 		
 	};

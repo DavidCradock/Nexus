@@ -2,7 +2,7 @@
 #include "../../precompiled_header.h"
 #include "../../math/vector2.h"
 #include "../vertexBuffer.h"
-#include "../../singleton.h"
+#include "../../core/singleton.h"
 
 namespace Nexus
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "../singleton.h"
-#include "../settings.h"
+#include "../core/singleton.h"
+#include "../core/settings.h"
 
 namespace Nexus
 {

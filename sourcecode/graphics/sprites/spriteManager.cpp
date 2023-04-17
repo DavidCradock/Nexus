@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "spriteManager.h"
-#include "../../log.h"
+#include "../../core/log.h"
 #include "../texture.h"
 
 namespace Nexus

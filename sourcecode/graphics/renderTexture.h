@@ -1,6 +1,6 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "../singleton.h"
+#include "../core/singleton.h"
 #include "../math/vector4.h"
 
 namespace Nexus

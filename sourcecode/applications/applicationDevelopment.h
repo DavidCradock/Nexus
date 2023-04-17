@@ -2,7 +2,7 @@
 #include "../precompiled_header.h"
 #include "applicationBase.h"
 #include "../graphics/vertexBuffer.h"
-#include "../timing.h"
+#include "../core/timing.h"
 #include "../graphics/sprites/sprites.h"
 #include "../graphics/textFont.h"
 

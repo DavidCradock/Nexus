@@ -1,6 +1,6 @@
 #pragma once
 #pragma once
-#include "precompiled_header.h"
+#include "../precompiled_header.h"
 
 // Usage:
 // Create a class from this template class with something like...

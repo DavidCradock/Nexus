@@ -1,6 +1,6 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "../singleton.h"
+#include "../core/singleton.h"
 #include "gui_button.h"
 #include "gui_theme.h"
 #include "gui_window.h"

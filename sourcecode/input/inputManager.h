@@ -1,6 +1,6 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "../singleton.h"
+#include "../core/singleton.h"
 #include "inputJoystick.h"
 #include "inputKeyboard.h"
 #include "inputMouse.h"

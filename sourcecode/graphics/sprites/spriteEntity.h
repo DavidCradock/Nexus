@@ -3,7 +3,7 @@
 #include "../../math/vector2.h"
 #include "../../math/rect2d.h"
 #include "../colour.h"
-#include "../../utils.h"
+#include "../../core/utils.h"
 
 namespace Nexus
 {

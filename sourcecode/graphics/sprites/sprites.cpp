@@ -2,7 +2,7 @@
 #include "sprites.h"
 #include "../texture.h"
 #include "../shader.h"
-#include "../../log.h"
+#include "../../core/log.h"
 
 namespace Nexus
 {

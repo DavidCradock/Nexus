@@ -4,7 +4,7 @@
 ### It's early days, but I'm enjoying programming again after about a nine year gap due to a health issue and it feels like this NeXus project could develop into a nice little 2D (and then later 3D too) game development framework.
 **Current features**
 
-- AI Neural network with genetic algorithm training. Some old code I wrote back in around 2002. This code is on the CPU only, no GPU and is singlethreaded as it was before a time when multiple cores were un-common. I will re-write this.
+- AI Neural network with genetic algorithm training. Some old code I wrote back in around 2002. This code is on the CPU only, no GPU and is singlethreaded as it was before a time when multiple cores were common. I will re-write this.
 - 2D sprite rendering on the GPU. Needs checking.
 - Font rendering with data created from truetype fonts which are installed on the OS and then saved to a pair of files containing character information and each character's image inside a texture, so no need to install any fonts on the target machine and even when not rendered to a buffer for faster re-rendering, I get almost 10,000 fps when rendering text.
 - Input from keyboard, joystick and mouse (Will be re-written in places, especially the joystick code which currently is really basic. Uses DirectX 8.

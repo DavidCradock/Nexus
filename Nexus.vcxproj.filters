@@ -46,6 +46,9 @@
     <Filter Include="sourcecode\core">
       <UniqueIdentifier>{5027b4b9-a1a5-4fe5-9153-b92972c4d088}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sourcecode\managers">
+      <UniqueIdentifier>{81a46966-d654-4105-825c-7e0320aeeea6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\main.cpp">

@@ -72,7 +72,7 @@ namespace Nexus
 		const std::string& getGroupName(unsigned int iGroupIndex);
 
 		// Adds a new resource group with the given name which resources can be put into
-		// If the named group already exists, an exception occurs.
+		// If the named group already exists, nothing happens
 		void addNewGroup(const std::string& strNewGroupName);
 
 		// Returns true if the named group exists, else false

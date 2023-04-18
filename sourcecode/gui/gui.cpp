@@ -142,8 +142,8 @@ namespace Nexus
 			// Now render the text for the titlebar
 			if (itr->second->strTitlebarText.length())
 			{
-				TextFont* pTextFont = pTFM->get(pTheme->strFontnameWindowTitlebar);
-				pTextFont->print(itr->second->strTitlebarText, (int)vWndTexDimsDiv3.x + 5, (int)vWndTexDimsDiv3.y);
+				TextFont* pTextFont = pTFM->getTextFont(pTheme->strFontnameWindowTitlebar);
+				pTextFont->print(itr->second->strTitlebarText, (int)itr->second->vPosition.x + vWndTexDimsDiv3.x, (int)itr->second->vPosition.y + 10);
 			}
 			itr++;
 		}
@@ -300,7 +300,7 @@ namespace Nexus
 				pTM->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
 				pTM->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
 				pTM->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
-				pTFM->create(itr->second->strFontnameWindowTitlebar);
+				pTFM->addTextFont(itr->second->strFontnameWindowTitlebar);
 			}
 			itr++;
 		}

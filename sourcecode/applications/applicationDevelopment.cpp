@@ -26,8 +26,8 @@ namespace Nexus
 		pWindow->setWindowDimensions(640, 480);
 
 		pWindow = pGUI->createWindow("Test Window2");
-//		pWindow->setWindowPosition(Vector2(650, 240));
-//		pWindow->setWindowDimensions(640, 480);
+		pWindow->setWindowPosition(Vector2(320+640+50, 240));
+		pWindow->setWindowDimensions(640, 480);
 
 	}
 

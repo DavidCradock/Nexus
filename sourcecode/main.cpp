@@ -15,6 +15,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             Nexus::InputManager* pIM = Nexus::InputManager::getPointer();
             pIM->init(pRD->getWindowHandle());
 
+            // Timing
+            Nexus::Timing timing;
+            timing.setStatFPSSrate(5);
+
             // Shaders
             Nexus::ShaderManager* pSM = Nexus::ShaderManager::getPointer();
             pSM->addNewGroup("default");
@@ -26,11 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
 
             // Texture manager groups
             Nexus::TextureManager* pTM = Nexus::TextureManager::getPointer();
-            pTM->addNewGroup("default");
-
-            Nexus::TextFontManager* pTFM = Nexus::TextFontManager::getPointer();
-
-            
+            pTM->addNewGroup("default");     
 
             // GUI
             Nexus::GUIManager* pGUI = Nexus::GUIManager::getPointer();
@@ -39,17 +39,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pGUI->setCurrentTheme("default");
             pGUI->loadAllThemes();
             
-            //pTM->add2DTexture(pTheme->strTexturenameWindow, pTheme->strTexturenameWindow, "default", false);
-                    // TextFontManager
-            //       TextFontManager* pTFM = TextFontManager::getPointer();
-            //       pTM->addNewGroup("fonts");
-            //       pTFM->create(pTheme->strFontnameWindowTitlebar);
-            //       pTFM->loadAll();
-            //       pTM->loadGroup("fonts");
-
+            // Text fonts
+            Nexus::TextFontManager* pTFM = Nexus::TextFontManager::getPointer();
             pTFM->loadAll();
             
-
             // Sprite manager
             Nexus::SpriteManager* pSpriteMan = Nexus::SpriteManager::getPointer();
 
@@ -63,9 +56,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pTM->loadGroup("default");
             pTM->loadGroup("fonts");
 
+            Nexus::TextFont *pTextFont = pTFM->addTextFont("fonts/publicsans_16");
+            pTFM->loadAll();
+
+            // Make sure the "fonts" group exists in the texture manager, if not, create it
+            //TextureManager* pTM = TextureManager::getPointer();
+            //if (!pTM->groupExists("fonts"))
+            //   pTM->addNewGroup("fonts");
+
             // Main loop
             while (pRD->updateWindow())
             {
+                timing.update();
+
                 pIM->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
                 if (!pAM->callCurrentApp_onUpdate())
                     break;
@@ -73,6 +76,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
                 pSpriteMan->update();
                 pSpriteMan->render();
                 pGUI->render();
+                std::string strFramerate("Framerate: ");
+                strFramerate.append(std::to_string(timing.getStatFPSS()));
+                strFramerate.append(" frames per second");
+                pTextFont->print(strFramerate, 0, 0, Nexus::CColouruc(255, 255, 255, 255));
                 pRD->swapBuffers();
                 Sleep(0);
             }

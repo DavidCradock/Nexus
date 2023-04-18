@@ -110,7 +110,9 @@ namespace Nexus
 
 	TextureManager::TextureManager()
 	{
-		
+		addNewGroup("default");
+		addNewGroup("fonts");
+		addNewGroup("gui");
 	}
 
 	
@@ -182,10 +184,7 @@ namespace Nexus
 	{
 		if (groupExists(strNewGroupName))
 		{
-			std::string err("TextureManager::addNewGroup() has been given the new group name of \"");
-			err.append(strNewGroupName);
-			err.append("\" but it already exists! Only new groups can be added.");
-			throw std::runtime_error(err);
+			return;
 		}
 
 		TextureGroup* pNewGroup = new TextureGroup;
@@ -306,7 +305,6 @@ namespace Nexus
 		std::map<std::string, Texture*>::iterator itr = itg->second->_mmapResource.find(strNewResourceName);	// Try to find the named resource in the group
 		if (itg->second->_mmapResource.end() != itr)
 		{
-			// Increase reference count of the resource
 			itr->second->refCount++;
 			return;
 		}

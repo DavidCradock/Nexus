@@ -14,6 +14,7 @@ namespace Nexus
 	TextFont::TextFont()
 	{
 		bLoaded = false;
+		refCount = 0;
 	}
 
 	TextFont::~TextFont()
@@ -157,19 +158,14 @@ namespace Nexus
 		return fWidth;
 	}
 
-
-
-	TextFont* TextFontManager::create(const std::string& name)
+	TextFont* TextFontManager::addTextFont(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (mapTextFonts.end() != itr)
 		{
-			std::string err("TextFontManager::create(\"");
-			err.append(name);
-			err.append("\"");
-			err.append(" failed. As the named object already exists.");
-			throw std::runtime_error(err);
+			itr->second->refCount++;
+			return (TextFont*)itr->second;
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -181,7 +177,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	TextFont* TextFontManager::get(const std::string& name)
+	TextFont* TextFontManager::getTextFont(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -196,7 +192,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	bool TextFontManager::getExists(const std::string& name)
+	bool TextFontManager::getTextFontExists(const std::string& name)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (itr == mapTextFonts.end())
@@ -204,7 +200,7 @@ namespace Nexus
 		return true;
 	}
 
-	void TextFontManager::remove(const std::string& name)
+	void TextFontManager::removeTextFont(const std::string& name)
 	{
 		// Resource doesn't exist in the group?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -216,18 +212,18 @@ namespace Nexus
 			throw std::runtime_error(err);
 		}
 
-		// Destroy the resource
-		delete itr->second;
-		mapTextFonts.erase(itr);
+		itr->second->refCount--;
+		// If the reference count is now at zero
+		if (itr->second->refCount <= 0)
+		{
+			// Destroy the resource
+			delete itr->second;
+			mapTextFonts.erase(itr);
+		}
 	}
 
 	void TextFontManager::loadAll(void)
 	{
-		// Make sure the "fonts" group exists in the texture manager, if not, create it
-		TextureManager* pTM = TextureManager::getPointer();
-		if (!pTM->groupExists("fonts"))
-			pTM->addNewGroup("fonts");
-
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.begin();
 		// If nothing to load
 		if (itr == mapTextFonts.end())
@@ -237,8 +233,6 @@ namespace Nexus
 			itr->second->load(itr->first);
 			itr++;
 		}
-
-		pTM->loadGroup("fonts");
 	}
 
 	void TextFontManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)

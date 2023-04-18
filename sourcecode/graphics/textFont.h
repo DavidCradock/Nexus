@@ -64,6 +64,7 @@ namespace Nexus
 		};
 		SFontTypes fontTypes;
 		VertexBuffer vertexBuffer;		// Used during rendering
+		unsigned int refCount;			// Used by the manager 
 	};
 
 	class TextFontManager : public Singleton<TextFontManager>
@@ -71,18 +72,18 @@ namespace Nexus
 	public:
 		// Creates a new object
 		// You'll need to call loadAll() afterwards
-		TextFont* create(const std::string& name);
+		TextFont* addTextFont(const std::string& name);
 
 		// Returns a pointer to the named object.
 		// Throws an exception if the object couldn't be found
-		TextFont* get(const std::string& name);
+		TextFont* getTextFont(const std::string& name);
 
 		// Returns true if the named object exists, else false.
-		bool getExists(const std::string& name);
+		bool getTextFontExists(const std::string& name);
 
 		// Removes an object.
 		// Throws an exception if the named object doesn't exist.
-		void remove(const std::string& name);
+		void removeTextFont(const std::string& name);
 
 		// Loads all added objects if they haven't already
 		void loadAll(void);

@@ -19,10 +19,6 @@ namespace Nexus
 	{
 		timing.setStatFPSSrate(5.0f);
 
-		// Build "built-in" fonts
-		TextFontManager* pTFM = TextFontManager::getPointer();
-		pTFM->buildFontFiles("fonts/PublicSans", "Public Sans", 20, true, false, false, false, false);
-
 		// GUI
 		GUIManager* pGUI = GUIManager::getPointer();
 		GUIWindow *pWindow = pGUI->createWindow("Test Window1");

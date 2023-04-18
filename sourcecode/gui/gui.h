@@ -53,7 +53,8 @@ namespace Nexus
 		// Sets the current theme
 		void setCurrentTheme(const std::string& name);
 
-		
+		// Loads all themes, adding texure
+		void loadAllThemes(void);
 
 		// Returns true is the mouse is over a gui window that is enabled
 		bool getMouseOverGUIWindow(void) { return bMouseIsOverGUI; }

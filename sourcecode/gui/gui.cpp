@@ -18,6 +18,9 @@ namespace Nexus
 		if (!mapGUIWindows.size())
 			return;
 
+		if (!strCurrentTheme.length())
+			throw std::runtime_error("GUIManager::render() failed as currently set theme is not set.");
+
 		TextureManager* pTM = TextureManager::getPointer();
 		TextFontManager* pTFM = TextFontManager::getPointer();
 
@@ -144,9 +147,6 @@ namespace Nexus
 			}
 			itr++;
 		}
-
-		
-
 	}
 
 	GUITheme* GUIManager::createTheme(const std::string& name)
@@ -283,5 +283,27 @@ namespace Nexus
 	void GUIManager::setCurrentTheme(const std::string& name)
 	{
 		strCurrentTheme = name;
+	}
+
+	void GUIManager::loadAllThemes(void)
+	{
+		TextureManager* pTM = TextureManager::getPointer();
+		TextFontManager* pTFM = TextFontManager::getPointer();
+
+		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.begin();
+		while (itr != mapGUIThemes.end())
+		{
+			if (!itr->second->bLoaded)
+			{
+				itr->second->bLoaded = true;
+				pTM->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
+				pTM->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
+				pTM->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
+				pTM->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
+				pTFM->create(itr->second->strFontnameWindowTitlebar);
+			}
+			itr++;
+		}
+		pTFM->loadAll();
 	}
 }

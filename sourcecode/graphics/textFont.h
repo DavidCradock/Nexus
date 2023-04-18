@@ -8,8 +8,6 @@
 namespace Nexus
 {
 	// A font rendering object
-	// All of these methods in here are slow for rendering lots of text.
-	// If the text doesn't change, use the GUI to render text... it caches text to a RT, greatly increasing speed.
 	class TextFont
 	{
 		friend class TextFontManager;

@@ -28,13 +28,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             Nexus::TextureManager* pTM = Nexus::TextureManager::getPointer();
             pTM->addNewGroup("default");
 
+            Nexus::TextFontManager* pTFM = Nexus::TextFontManager::getPointer();
+
+            
+
             // GUI
             Nexus::GUIManager* pGUI = Nexus::GUIManager::getPointer();
-            // Create default theme
- //           GUITheme* pTheme = pGUI->createTheme("default");
-            //       strCurrentTheme = "default";
-            //       TextureManager* pTM = TextureManager::getPointer();
-            //       pTM->add2DTexture(pTheme->strTexturenameWindow, pTheme->strTexturenameWindow, "default", false);
+            // Create default theme and set as default
+            Nexus::GUITheme* pTheme = pGUI->createTheme("default");
+            pGUI->setCurrentTheme("default");
+            pGUI->loadAllThemes();
+            
+            //pTM->add2DTexture(pTheme->strTexturenameWindow, pTheme->strTexturenameWindow, "default", false);
                     // TextFontManager
             //       TextFontManager* pTFM = TextFontManager::getPointer();
             //       pTM->addNewGroup("fonts");
@@ -42,9 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             //       pTFM->loadAll();
             //       pTM->loadGroup("fonts");
 
-
-            Nexus::TextFontManager* pTFM = Nexus::TextFontManager::getPointer();
             pTFM->loadAll();
+            
 
             // Sprite manager
             Nexus::SpriteManager* pSpriteMan = Nexus::SpriteManager::getPointer();

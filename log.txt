@@ -36,3 +36,10 @@ GUIManager::getTheme("" failed. As the named object doesn't exist.
 GUIManager::getTheme("" failed. As the named object doesn't exist.
 GUIManager::getTheme("" failed. As the named object doesn't exist.
 GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::getTheme("" failed. As the named object doesn't exist.
+GUIManager::render() failed as currently set theme is not set.
+GUIManager::render() failed as currently set theme is not set.
+GUIManager::render() failed as currently set theme is not set.
+TextureManager::get2DTexture("gui/gui_window.png", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!

@@ -1,4 +1,4 @@
-![Nexus project logo. Just some text "NeXus" extruded slightly and placed against a quad and the awesome Nishita sky setup within the 3D application Blender to give a natural, outdoors in sunset lighting.](https://github.com/DavidCradock/Nexus/blob/4b3d00e3a4ae0950816c73e66e67e34823163bb7/textures/github_social_image.png)
+![Nexus project logo. Just some text "NeXus" extruded slightly and placed against a quad and the awesome Nishita sky setup within the 3D application Blender to give a natural, outdoors in sunset lighting.](https://github.com/DavidCradock/Nexus/blob/fd9d367a4d39ce8b52feb9a1b179e5446aef6944/git_images/github_social_image.png)
 # My current personal project.
 ## Written in C++ for Windows 11, using OpenGL core profile for rendering.
 ### It's early days, but I'm enjoying programming again after about a nine year gap due to a health issue and it feels like this NeXus project could develop into a nice little 2D (and then later 3D too) game development framework.

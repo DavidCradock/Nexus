@@ -206,6 +206,7 @@
     <Text Include="dependencies\ZLib\readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shaders\gui.fs" />
     <None Include="shaders\gui.vs" />
     <None Include="shaders\sprites.fs" />

@@ -416,9 +416,6 @@
     <ClInclude Include="sourcecode\core\utils.h">
       <Filter>sourcecode\core</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\todo.h">
-      <Filter>sourcecode</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\Nexus.h">
       <Filter>sourcecode</Filter>
     </ClInclude>

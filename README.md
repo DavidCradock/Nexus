@@ -9,7 +9,7 @@
 - Font rendering with data created from truetype fonts which are installed on the OS and then saved to a pair of files containing character information and each character's image inside a texture, so no need to install any fonts on the target machine and even when not rendered to a buffer for faster re-rendering, I get almost 10,000 fps when rendering text.
 - Input from keyboard, joystick and mouse (Will be re-written in places, especially the joystick code which currently is really basic. Uses DirectX 8.
 - The beginnings of a 2D rendered GUI. Currently has a window container object which holds and deals with all other GUI objects such as buttons, text edit boxes etc.
-![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/862d35f796801a332b7435fc011ce93aeb45db27/git_images/current_state.jpg)
+![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/bf2bbfdd9524f6150c3152bedb34e96715ae0dd8/git_images/current_state.jpg)
 
 **To do**
 

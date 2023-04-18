@@ -2,15 +2,16 @@
 # My current personal project.
 ## Written in C++ for Windows 11, using OpenGL core profile for rendering.
 ### It's early days, but I'm enjoying programming again after about a nine year gap due to a health issue and it feels like this NeXus project could develop into a nice little 2D (and then later 3D too) game development framework.
-#Current features
+**Current features**
+
 - AI Neural network with genetic algorithm training. Some old code I wrote back in around 2002. This code is on the CPU only, no GPU and is singlethreaded as it was before a time when multiple cores were common. I will re-write this.
 - 2D sprite rendering on the GPU. Needs checking.
 - Font rendering with data created from truetype fonts which are installed on the OS and then saved to a pair of files containing character information and each character's image inside a texture, so no need to install any fonts on the target machine and even when not rendered to a buffer for faster re-rendering, I get almost 10,000 fps when rendering text.
 - Input from keyboard, joystick and mouse (Will be re-written in places, especially the joystick code which currently is really basic. Uses DirectX 8.
 - The beginnings of a 2D rendered GUI. Currently has a window container object which holds and deals with all other GUI objects such as buttons, text edit boxes etc.
-![Nexus project logo. Just some text "NeXus" extruded slightly and placed against a quad and the awesome Nishita sky setup within the 3D application Blender to give a natural, outdoors in sunset lighting.](https://github.com/DavidCradock/Nexus/blob/4b3d00e3a4ae0950816c73e66e67e34823163bb7/textures/github_social_image.png)
+![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/862d35f796801a332b7435fc011ce93aeb45db27/git_images/current_state.jpg)
 
-#TODO
+**To do**
 
 - Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects
 - Unify each manager so they each have reference counts and maybe groups?

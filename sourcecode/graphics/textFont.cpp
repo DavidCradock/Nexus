@@ -36,7 +36,7 @@ namespace Nexus
 		fontTypes.mstrTextureName = strFontTGAFilename;
 
 		// Add textures to texture manager
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		pTM->add2DTexture(fontTypes.mstrTextureName, fontTypes.mstrTextureName, "fonts", false, TextureFiltering::nearest);
 
 		// Load in font data
@@ -66,7 +66,7 @@ namespace Nexus
 		if (!bLoaded)
 			return;
 
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		pTM->remove2DTexture(fontTypes.mstrTextureName, "fonts");
 		bLoaded = false;
 	}
@@ -77,7 +77,7 @@ namespace Nexus
 			return;
 
 		RenderDevice* pRD = RenderDevice::getPointer();
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		Texture* pTexture = pTM->get2DTexture(fontTypes.mstrTextureName, "fonts");
 		pTexture->bind();
 		Shader* pShader = ManagerShaders::getPointer()->getShader("textFont");

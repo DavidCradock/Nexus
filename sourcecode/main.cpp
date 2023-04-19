@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pSM->loadGroup("default");
 
             // Texture manager groups
-            Nexus::TextureManager* pTM = Nexus::TextureManager::getPointer();
+            Nexus::ManagerTextures* pTM = Nexus::ManagerTextures::getPointer();
             pTM->addNewGroup("default");     
 
             // GUI
@@ -40,11 +40,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pGUI->loadAllThemes();
             
             // Text fonts
-            Nexus::TextFontManager* pTFM = Nexus::TextFontManager::getPointer();
+            Nexus::ManagerTextFonts* pTFM = Nexus::ManagerTextFonts::getPointer();
             pTFM->loadAll();
             
             // Sprite manager
-            Nexus::SpriteManager* pSpriteMan = Nexus::SpriteManager::getPointer();
+            Nexus::ManagerSprites* pSpriteMan = Nexus::ManagerSprites::getPointer();
 
             // Initialise all applications
             Nexus::ManagerApplications* pAM = Nexus::ManagerApplications::getPointer();

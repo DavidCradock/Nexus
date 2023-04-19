@@ -6,10 +6,10 @@
 namespace Nexus
 {
 
-	SpriteManager::SpriteManager()
+	ManagerSprites::ManagerSprites()
 	{
 		// Add the resource group "sprites"
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		pTM->addNewGroup("sprites");
 
 		// Add sprite material
@@ -25,7 +25,7 @@ namespace Nexus
 	}
 
 
-	void SpriteManager::update(void)
+	void ManagerSprites::update(void)
 	{
 		_mcTimer.update();
 
@@ -54,7 +54,7 @@ namespace Nexus
 
 	}
 
-	void SpriteManager::setCameraPosition(const Vector2& vCameraTargetPosition, float fSpeed)
+	void ManagerSprites::setCameraPosition(const Vector2& vCameraTargetPosition, float fSpeed)
 	{
 		_mvCameraPositionTarget = vCameraTargetPosition;
 
@@ -68,7 +68,7 @@ namespace Nexus
 		_mfCameraPositionSpeed = fSpeed;
 	}
 
-	void SpriteManager::render(void)
+	void ManagerSprites::render(void)
 	{
 
 		// For each layer
@@ -87,7 +87,7 @@ namespace Nexus
 		}
 	}
 
-	bool SpriteManager::hasStuffToRender(void)
+	bool ManagerSprites::hasStuffToRender(void)
 	{
 		// For each layer
 		for (size_t i = 0; i < _mvecLayerNameZOrder.size(); ++i)
@@ -104,13 +104,13 @@ namespace Nexus
 		return false;
 	}
 
-	SpriteLayer* SpriteManager::addLayer(const std::string& strUniqueName)
+	SpriteLayer* ManagerSprites::addLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
 		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer != _mmapLayers.end())
 		{
-			std::string err("SpriteManger::addLayer(\"");
+			std::string err("ManagerSprites::addLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer already exists.");
 			throw std::runtime_error(err);
@@ -118,7 +118,7 @@ namespace Nexus
 
 		SpriteLayer* pNewLayer = new SpriteLayer;
 		if (!pNewLayer)
-			throw std::runtime_error("Memory allocation error.");
+			throw std::runtime_error("ManagerSprites memory allocation error.");
 
 		// Add layer to hash map
 		_mmapLayers[strUniqueName] = pNewLayer;
@@ -129,19 +129,19 @@ namespace Nexus
 		return pNewLayer;
 	}
 
-	bool SpriteManager::layerExists(const std::string& strUniqueName)
+	bool ManagerSprites::layerExists(const std::string& strUniqueName)
 	{
 		if (_mmapLayers.find(strUniqueName) == _mmapLayers.end())
 			return false;
 		return true;
 	}
-	SpriteLayer* SpriteManager::getLayer(const std::string& strUniqueName)
+	SpriteLayer* ManagerSprites::getLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
 		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer == _mmapLayers.end())
 		{
-			std::string err("SpriteManager::getLayer(\"");
+			std::string err("ManagerSprites::getLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. Layer name doesn't exist!");
 			throw std::runtime_error(err);
@@ -149,13 +149,13 @@ namespace Nexus
 		return itlayer->second;
 	}
 
-	void SpriteManager::removeLayer(const std::string& strUniqueName)
+	void ManagerSprites::removeLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
 		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
 		if (itlayer == _mmapLayers.end())
 		{
-			std::string err("SpriteManger::removeLayer(\"");
+			std::string err("ManagerSprites::removeLayer(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The layer doesn't exist.");
 			throw std::runtime_error(err);
@@ -181,7 +181,7 @@ namespace Nexus
 		}
 	}
 
-	void SpriteManager::removeAllLayers(void)
+	void ManagerSprites::removeAllLayers(void)
 	{
 		// Get names of each layer
 		std::vector<std::string> vNames;
@@ -198,12 +198,12 @@ namespace Nexus
 		}
 	}
 
-	std::string SpriteManager::getLayerName(int iZorder)
+	std::string ManagerSprites::getLayerName(int iZorder)
 	{
 		// Make sure valid index given
 		if (iZorder < 0 || iZorder >= (int)_mvecLayerNameZOrder.size())
 		{
-			std::string err("SpriteManager::getLayerName(");
+			std::string err("ManagerSprites::getLayerName(");
 			err.append(std::to_string(iZorder));
 			err.append(") failed. Invalid iZorder value given!");
 			throw std::runtime_error(err);
@@ -211,7 +211,7 @@ namespace Nexus
 		return _mvecLayerNameZOrder[iZorder];
 	}
 
-	int SpriteManager::getLayerZorder(const std::string& strLayerName)
+	int ManagerSprites::getLayerZorder(const std::string& strLayerName)
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
@@ -228,7 +228,7 @@ namespace Nexus
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SpriteManager::getLayerZorder(\"");
+			std::string err("ManagerSprites::getLayerZorder(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			throw std::runtime_error(err);
@@ -236,7 +236,7 @@ namespace Nexus
 		return iCurrentIndex;
 	}
 
-	void SpriteManager::moveLayerToFrontByOne(const std::string& strLayerName)
+	void ManagerSprites::moveLayerToFrontByOne(const std::string& strLayerName)
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
@@ -253,7 +253,7 @@ namespace Nexus
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SpriteManager::moveLayerUpOne(\"");
+			std::string err("ManagerSprites::moveLayerUpOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			throw std::runtime_error(err);
@@ -268,7 +268,7 @@ namespace Nexus
 		_mvecLayerNameZOrder[iCurrentIndex + 1] = strLayerName;
 	}
 
-	void SpriteManager::moveLayerToBackByOne(const std::string& strLayerName)
+	void ManagerSprites::moveLayerToBackByOne(const std::string& strLayerName)
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
@@ -285,7 +285,7 @@ namespace Nexus
 		// If the layer couldn't be found
 		if (-1 == iCurrentIndex)
 		{
-			std::string err("SpriteManager::moveLayerToBackByOne(\"");
+			std::string err("ManagerSprites::moveLayerToBackByOne(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			throw std::runtime_error(err);
@@ -301,7 +301,7 @@ namespace Nexus
 	}
 
 
-	void SpriteManager::moveLayerToBack(const std::string& strLayerName)
+	void ManagerSprites::moveLayerToBack(const std::string& strLayerName)
 	{
 		// Make sure the layer name exists
 		bool bFound = false;
@@ -315,7 +315,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerToBack(\"");
+			std::string err("ManagerSprites::moveLayerToBack(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			throw std::runtime_error(err);
@@ -327,7 +327,7 @@ namespace Nexus
 
 	}
 
-	void SpriteManager::moveLayerToFront(const std::string& strLayerName)
+	void ManagerSprites::moveLayerToFront(const std::string& strLayerName)
 	{
 		// Make sure the layer name exists
 		bool bFound = false;
@@ -341,7 +341,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerToFront(\"");
+			std::string err("ManagerSprites::moveLayerToFront(\"");
 			err.append(strLayerName);
 			err.append("\") failed. The given layer name couldn't be found.");
 			throw std::runtime_error(err);
@@ -352,7 +352,7 @@ namespace Nexus
 		}
 	}
 
-	void SpriteManager::moveLayerBehind(const std::string& strLayerName, const std::string& strLayerNameOther)
+	void ManagerSprites::moveLayerBehind(const std::string& strLayerName, const std::string& strLayerNameOther)
 	{
 		// Make sure both layer names exist
 		bool bFound = false;
@@ -366,7 +366,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerBehind(\"");
+			std::string err("ManagerSprites::moveLayerBehind(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -386,7 +386,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerBehind(\"");
+			std::string err("ManagerSprites::moveLayerBehind(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -406,7 +406,7 @@ namespace Nexus
 
 	}
 
-	void SpriteManager::moveLayerInfront(const std::string& strLayerName, const std::string& strLayerNameOther)
+	void ManagerSprites::moveLayerInfront(const std::string& strLayerName, const std::string& strLayerNameOther)
 	{
 		// Make sure both layer names exist
 		bool bFound = false;
@@ -420,7 +420,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerInfront(\"");
+			std::string err("ManagerSprites::moveLayerInfront(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -440,7 +440,7 @@ namespace Nexus
 		}
 		if (!bFound)
 		{
-			std::string err("SpriteManager::moveLayerInfront(\"");
+			std::string err("ManagerSprites::moveLayerInfront(\"");
 			err.append(strLayerName);
 			err.append("\", \"");
 			err.append(strLayerNameOther);
@@ -459,13 +459,13 @@ namespace Nexus
 			moveLayerToFrontByOne(strLayerName);
 	}
 
-	SpriteDescription* SpriteManager::addDescription(const std::string& strUniqueName)
+	SpriteDescription* ManagerSprites::addDescription(const std::string& strUniqueName)
 	{
 		// Attempt to find if the named object already exists
 		std::map<std::string, SpriteDescription*>::iterator itlayer = _mmapDescriptions.find(strUniqueName);
 		if (itlayer != _mmapDescriptions.end())
 		{
-			std::string err("SpriteManger::addDescription(\"");
+			std::string err("ManagerSprites::addDescription(\"");
 			err.append(strUniqueName);
 			err.append("\") failed. The description already exists.");
 			throw std::runtime_error(err);
@@ -473,7 +473,7 @@ namespace Nexus
 
 		SpriteDescription* pNewDesc = new SpriteDescription;
 		if (!pNewDesc)
-			throw std::runtime_error("Memory allocation error.");
+			throw std::runtime_error("ManagerSprites memory allocation error.");
 
 		// Add layer to hash map
 		_mmapDescriptions[strUniqueName] = pNewDesc;
@@ -481,7 +481,7 @@ namespace Nexus
 		return pNewDesc;
 	}
 
-	SpriteDescription* SpriteManager::getDescription(const std::string& strUniqueName)
+	SpriteDescription* ManagerSprites::getDescription(const std::string& strUniqueName)
 	{
 		// Attempt to find if the named object already exists
 		std::map<std::string, SpriteDescription*>::iterator itdesc = _mmapDescriptions.find(strUniqueName);
@@ -491,7 +491,7 @@ namespace Nexus
 	}
 
 	/*
-	CVector2 SC2DSpriteManager::convertScreenspaceToWorldspace(const CVector2& vScreenSpacePosition)
+	CVector2 ManagerSprites::convertScreenspaceToWorldspace(const CVector2& vScreenSpacePosition)
 	{
 		SCRenderDevice* pRD = SCRenderDevice::getPointer();
 
@@ -594,7 +594,7 @@ namespace Nexus
 	}
 	*/
 
-	void SpriteManager::removeAll(void)
+	void ManagerSprites::removeAll(void)
 	{
 		// Remove all sprite descriptions
 		std::map<std::string, SpriteDescription*>::iterator it = _mmapDescriptions.begin();
@@ -607,7 +607,7 @@ namespace Nexus
 		removeAllLayers();
 	}
 
-	void SpriteManager::resetCamera(void)
+	void ManagerSprites::resetCamera(void)
 	{
 		_mfCameraZoomCurrent = 1.0f;
 		_mfCameraZoomTarget = 1.0f;

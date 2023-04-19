@@ -13,7 +13,7 @@ namespace Nexus
 
 	void SpriteDescription::addFrame(const std::string& strTextureFilename, float fTimeToShowThisFrameMS)
 	{
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 
 		mvFrameTextures.push_back(strTextureFilename);
 		if (fTimeToShowThisFrameMS < 1.0f)
@@ -25,7 +25,7 @@ namespace Nexus
 
 	void SpriteDescription::removeAllFrames(void)
 	{
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		for (int i = 0; i < (int)mvFrameTextures.size(); ++i)
 		{
 			pTM->remove2DTexture(mvFrameTextures[i], "sprites");

@@ -14,7 +14,7 @@ namespace Nexus
 	// A single texture
 	class Texture
 	{
-		friend class TextureManager;
+		friend class ManagerTextures;
 
 	public:
 		Texture(const std::string& imageFilenameUsed, bool bImageFlipOnLoadIN = false, TextureFiltering filter = mipmaps);

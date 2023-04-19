@@ -231,7 +231,7 @@ namespace Nexus
 	{
 		_mcTimer.update();
 
-		TextureManager* pTM = TextureManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
 		pTM->disableTexturing();
 
 		glEnable(GL_BLEND);
@@ -246,14 +246,14 @@ namespace Nexus
 		Vector2 v2SpritePos;
 		Vector2 vSpriteDims;
 		float fSpriteRotRad;
-		SpriteManager* p2DSMan = SpriteManager::getPointer();
+		ManagerSprites* pManSprites = ManagerSprites::getPointer();
 
 		// For each sprite description
 		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.begin();
 		while (itsde != _mmapSpriteDescAndSprites.end())
 		{
 			// Get this layer's sprite description
-			SpriteDescription* pDesc = p2DSMan->getDescription(itsde->first);
+			SpriteDescription* pDesc = pManSprites->getDescription(itsde->first);
 
 
 			if (0 == pDesc->getFrameTextureName(0).length())
@@ -303,7 +303,7 @@ namespace Nexus
 				if (itse->second->mbHasParent)
 				{
 					// Get parent sprite entity
-					SpriteLayer* pParentLayer = p2DSMan->getLayer(itse->second->mstrParentEntityLayerName);
+					SpriteLayer* pParentLayer = pManSprites->getLayer(itse->second->mstrParentEntityLayerName);
 					SpriteEntity* pParentEntity = pParentLayer->getEntity(itse->second->mstrParentEntityUniqueName, itse->second->mstrParentEntitySpriteDesc);
 
 					// Compute combined scale

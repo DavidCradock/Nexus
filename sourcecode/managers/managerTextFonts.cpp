@@ -10,7 +10,7 @@
 
 namespace Nexus
 {
-	TextFont* TextFontManager::addTextFont(const std::string& name)
+	TextFont* ManagerTextFonts::addTextFont(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -29,13 +29,13 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	TextFont* TextFontManager::getTextFont(const std::string& name)
+	TextFont* ManagerTextFonts::getTextFont(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (mapTextFonts.end() == itr)
 		{
-			std::string err("TextFontManager::get(\"");
+			std::string err("ManagerTextFonts::get(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
@@ -44,7 +44,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	bool TextFontManager::getTextFontExists(const std::string& name)
+	bool ManagerTextFonts::getTextFontExists(const std::string& name)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (itr == mapTextFonts.end())
@@ -52,13 +52,13 @@ namespace Nexus
 		return true;
 	}
 
-	void TextFontManager::removeTextFont(const std::string& name)
+	void ManagerTextFonts::removeTextFont(const std::string& name)
 	{
 		// Resource doesn't exist in the group?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (mapTextFonts.end() == itr)
 		{
-			std::string err("TextFontManager::remove(\"");
+			std::string err("ManagerTextFonts::remove(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
 			throw std::runtime_error(err);
@@ -74,7 +74,7 @@ namespace Nexus
 		}
 	}
 
-	void TextFontManager::loadAll(void)
+	void ManagerTextFonts::loadAll(void)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.begin();
 		// If nothing to load
@@ -87,7 +87,7 @@ namespace Nexus
 		}
 	}
 
-	void TextFontManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
+	void ManagerTextFonts::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create textures holding each type of font (Normal, Bold, Italic, Underlined and Strikeout) and save them to disk.

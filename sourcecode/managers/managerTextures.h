@@ -13,10 +13,10 @@ namespace Nexus
 	};
 
 	// Is responsible for textures.
-	class TextureManager : public Singleton<TextureManager>
+	class ManagerTextures : public Singleton<ManagerTextures>
 	{
 	public:
-		TextureManager();
+		ManagerTextures();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);

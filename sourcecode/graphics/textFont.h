@@ -9,7 +9,7 @@ namespace Nexus
 	// A font rendering object
 	class TextFont
 	{
-		friend class TextFontManager;
+		friend class ManagerTextFonts;
 	public:
 		// Called when added to resource manager
 		TextFont();

@@ -18,7 +18,7 @@ namespace Nexus
 		matrixTransform.setIdentity();
 		matrixTransform.setTranslation(vPos);
 
-		Texture* pTexture = TextureManager::getPointer()->get2DTexture(textureName);
+		Texture* pTexture = ManagerTextures::getPointer()->get2DTexture(textureName);
 		pTexture->bind();
 
 		Shader* pShader = ManagerShaders::getPointer()->getShader("sprites");

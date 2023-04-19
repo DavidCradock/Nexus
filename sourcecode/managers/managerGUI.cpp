@@ -22,8 +22,8 @@ namespace Nexus
 		if (!strCurrentTheme.length())
 			throw std::runtime_error("ManagerGUI::render() failed as currently set theme is not set.");
 
-		TextureManager* pTM = TextureManager::getPointer();
-		TextFontManager* pTFM = TextFontManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
+		ManagerTextFonts* pTFM = ManagerTextFonts::getPointer();
 
 		// Get currently set theme
 		GUITheme* pTheme = getTheme(strCurrentTheme);
@@ -288,8 +288,8 @@ namespace Nexus
 
 	void ManagerGUI::loadAllThemes(void)
 	{
-		TextureManager* pTM = TextureManager::getPointer();
-		TextFontManager* pTFM = TextFontManager::getPointer();
+		ManagerTextures* pTM = ManagerTextures::getPointer();
+		ManagerTextFonts* pTFM = ManagerTextFonts::getPointer();
 
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.begin();
 		while (itr != mapGUIThemes.end())

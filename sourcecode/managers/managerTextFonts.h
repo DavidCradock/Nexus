@@ -8,7 +8,7 @@
 
 namespace Nexus
 {
-	class TextFontManager : public Singleton<TextFontManager>
+	class ManagerTextFonts : public Singleton<ManagerTextFonts>
 	{
 	public:
 		// Creates a new object

@@ -27,7 +27,7 @@ namespace Nexus
 	// A layer renders it's sprite entities in batches, a batch is simply a sprite description
 	class SpriteLayer
 	{
-		friend class SpriteManager;
+		friend class ManagerSprites;
 	public:
 		SpriteLayer();
 		~SpriteLayer();

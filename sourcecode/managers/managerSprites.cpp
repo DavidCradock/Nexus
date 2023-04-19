@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
-#include "spriteManager.h"
-#include "../../core/log.h"
-#include "../texture.h"
+#include "managerSprites.h"
+#include "../core/log.h"
+#include "../managers/managerTextures.h"
 
 namespace Nexus
 {
@@ -618,4 +618,61 @@ namespace Nexus
 		_mfCameraPositionSpeed = 0.0f;
 	}
 
+
+
+
+
+
+
+	void SpriteManagerTmp::addSprite(const std::string& strSpriteName, const std::string& strTextureFilename)
+	{
+		std::map<std::string, Sprite*>::iterator itr = sprites.find(strSpriteName);
+		if (sprites.end() != itr)
+		{
+			std::string err("SpriteManager::addSprite(\"");
+			err.append(strSpriteName);
+			err.append("\") failed. As the given named sprite already exists.");
+			throw std::runtime_error(err);
+		}
+		Sprite* pNewSprite = new Sprite;
+		pNewSprite->setTexture(strTextureFilename);
+		sprites[strSpriteName] = pNewSprite;
+	}
+
+	Sprite* SpriteManagerTmp::getSprite(const std::string& strSpriteName)
+	{
+		// Sprite doesn't exist
+		std::map<std::string, Sprite*>::iterator itr = sprites.find(strSpriteName);
+		if (sprites.end() == itr)
+		{
+			std::string err("SpriteManager::getSprite(\"");
+			err.append(strSpriteName);
+			err.append("\"\" failed. The sprite doesn't exist.");
+			throw std::runtime_error(err);
+		}
+		return (Sprite*)itr->second;
+	}
+
+	bool SpriteManagerTmp::getExists(const std::string& strSpriteName)
+	{
+		std::map<std::string, Sprite*>::iterator itr = sprites.find(strSpriteName);
+		if (sprites.end() == itr)
+			return false;
+		return true;
+	}
+
+	void SpriteManagerTmp::removeSprite(const std::string& strSpriteName)
+	{
+		std::map<std::string, Sprite*>::iterator itr = sprites.find(strSpriteName);
+		if (sprites.end() == itr)
+		{
+			std::string err("SpriteManager::removeSprite(\"");
+			err.append(strSpriteName);
+			err.append("\"\" failed. The sprite doesn't exist.");
+			throw std::runtime_error(err);
+		}
+
+		delete itr->second;
+		sprites.erase(itr);
+	}
 }

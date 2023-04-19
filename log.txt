@@ -1,2 +1,3 @@
 TextureManager::add2DTexture("gui/publicsans_20.tga", "fonts") failed. As the given named group of "fonts" which the new resource was to be placed into, doesn't exist!
 TextureManager::addNewGroup() has been given the new group name of "default" but it already exists! Only new groups can be added.
+GUIManager::getTheme("" failed. As the named object doesn't exist.

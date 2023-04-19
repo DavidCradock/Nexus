@@ -1,7 +1,7 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "applicationBase.h"
+#include "../applications/applicationBase.h"
 
 namespace Nexus
 {
@@ -9,10 +9,10 @@ namespace Nexus
 	// App manager class to handle all apps which are derived from CAppBase found in "app base.h"
 	// By default, the current application to be run each loop is the CAppDevelopment application
 	// This can be changed by called ApplicationManager::getPointer()->switchToApp("YourApplicationName");
-	class ApplicationManager : public Singleton<ApplicationManager>
+	class ManagerApplications : public Singleton<ManagerApplications>
 	{
 	public:
-		ApplicationManager();
+		ManagerApplications();
 
 		// Return the number of applications added to this manager
 		size_t getNumApps(void) { return applications.size(); }

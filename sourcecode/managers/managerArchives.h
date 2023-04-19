@@ -1,7 +1,8 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "archiveData.h"
-#include "singleton.h"
+#include "../core/archiveData.h"
+#include "../core/singleton.h"
+
 
 namespace Nexus
 {
@@ -29,11 +30,10 @@ namespace Nexus
 	// 	// Decompression was successful
 	// 	// theDecompressedFileData now holds the uncompressed data of "cat.tga"
 	// }
-	class ArchiveManager : public Singleton<ArchiveManager>
+	class ManagerArchives : public Singleton<ManagerArchives>
 	{
 	public:
-		ArchiveManager();
-		~ArchiveManager();
+		ManagerArchives();
 
 		// Add a zip archive to the search list.
 		// Adds a zip file archive to the search list which, when calling openFile(), will be searched

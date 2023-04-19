@@ -1,9 +1,9 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "inputJoystick.h"
-#include "inputKeyboard.h"
-#include "inputMouse.h"
+#include "../input/inputJoystick.h"
+#include "../input/inputKeyboard.h"
+#include "../input/inputMouse.h"
 
 namespace Nexus
 {
@@ -21,10 +21,10 @@ namespace Nexus
 	// { 
 	//    // Do something, like exit
 	// }
-	class InputManager : public Singleton<InputManager>
+	class ManagerInputDevices : public Singleton<ManagerInputDevices>
 	{
 	public:
-		InputManager();
+		ManagerInputDevices();
 
 		// Initialise all input devices
 		void init(HWND hApplicationWindow);

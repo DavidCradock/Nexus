@@ -12,7 +12,7 @@ namespace Nexus
 	// The cells of the four edges are stretched
 	class GUITheme
 	{
-		friend class GUIManager;
+		friend class ManagerGUI;
 	public:
 		// Sets default settings for the theme using default texture names etc.
 		GUITheme();

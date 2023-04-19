@@ -13,8 +13,9 @@
 
 **To do**
 
-- Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects
+
 - Unify each manager so they each have reference counts and maybe groups?
+- Go through each files' include section and make sure only the minimal is included due to manager change.
 - Remove all the old coding style of underscores etc. Tidy up all the code with new.
 - Check all the /graphics/sprites/ code and test the hell out of it.
 - Check RenderTexture code.
@@ -33,3 +34,6 @@
 - Audio loading/saving/playback of .wav and .ogg
 - Add physics. Both 2D and 3D. Use pre-existing or write from scratch?
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
+
+**Done**
+- Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects

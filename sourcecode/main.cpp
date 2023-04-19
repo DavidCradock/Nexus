@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pRD->createWindow("Nexus");
 
             // Initialise input
-            Nexus::InputManager* pIM = Nexus::InputManager::getPointer();
+            Nexus::ManagerInputDevices* pIM = Nexus::ManagerInputDevices::getPointer();
             pIM->init(pRD->getWindowHandle());
 
             // Timing
@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             timing.setStatFPSSrate(5);
 
             // Shaders
-            Nexus::ShaderManager* pSM = Nexus::ShaderManager::getPointer();
+            Nexus::ManagerShaders* pSM = Nexus::ManagerShaders::getPointer();
             pSM->addNewGroup("default");
             pSM->addShader("sprites", "shaders/simple.vs", "shaders/simple.fs", "default");
             pSM->addShader("sprites", "shaders/sprites.vs", "shaders/sprites.fs", "default");
@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pTM->addNewGroup("default");     
 
             // GUI
-            Nexus::GUIManager* pGUI = Nexus::GUIManager::getPointer();
+            Nexus::ManagerGUI* pGUI = Nexus::ManagerGUI::getPointer();
             // Create default theme and set as default
             Nexus::GUITheme* pTheme = pGUI->createTheme("default");
             pGUI->setCurrentTheme("default");
@@ -47,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             Nexus::SpriteManager* pSpriteMan = Nexus::SpriteManager::getPointer();
 
             // Initialise all applications
-            Nexus::ApplicationManager* pAM = Nexus::ApplicationManager::getPointer();
+            Nexus::ManagerApplications* pAM = Nexus::ManagerApplications::getPointer();
             std::string applicationName = "Development";
             Nexus::ApplicationDevelopment applicationDevelopment(applicationName);
             pAM->callAllApps_initOnce();

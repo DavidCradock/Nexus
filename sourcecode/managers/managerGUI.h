@@ -1,9 +1,9 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "gui_button.h"
-#include "gui_theme.h"
-#include "gui_window.h"
+#include "../gui/gui_button.h"
+#include "../gui/gui_theme.h"
+#include "../gui/gui_window.h"
 #include "../graphics/vertexBuffer.h"
 #include "../graphics/shader.h"
 
@@ -12,11 +12,11 @@ namespace Nexus
 
 	// Use this to deal with everything related to the graphical user interface.
 	// Create text, buttons, windows and all sorts of fun interactive things.
-	class GUIManager : public Singleton<GUIManager>
+	class ManagerGUI : public Singleton<ManagerGUI>
 	{
 	public:
 		// Sets defaults and creates the default theme
-		GUIManager();
+		ManagerGUI();
 
 		// Updates and renders the GUI.
 		// Called from main

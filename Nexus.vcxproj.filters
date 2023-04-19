@@ -108,9 +108,6 @@
     <ClCompile Include="dependencies\ZLib\zutil.c">
       <Filter>dependencies\ZLib</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\applications\applicationManager.cpp">
-      <Filter>sourcecode\applications</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\applications\applicationBase.cpp">
       <Filter>sourcecode\applications</Filter>
     </ClCompile>
@@ -131,9 +128,6 @@
     </ClCompile>
     <ClCompile Include="sourcecode\math\vector4.cpp">
       <Filter>sourcecode\math</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\input\inputManager.cpp">
-      <Filter>sourcecode\input</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\input\inputJoystick.cpp">
       <Filter>sourcecode\input</Filter>
@@ -189,14 +183,8 @@
     <ClCompile Include="sourcecode\graphics\sprites\spriteLayer.cpp">
       <Filter>sourcecode\graphics\sprites</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\graphics\sprites\spriteManager.cpp">
-      <Filter>sourcecode\graphics\sprites</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\graphics\sprites\sprites.cpp">
       <Filter>sourcecode\graphics\sprites</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\gui\gui.cpp">
-      <Filter>sourcecode\gui</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\gui\gui_theme.cpp">
       <Filter>sourcecode\gui</Filter>
@@ -208,9 +196,6 @@
       <Filter>sourcecode\gui</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\core\archiveData.cpp">
-      <Filter>sourcecode\core</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\core\archiveManager.cpp">
       <Filter>sourcecode\core</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\core\log.cpp">
@@ -227,6 +212,33 @@
     </ClCompile>
     <ClCompile Include="sourcecode\core\utils.cpp">
       <Filter>sourcecode\core</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerApplications.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerArchives.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerSprites.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerInputDevices.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerGUI.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerTextures.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerTextFonts.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerShaders.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerRenderTextures.cpp">
+      <Filter>sourcecode\managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,9 +299,6 @@
     <ClInclude Include="dependencies\OpenGL\wglext.h">
       <Filter>dependencies\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\applications\applicationManager.h">
-      <Filter>sourcecode\applications</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\applications\applicationBase.h">
       <Filter>sourcecode\applications</Filter>
     </ClInclude>
@@ -310,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="sourcecode\math\vector4.h">
       <Filter>sourcecode\math</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\input\inputManager.h">
-      <Filter>sourcecode\input</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\input\inputJoystick.h">
       <Filter>sourcecode\input</Filter>
@@ -377,14 +383,8 @@
     <ClInclude Include="sourcecode\graphics\sprites\spriteLayer.h">
       <Filter>sourcecode\graphics\sprites</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\sprites\spriteManager.h">
-      <Filter>sourcecode\graphics\sprites</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\graphics\sprites\sprites.h">
       <Filter>sourcecode\graphics\sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\gui\gui.h">
-      <Filter>sourcecode\gui</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\gui\gui_theme.h">
       <Filter>sourcecode\gui</Filter>
@@ -396,9 +396,6 @@
       <Filter>sourcecode\gui</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\core\archiveData.h">
-      <Filter>sourcecode\core</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\core\archiveManager.h">
       <Filter>sourcecode\core</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\core\log.h">
@@ -421,6 +418,33 @@
     </ClInclude>
     <ClInclude Include="sourcecode\Nexus.h">
       <Filter>sourcecode</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerApplications.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerArchives.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerSprites.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerInputDevices.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerGUI.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerTextures.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerTextFonts.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerShaders.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerRenderTextures.h">
+      <Filter>sourcecode\managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

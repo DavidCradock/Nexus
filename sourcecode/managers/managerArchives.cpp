@@ -1,23 +1,19 @@
 #include "precompiled_header.h"
-#include "archiveManager.h"
+#include "managerArchives.h"
 #include "../../dependencies/ZLib/zlib.h"
 #include "../../dependencies/ZLib/unzip.h"
-#include "utils.h"
-#include "log.h"
+#include "../core/utils.h"
+#include "../core/log.h"
 
 namespace Nexus
 {
 
-	ArchiveManager::ArchiveManager()
+	ManagerArchives::ManagerArchives()
 	{
 		archiveList.clear();
 	}
 
-	ArchiveManager::~ArchiveManager()
-	{
-	}
-
-	bool ArchiveManager::addArchive(const std::string& strFilename, const std::string& strPassword)
+	bool ManagerArchives::addArchive(const std::string& strFilename, const std::string& strPassword)
 	{
 		// Try to locate file
 		if (!fileExists(strFilename))
@@ -37,7 +33,7 @@ namespace Nexus
 		return true;
 	}
 
-	bool ArchiveManager::removeArchive(const std::string& strFilename)
+	bool ManagerArchives::removeArchive(const std::string& strFilename)
 	{
 		if (archiveList.size() <= 0)
 			return false;
@@ -54,12 +50,12 @@ namespace Nexus
 		return false;
 	}
 
-	void ArchiveManager::removeAllArchives(void)
+	void ManagerArchives::removeAllArchives(void)
 	{
 		archiveList.clear();
 	}
 
-	bool ArchiveManager::loadFile(const std::string& strFilename, ArchiveData& streamOutput)
+	bool ManagerArchives::loadFile(const std::string& strFilename, ArchiveData& streamOutput)
 	{
 		streamOutput.free();
 
@@ -84,7 +80,7 @@ namespace Nexus
 					streamOutput.pData = new unsigned char[ulSize];
 					if (!streamOutput.pData)
 					{
-						std::string err("Found file in archive \"");
+						std::string err("ManagerArchives found file in archive \"");
 						err.append(strFilename);
 						err.append("\" but unable to allocate memory for it.");
 						throw std::runtime_error(err);
@@ -98,7 +94,7 @@ namespace Nexus
 						unzCloseCurrentFile(zipFile); // Close file within archive
 						unzClose(zipFile);  // Close zip file
 						streamOutput.free();
-						std::string err("Found file in archive \"");
+						std::string err("ManagerArchives found file in archive \"");
 						err.append(strFilename);
 						err.append("\", also allocated memory for it, but an error occured during decompression.");
 						throw std::runtime_error(err);

@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "inputJoystick.h"
-#include "inputManager.h"
+#include "../managers/managerInputDevices.h"
 
 namespace Nexus
 {
@@ -11,7 +11,7 @@ namespace Nexus
 		HRESULT hr;
 
 		// Obtain an interface to the enumerated joystick.
-		hr = InputManager::getPointer()->joy.directInput->CreateDevice(pdidInstance->guidInstance, &InputManager::getPointer()->joy.device, NULL);
+		hr = ManagerInputDevices::getPointer()->joy.directInput->CreateDevice(pdidInstance->guidInstance, &ManagerInputDevices::getPointer()->joy.device, NULL);
 
 		// If it failed, then we can't use this joystick. (Maybe the user unplugged
 		// it while we were in the middle of enumerating it.)

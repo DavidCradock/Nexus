@@ -1,13 +1,13 @@
 #include "precompiled_header.h"
 #include "spriteLayer.h"
 #include "../../core/log.h"
+#include "../../core/utils.h"
 #include "../colour.h"
 #include "spriteDescription.h"
-#include "spriteManager.h"
+#include "../../managers/managerShaders.h"
+#include "../../managers/managerSprites.h"
+#include "../../managers/managerTextures.h"
 #include "../../math/vector4.h"
-#include "../../core/utils.h"
-#include "../texture.h"
-#include "../shader.h"
 #include "../vertexBuffer.h"
 
 namespace Nexus
@@ -275,7 +275,7 @@ namespace Nexus
 			// Render stuff
 //			pSR->begin(vCameraPosition, fCameraZoom);
 
-			Shader* pShader = ShaderManager::getPointer()->getShader("sprites");
+			Shader* pShader = ManagerShaders::getPointer()->getShader("sprites");
 			Matrix matrixOrtho;
 			matrixOrtho.setOrthographic();
 			Matrix matrixTransform;

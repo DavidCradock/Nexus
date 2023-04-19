@@ -1,12 +1,13 @@
 #include "precompiled_header.h"
 #include "applicationDevelopment.h"
-#include "../input/inputManager.h"
+#include "../managers/managerInputDevices.h"
 #include "../graphics/shader.h"
 #include "../graphics/texture.h"
 #include "../graphics/renderDevice.h"
-#include "../graphics/sprites/spriteManager.h"
+#include "../managers/managerGUI.h"
+#include "../managers/managerSprites.h"
 #include "../graphics/textFont.h"
-#include "../gui/gui.h"
+
 
 namespace Nexus
 {
@@ -20,7 +21,7 @@ namespace Nexus
 		timing.setStatFPSSrate(5.0f);
 
 		// GUI
-		GUIManager* pGUI = GUIManager::getPointer();
+		ManagerGUI* pGUI = ManagerGUI::getPointer();
 		GUIWindow *pWindow = pGUI->createWindow("Test Window1");
 		pWindow->setWindowPosition(Vector2(320, 240));
 		pWindow->setWindowDimensions(640, 480);
@@ -46,11 +47,11 @@ namespace Nexus
 		RenderDevice* pRD = RenderDevice::getPointer();
 
 		// Shutdown if escape key pressed
-		if (InputManager::getPointer()->key.pressed(KC_ESCAPE))
+		if (ManagerInputDevices::getPointer()->key.pressed(KC_ESCAPE))
 			return false;
 
 		static bool vsync = true;
-		if (InputManager::getPointer()->key.once(KC_F1))
+		if (ManagerInputDevices::getPointer()->key.once(KC_F1))
 		{
 			vsync = !vsync;
 			RenderDevice::getPointer()->setVsync(vsync);

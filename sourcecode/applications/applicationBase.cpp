@@ -1,12 +1,12 @@
 #include "precompiled_header.h"
 #include "applicationBase.h"
-#include "applicationManager.h"
+#include "../managers/managerApplications.h"
 
 namespace Nexus
 {
 	void ApplicationBase::_addAppToManager(const std::string& applicationName)
 	{
-		ApplicationManager* pAM = ApplicationManager::getPointer();
+		ManagerApplications* pAM = ManagerApplications::getPointer();
 		pAM->addApp(applicationName, this);
 	}
 

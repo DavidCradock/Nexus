@@ -17,7 +17,7 @@ namespace Nexus
 	// A window contains all other GUI objects. I almost called this class a GUIContainer because of this.
 	class GUIWindow
 	{
-		friend class GUIManager;
+		friend class ManagerGUI;
 	public:
 		// Sets default settings for the window
 		GUIWindow();

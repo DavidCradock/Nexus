@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "archiveData.h"
-#include "archiveManager.h"
+#include "../managers/managerArchives.h"
 #include "log.h"
 
 namespace Nexus
@@ -36,7 +36,7 @@ namespace Nexus
 		free();
 
 		// First, attempt to load the file from a zip archive
-		if (ArchiveManager::getPointer()->loadFile(strFilename, *this))
+		if (ManagerArchives::getPointer()->loadFile(strFilename, *this))
 		{
 			gotoStart();
 			return true;

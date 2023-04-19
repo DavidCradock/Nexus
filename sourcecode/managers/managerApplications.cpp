@@ -1,21 +1,21 @@
 #include "precompiled_header.h"
-#include "applicationManager.h"
+#include "ManagerApplications.h"
 #include "../core/log.h"
 
 namespace Nexus
 {
-	ApplicationManager::ApplicationManager()
+	ManagerApplications::ManagerApplications()
 	{
 		currentApp = "";
 	}
 
-	void ApplicationManager::addApp(const std::string& applicationName, ApplicationBase* pTheApplication)
+	void ManagerApplications::addApp(const std::string& applicationName, ApplicationBase* pTheApplication)
 	{
 		// Make sure it doesn't already exist
 		std::map<std::string, ApplicationBase*>::iterator it = applications.find(applicationName);
 		if (it != applications.end())
 		{
-			std::string err("ApplicationManager::addApp(");
+			std::string err("ManagerApplications::addApp(");
 			err.append(applicationName);
 			err.append(" failed. Name already exists");
 			throw std::runtime_error(err);
@@ -34,11 +34,11 @@ namespace Nexus
 		}
 	}
 
-	const std::string& ApplicationManager::getAppName(unsigned int index)
+	const std::string& ManagerApplications::getAppName(unsigned int index)
 	{
 		if (index >= applications.size())
 		{
-			std::string err("ApplicationManager::getAppName(");
+			std::string err("ManagerApplications::getAppName(");
 			err.append(std::to_string(index));
 			err.append(") failed. Invalid index given, maximum number of added applications is ");
 			err.append(std::to_string(applications.size()));
@@ -53,13 +53,13 @@ namespace Nexus
 		return it->first;
 	}
 
-	void ApplicationManager::switchToApp(const std::string& applicationToSwitchTo)
+	void ManagerApplications::switchToApp(const std::string& applicationToSwitchTo)
 	{
 		// Attempt to find the application we're trying to switch to
 		std::map<std::string, ApplicationBase*>::iterator itNewApp = applications.find(applicationToSwitchTo);
 		if (itNewApp == applications.end())
 		{
-			std::string err("ApplicationManager::switchToApp(\"");
+			std::string err("ManagerApplications::switchToApp(\"");
 			err.append(applicationToSwitchTo);
 			err.append("\") failed. Application by given name doesn't exist.");
 			throw std::runtime_error(err);
@@ -68,7 +68,7 @@ namespace Nexus
 		std::map<std::string, ApplicationBase*>::iterator itOldApp = applications.find(currentApp);
 		if (itOldApp == applications.end())
 		{
-			std::string err("ApplicationManager::switchToApp(");
+			std::string err("ManagerApplications::switchToApp(");
 			err.append(applicationToSwitchTo);
 			err.append(" failed. Prior to changing to the new application, the old application called ");
 			err.append(currentApp);
@@ -83,7 +83,7 @@ namespace Nexus
 
 	}
 
-	void ApplicationManager::switchToNextApp(void)
+	void ManagerApplications::switchToNextApp(void)
 	{
 		// If no apps are currently set
 		if (0 == currentApp.size())
@@ -112,7 +112,7 @@ namespace Nexus
 		switchToApp(getAppName(indexOfNextApp));
 	}
 
-	void ApplicationManager::callAllApps_initOnce(void)
+	void ManagerApplications::callAllApps_initOnce(void)
 	{
 		std::map<std::string, ApplicationBase*>::iterator it = applications.begin();
 		while (it != applications.end())
@@ -122,7 +122,7 @@ namespace Nexus
 		}
 	}
 
-	bool ApplicationManager::callCurrentApp_onUpdate(void)
+	bool ManagerApplications::callCurrentApp_onUpdate(void)
 	{
 		std::map<std::string, ApplicationBase*>::iterator it = applications.find(currentApp);
 		if (it == applications.end())

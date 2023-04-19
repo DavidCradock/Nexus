@@ -23,7 +23,7 @@ namespace Nexus
 		void render(void);
 
 		// Creates a new theme, ready for customization
-		GUITheme* createTheme(const std::string& name);
+		GUITheme* addTheme(const std::string& name);
 
 		// Returns a pointer to the named object.
 		// Throws an exception if the object couldn't be found
@@ -37,7 +37,7 @@ namespace Nexus
 		void removeTheme(const std::string& name);
 
 		// Creates a new window, ready for customization
-		GUIWindow* createWindow(const std::string& name);
+		GUIWindow* addWindow(const std::string& name);
 
 		// Returns a pointer to the named object.
 		// Throws an exception if the object couldn't be found

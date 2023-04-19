@@ -150,13 +150,13 @@ namespace Nexus
 		}
 	}
 
-	GUITheme* ManagerGUI::createTheme(const std::string& name)
+	GUITheme* ManagerGUI::addTheme(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(name);
 		if (mapGUIThemes.end() != itr)
 		{
-			std::string err("ManagerGUI::createTheme(\"");
+			std::string err("ManagerGUI::addTheme(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
@@ -218,13 +218,13 @@ namespace Nexus
 		mapGUIThemes.erase(itr);
 	}
 
-	GUIWindow* ManagerGUI::createWindow(const std::string& name)
+	GUIWindow* ManagerGUI::addWindow(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(name);
 		if (mapGUIWindows.end() != itr)
 		{
-			std::string err("ManagerGUI::createWindow(\"");
+			std::string err("ManagerGUI::addWindow(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");

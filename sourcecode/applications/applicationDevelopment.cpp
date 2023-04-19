@@ -22,11 +22,11 @@ namespace Nexus
 
 		// GUI
 		ManagerGUI* pGUI = ManagerGUI::getPointer();
-		GUIWindow *pWindow = pGUI->createWindow("Test Window1");
+		GUIWindow *pWindow = pGUI->addWindow("Test Window1");
 		pWindow->setWindowPosition(Vector2(320, 240));
 		pWindow->setWindowDimensions(640, 480);
 
-		pWindow = pGUI->createWindow("Test Window2");
+		pWindow = pGUI->addWindow("Test Window2");
 		pWindow->setWindowPosition(Vector2(320+640+50, 240));
 		pWindow->setWindowDimensions(640, 480);
 

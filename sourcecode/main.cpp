@@ -35,7 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             // GUI
             Nexus::ManagerGUI* pGUI = Nexus::ManagerGUI::getPointer();
             // Create default theme and set as default
-            Nexus::GUITheme* pTheme = pGUI->createTheme("default");
+            Nexus::GUITheme* pTheme = pGUI->addTheme("default");
             pGUI->setCurrentTheme("default");
             pGUI->loadAllThemes();
             

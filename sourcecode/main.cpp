@@ -59,11 +59,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             Nexus::TextFont *pTextFont = pTFM->addTextFont("fonts/publicsans_16");
             pTFM->loadAll();
 
-            // Make sure the "fonts" group exists in the texture manager, if not, create it
-            //TextureManager* pTM = TextureManager::getPointer();
-            //if (!pTM->groupExists("fonts"))
-            //   pTM->addNewGroup("fonts");
-
             // Main loop
             while (pRD->updateWindow())
             {

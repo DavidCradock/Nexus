@@ -14,11 +14,11 @@ namespace Nexus
 	// Holds an entity's name, the layer it is in, the description's name it is using, it's dimensions and position (Used for checking collisions between sprite entities)
 	struct SEntityDetailsEx
 	{
-		std::string strLayerName;				// The layer name which the sprite it stored in
+		std::string strLayerName;			// The layer name which the sprite it stored in
 		std::string strEntityName;			// The sprite name
 		std::string strEntityDescName;		// The sprite description name that the sprite uses to render itself
-		Vector2 vSpriteDims;			// The sprite's dimensions
-		Vector2 vSpritePos;			// The sprite's position
+		Vector2 vSpriteDims;				// The sprite's dimensions
+		Vector2 vSpritePos;					// The sprite's position
 	};
 
 	struct SEntityCollisionPairs		// Holds sprite entity details for a pair of colliding sprite entities
@@ -137,7 +137,7 @@ namespace Nexus
 		// The higher the value of fZoomSpeed, the quicker the camera will move towards the target value
 		inline void setCameraZoom(float fZoomTarget, float fZoomSpeed) { _mfCameraZoomTarget = fZoomTarget;	_mfCameraZoomSpeed = fZoomSpeed; }
 
-		// If setCameraZoom(fZoomTarget, fZoomSpeed) has been called, this will returns the camera's currently set zoom target
+		// If setCameraZoom has been called, this will returns the camera's currently set zoom target
 		inline float getCameraZoomTarget(void) { return _mfCameraZoomTarget; }
 
 		// Using the currently set camera position and zoom, this will take a screen space position and compute it's
@@ -155,10 +155,10 @@ namespace Nexus
 		// Called from main
 		void render(void);
 
-		// Called by SC2DManager to determine if there is anything which needs rendering
+		// Returns whether there is anything which needs rendering
 		bool hasStuffToRender(void);
 
-		std::map<std::string, SpriteLayer*> _mmapLayers;		// Each named layer which holds sprite entities
+		std::map<std::string, SpriteLayer*> _mmapLayers;				// Each named layer which holds sprite entities
 		std::map<std::string, SpriteDescription*> _mmapDescriptions;	// Each named sprite description
 
 		std::vector<std::string> _mvecLayerNameZOrder;		// Holds names of each layer, in their rendering order (first added = first rendered)
@@ -167,30 +167,9 @@ namespace Nexus
 		Vector2 _mvCameraPositionCurrent;	// This is the camera's current position
 		Vector2 _mvCameraPositionTarget;	// This is the camera's target position
 		float _mfCameraPositionSpeed;		// This is used to move _mvCameraPositionCurrent towards _mvCameraPositionTarget over time
-		float _mfCameraZoomCurrent;	// Used by this class's setCameraZoom???? methods. This is the actual current camera zoom level (The level used to build the projection matrix)
-		float _mfCameraZoomTarget;	// Used by this class's setCameraZoom???? methods. This is the target zoom level, we move the current camera zoom level towards this value over time.
-		float _mfCameraZoomSpeed;	// Used to move _mfCameraZoomCurrent towards _mfCameraZoomTarget over time
+		float _mfCameraZoomCurrent;			// Used by this class's setCameraZoom???? methods. This is the actual current camera zoom level (The level used to build the projection matrix)
+		float _mfCameraZoomTarget;			// Used by this class's setCameraZoom???? methods. This is the target zoom level, we move the current camera zoom level towards this value over time.
+		float _mfCameraZoomSpeed;			// Used to move _mfCameraZoomCurrent towards _mfCameraZoomTarget over time
 	};
 
-	// Create all unique sprites and manage them here
-	class SpriteManagerTmp : public Singleton<SpriteManagerTmp>
-	{
-	public:
-		// Adds a new sprite
-		// If the sprite already exists, an exception occurs
-		void addSprite(const std::string& strSpriteName, const std::string& strTextureFilename);
-
-		// Returns a pointer to the named sprite
-		// If the named sprite doesn't exist, an exception occurs
-		Sprite* getSprite(const std::string& strSpriteName);
-
-		// Returns true if the named sprite exists, else false
-		bool getExists(const std::string& strSpriteName);
-
-		// Removes the named sprite
-		// If the sprite doesn't exist, an exception occurs
-		void removeSprite(const std::string& strSpriteName);
-	private:
-		std::map<std::string, Sprite*> sprites;	// Hash map holding each sprite
-	};
 }

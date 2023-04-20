@@ -21,6 +21,7 @@ namespace Nexus
 		bool bLoaded;	// Whether the object has been loaded. Used by the GUI manager.
 		std::string strTexturenameWindow;			// Name of the texture containing image data used to render a window.
 		std::string strFontnameWindowTitlebar;		// Name of the font used to render text for a window.
+		Vector2 vWindowTitlebarTextOffset;			// 
 		TextFont textFontWindowTitlebar;			// TextFont object used to render the window's titlebar text
 		std::string strTexturenameButton[3];		// Name of the texture containing image data used to render a button in it's up, over and down states.
 		

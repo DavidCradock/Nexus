@@ -9,6 +9,7 @@ namespace Nexus
 		bLoaded = false;
 		strTexturenameWindow = "gui/gui_window.png";
 		strFontnameWindowTitlebar = "gui/publicsans_20";
+		vWindowTitlebarTextOffset.set(-40, 15);
 
 		strTexturenameButton[0] = "gui/gui_button_up.png";
 		strTexturenameButton[1] = "gui/gui_button_over.png";

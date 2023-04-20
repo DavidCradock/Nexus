@@ -13,8 +13,8 @@
 
 **To do**
 
+- Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object.
 - Unify each manager so they each have reference counts and maybe groups?
-- Go through each files' include section and make sure only the minimal is included due to manager change.
 - Remove all the old coding style of underscores etc. Tidy up all the code with new.
 - Check all the /graphics/sprites/ code and test the hell out of it.
 - Check RenderTexture code.

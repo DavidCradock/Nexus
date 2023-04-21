@@ -7,7 +7,7 @@
 #include "../managers/managerGUI.h"
 #include "../managers/managerSprites.h"
 #include "../graphics/textFont.h"
-
+#include "../Nexus.h"
 
 namespace Nexus
 {
@@ -18,18 +18,23 @@ namespace Nexus
 
 	void ApplicationDevelopment::initOnce(void)
 	{
-		timing.setStatFPSSrate(5.0f);
-
 		// GUI
 		ManagerGUI* pGUI = ManagerGUI::getPointer();
-		GUIWindow *pWindow = pGUI->addWindow("Test Window1");
-		pWindow->setWindowPosition(Vector2(320, 240));
-		pWindow->setWindowDimensions(640, 480);
+//		GUIWindow *pWindow = pGUI->addWindow("Test Window1");
+//		pWindow->setWindowPosition(Vector2(320, 240));
+//		pWindow->setWindowDimensions(640, 480);
+//		pWindow = pGUI->addWindow("Test Window2");
+//		pWindow->setWindowPosition(Vector2(320+640+50, 240));
+//		pWindow->setWindowDimensions(640, 480);
 
-		pWindow = pGUI->addWindow("Test Window2");
-		pWindow->setWindowPosition(Vector2(320+640+50, 240));
-		pWindow->setWindowDimensions(640, 480);
-
+		// Sprite manager
+		ManagerSprites* pSpriteMan = ManagerSprites::getPointer();
+		SpriteDescription *pSpriteDesc = pSpriteMan->addDescription("spriteTest");
+		pSpriteDesc->addFrame("sprites/sprite_test.png");
+		SpriteLayer *pSpriteLayer = pSpriteMan->addLayer("layer0");
+		SpriteEntity *pSpriteEntity = pSpriteLayer->addEntity("entity0", "spriteTest", Vector2(500, 500), 0.0f, 1.0f);
+		
+		
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -61,6 +66,11 @@ namespace Nexus
 
 		timing.update();
 
+		// Rotate sprite
+		ManagerSprites* pSpriteMan = ManagerSprites::getPointer();
+		float fSpriteRotDeg = pSpriteMan->getLayer("layer0")->getEntity("entity0", "spriteTest")->getRotationDeg();
+		fSpriteRotDeg += timing.getSecPast() * 90.0f;
+		pSpriteMan->getLayer("layer0")->getEntity("entity0", "spriteTest")->setRotationDeg(fSpriteRotDeg);
 		return true;
 	}
 

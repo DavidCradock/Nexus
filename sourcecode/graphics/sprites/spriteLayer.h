@@ -35,7 +35,7 @@ namespace Nexus
 		// Add a new named sprite entity to this layer with parsed values.
 		// If the name of the sprite entity already exists, an exception occurs
 		// Returns a pointer to the newly added entity
-		SpriteEntity* addEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription, Vector2 vSpritePosition, float fSpriteRotationDegrees, float fSpriteScale);
+		SpriteEntity* addEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription, Vector2 vSpritePosition = Vector2(0,0), float fSpriteRotationDegrees = 0.0f, float fSpriteScale = 1.0f);
 
 		// Returns true is the named entity exists, else false
 		bool entityExists(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription);

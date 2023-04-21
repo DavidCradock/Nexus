@@ -17,7 +17,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
 
             // Timing
             Nexus::Timing timing;
-            timing.setStatFPSSrate(5);
+            timing.setStatFPSSrate(1);
 
             // Shaders
             Nexus::ManagerShaders* pSM = Nexus::ManagerShaders::getPointer();
@@ -72,9 +72,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
                 pSpriteMan->render();
                 pGUI->render();
                 std::string strFramerate("Framerate: ");
-                strFramerate.append(std::to_string(timing.getStatFPSS()));
-                strFramerate.append(" frames per second");
+                strFramerate.append(std::to_string((int)timing.getStatFPSS()));
+                strFramerate.append(" fps");
                 pTextFont->print(strFramerate, 0, 0, Nexus::CColouruc(255, 255, 255, 255));
+                std::string strMouseInfo("Mouse cursor pos: ");
+                strMouseInfo.append(std::to_string(int(pIM->mouse.getCursorPos().x)));
+                strMouseInfo.append("x");
+                strMouseInfo.append(std::to_string(int(pIM->mouse.getCursorPos().y)));
+                pTextFont->print(strMouseInfo, 0, 15, Nexus::CColouruc(255, 255, 255, 255));
                 pRD->swapBuffers();
                 Sleep(0);
             }

@@ -12,12 +12,12 @@ namespace Nexus
 		
 	}
 
-	void Sprite::render(const Vector2 &vPositionIn)
+	void Sprite::render(const Vector2 &vPositionIn, float fRotationDegrees)
 	{
 		Vector3 vPos(vPositionIn.x, vPositionIn.y, 0.0f);
 		matrixTransform.setIdentity();
 		matrixTransform.setTranslation(vPos);
-
+		matrixTransform.setFromAxisAngle(Vector3(0, 1, 0), fRotationDegrees);
 		Texture* pTexture = ManagerTextures::getPointer()->get2DTexture(textureName);
 		pTexture->bind();
 

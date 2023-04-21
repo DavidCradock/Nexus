@@ -81,7 +81,7 @@ namespace Nexus
 
 	SpriteEntity* SpriteLayer::getEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription)
 	{
-		// Does the sprite description already exist?
+		// Does the sprite description exist?
 		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.find(strSpriteDescription);
 		if (itsde == _mmapSpriteDescAndSprites.end())
 		{
@@ -278,15 +278,16 @@ namespace Nexus
 			Shader* pShader = ManagerShaders::getPointer()->getShader("sprites");
 			Matrix matrixOrtho;
 			matrixOrtho.setOrthographic();
+			Matrix matrixTranslation;
+			Matrix matrixRotation;
 			Matrix matrixTransform;
-			matrixTransform.setIdentity();
-				
+			matrixTranslation.setIdentity();
+			matrixRotation.setIdentity();
+
 			//pShader->setInt("texture1", pTexture->getID());
 			//pShader->setMat4("transform", matrixOrtho * matrixTransform);
 			pShader->use();
 			VertexBuffer vertexBuffer;
-			
-			
 
 			// For each sprite entity of this sprite description
 			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.begin();
@@ -341,13 +342,18 @@ namespace Nexus
 				// Get texture of sprite entity
 				pTex = pTM->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
 				pTex->bind();
-				matrixTransform.setTranslation(v2SpritePos.x, v2SpritePos.y, 0.0f);
+				matrixTranslation.setTranslation(v2SpritePos.x - (0.5f * renderDims.x), v2SpritePos.y - (0.5f * renderDims.y), 0.0f);
+				matrixRotation.setFromAxisAngle(Vector3(0, 0, -1), fSpriteRotRad);
+				matrixTransform.setIdentity();
+				matrixTransform *= matrixTranslation;
+				matrixTransform *= matrixRotation;
+
 				pShader->setInt("texture1", pTex->getID());
 				pShader->setMat4("transform", matrixOrtho * matrixTransform);
 				vertexBuffer.reset();
-				vertexBuffer.addQuad(Vector2(0, 0), vSpriteDims);
+				vertexBuffer.addQuad(Vector2(-(0.5f * renderDims.x), - (0.5f * renderDims.y)), vSpriteDims);
 				vertexBuffer.upload();
-				vertexBuffer.draw();
+				vertexBuffer.draw(false);
 
 //				pSR->addSprite(pTex, v3SpritePos, vSpriteDims, fSpriteRotRad, itse->second->getColour());
 				itse++;

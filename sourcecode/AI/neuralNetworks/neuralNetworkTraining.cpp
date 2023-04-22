@@ -17,9 +17,9 @@ namespace Nexus
 		double crossoverRateIn)
 	{
 		// Clear every vector
-		mvecPop.clear();
-		mvecNN.clear();
-		mvecNeuronSplitPoints.clear();
+		vecPop.clear();
+		vecNN.clear();
+		vecNeuronSplitPoints.clear();
 
 		// Make sure if ( (miNumElite * miNumEliteCopies)%2 == 0)
 		if ((numEliteIn * numEliteCopiesIn) % 2 != 0)
@@ -41,8 +41,8 @@ namespace Nexus
 		// Create NNs
 		for (int i = 0; i < populationSize; i++)
 		{
-			mvecNN.push_back(NeuralNet());
-			mvecNN[i].create(numInputsPerBrain,
+			vecNN.push_back(NeuralNet());
+			vecNN[i].create(numInputsPerBrain,
 				numOutputsPerBrain,
 				numLayers,
 				numNeuronsPerLayer);
@@ -50,7 +50,7 @@ namespace Nexus
 		}
 
 		// Get number of weights in a NN
-		int numWeights = mvecNN[0].getNumberOfWeights();
+		int numWeights = vecNN[0].getNumberOfWeights();
 
 		// Create genomes for each brain and weights for each genome with a random value between -1 and +1
 		for (int i = 0; i < populationSize; i++)
@@ -58,13 +58,13 @@ namespace Nexus
 			//vector<double> weights; // Will hold the genome's weight values
 
 			// Create new gene
-			mvecPop.push_back(SGenome());
+			vecPop.push_back(Genome());
 
 			// Create each weight
 			for (int j = 0; j < numWeights; j++)
 			{
 				// Create weight
-				mvecPop[i].vecWeights.push_back(randomClamped());
+				vecPop[i].vecWeights.push_back(randomClamped());
 
 				// Get this weight, for storing into NN
 				//weights.push_back(mvecPop[i].vecWeights[j]);
@@ -72,11 +72,11 @@ namespace Nexus
 
 			// Put the weights into NNs
 			//mvecNN[i].putWeights(weights);
-			mvecNN[i].putWeights(mvecPop[i].vecWeights);
+			vecNN[i].putWeights(vecPop[i].vecWeights);
 		}
 
 		// Calculates a brain's neuron split points
-		mvecNeuronSplitPoints = mvecNN[0].calculateSplitPoints();
+		vecNeuronSplitPoints = vecNN[0].calculateSplitPoints();
 
 		generationNumber = 1;
 		mdTotalFitness = 0;         // Total fitness for previous generation
@@ -92,7 +92,7 @@ namespace Nexus
 		if (brainNumber >= populationSize)
 			return;
 
-		mvecNN[brainNumber].setInputs(inputs);
+		vecNN[brainNumber].setInputs(inputs);
 	}
 
 	void NeuralNetGeneticAlgorithm::update(void)
@@ -100,13 +100,13 @@ namespace Nexus
 #pragma omp parallel for
 		for (int i = 0; i < populationSize; ++i)
 		{
-			mvecNN[i].update();
+			vecNN[i].update();
 		}
 	}
 
 	void NeuralNetGeneticAlgorithm::update(unsigned int index)
 	{
-		mvecNN[index].update();
+		vecNN[index].update();
 	}
 
 	void NeuralNetGeneticAlgorithm::newGeneration(void)
@@ -114,12 +114,12 @@ namespace Nexus
 		generationNumber++;
 
 		// Sort the population genomes for scaling and elitism
-		sort(mvecPop.begin(), mvecPop.end());
+		sort(vecPop.begin(), vecPop.end());
 
 		calculateFitness();
 
 		// New vector to store new population of genomes
-		std::vector<SGenome> vecNewPop;
+		std::vector<Genome> vecNewPop;
 
 		// Add some best performing genomes from current population into new population
 		insertElite(vecNewPop);
@@ -128,8 +128,8 @@ namespace Nexus
 		while ((int)vecNewPop.size() < populationSize)
 		{
 			// Get two parents
-			SGenome mum = getGenomeViaRoulette();
-			SGenome dad = getGenomeViaRoulette();
+			Genome mum = getGenomeViaRoulette();
+			Genome dad = getGenomeViaRoulette();
 
 			// Create two babies with crossing over of parent genes
 			std::vector<double> baby1;
@@ -141,25 +141,25 @@ namespace Nexus
 			mutateWeights(baby2);
 
 			// Insert these babies into the new population
-			vecNewPop.push_back(SGenome(baby1, // Weights
+			vecNewPop.push_back(Genome(baby1, // Weights
 				0));  // Fitness reset
 			if ((int)vecNewPop.size() >= populationSize)
 			{
 				break;
 			}
-			vecNewPop.push_back(SGenome(baby2, // Weights
+			vecNewPop.push_back(Genome(baby2, // Weights
 				0));  // Fitness reset
 		}
 
 		// Now vecNewPop contains the new genes!
 		// Copy this new population into the current population
-		mvecPop = vecNewPop;
+		vecPop = vecNewPop;
 
 		// Update the NN with weights from new population
 		for (int i = 0; i < populationSize; i++)
 		{
-			mvecNN[i].putWeights(mvecPop[i].vecWeights);
-			mvecPop[i].dFitness = 0;  // Reset fitness
+			vecNN[i].putWeights(vecPop[i].vecWeights);
+			vecPop[i].dFitness = 0;  // Reset fitness
 		}
 	}
 
@@ -175,8 +175,8 @@ namespace Nexus
 		}
 
 		// Get two crossover points within the weights
-		int cp1 = int(mvecNeuronSplitPoints[randInt(0, int(mvecNeuronSplitPoints.size()) - 2)]);
-		int cp2 = int(mvecNeuronSplitPoints[randInt(0, int(mvecNeuronSplitPoints.size()) - 1)]);
+		int cp1 = int(vecNeuronSplitPoints[randInt(0, int(vecNeuronSplitPoints.size()) - 2)]);
+		int cp2 = int(vecNeuronSplitPoints[randInt(0, int(vecNeuronSplitPoints.size()) - 1)]);
 
 		for (int i = 0; i < (int)mum.size(); i++)
 		{
@@ -208,7 +208,7 @@ namespace Nexus
 		}
 	}
 
-	void NeuralNetGeneticAlgorithm::insertElite(std::vector<SGenome>& newPopulation)
+	void NeuralNetGeneticAlgorithm::insertElite(std::vector<Genome>& newPopulation)
 	{
 		// Make sure even numbers, otherwise roulette wheel selection will crash...
 		if ((numElite * numEliteCopies) % 2 == 0)
@@ -218,27 +218,27 @@ namespace Nexus
 			{
 				for (int i = 0; i < numEliteCopies; i++)
 				{
-					newPopulation.push_back(mvecPop[populationSize - 1 - iGenomeIndex]);
+					newPopulation.push_back(vecPop[populationSize - 1 - iGenomeIndex]);
 				}
 				iGenomeIndex--;
 			}
 		}
 	}
 
-	SGenome NeuralNetGeneticAlgorithm::getGenomeViaRoulette(void)
+	Genome NeuralNetGeneticAlgorithm::getGenomeViaRoulette(void)
 	{
 		double slice = (double)randFloat() * mdTotalFitness;
 
-		SGenome selectedGenome;
+		Genome selectedGenome;
 
 		double dFitnessSoFar = 0;
 		for (int i = 0; i < populationSize; i++)
 		{
-			dFitnessSoFar += mvecPop[i].dFitness;
+			dFitnessSoFar += vecPop[i].dFitness;
 
 			if (dFitnessSoFar >= slice)
 			{
-				selectedGenome = mvecPop[i];
+				selectedGenome = vecPop[i];
 				break;
 			}
 		}
@@ -252,11 +252,11 @@ namespace Nexus
 		bestFitness = -99999999.0f;
 		for (int i = 0; i < populationSize; i++)
 		{
-			mdTotalFitness += mvecPop[i].dFitness;
-			if ((float)mvecPop[i].dFitness > bestFitness)
-				bestFitness = (float)mvecPop[i].dFitness;
-			if ((float)mvecPop[i].dFitness < worstFitness)
-				worstFitness = (float)mvecPop[i].dFitness;
+			mdTotalFitness += vecPop[i].dFitness;
+			if ((float)vecPop[i].dFitness > bestFitness)
+				bestFitness = (float)vecPop[i].dFitness;
+			if ((float)vecPop[i].dFitness < worstFitness)
+				worstFitness = (float)vecPop[i].dFitness;
 		}
 		averageFitness = float(mdTotalFitness / populationSize);
 	}
@@ -266,10 +266,10 @@ namespace Nexus
 		if (brainNumber >= populationSize)
 			return;
 
-		mvecPop[brainNumber].dFitness += double(amount);
+		vecPop[brainNumber].dFitness += double(amount);
 		// Keep fitness above zero, otherwise roulette wheel screws up
-		if (mvecPop[brainNumber].dFitness < 0)
-			mvecPop[brainNumber].dFitness = 0;
+		if (vecPop[brainNumber].dFitness < 0)
+			vecPop[brainNumber].dFitness = 0;
 	}
 
 	void NeuralNetGeneticAlgorithm::setBrainFitness(int brainNumber, float value)
@@ -277,16 +277,16 @@ namespace Nexus
 		if (brainNumber >= populationSize)
 			return;
 		if (value < 0)
-			mvecPop[brainNumber].dFitness = 0;
+			vecPop[brainNumber].dFitness = 0;
 		else
-			mvecPop[brainNumber].dFitness = value;
+			vecPop[brainNumber].dFitness = value;
 	}
 
 	float NeuralNetGeneticAlgorithm::getBrainFitness(int brainNumber)
 	{
 		if (brainNumber >= populationSize)
 			return 0;
-		return float(mvecPop[brainNumber].dFitness);
+		return float(vecPop[brainNumber].dFitness);
 	}
 
 	std::vector<double> NeuralNetGeneticAlgorithm::getOutputs(int brainNumber)
@@ -295,7 +295,7 @@ namespace Nexus
 		if (brainNumber >= populationSize)
 			return outputs;
 
-		outputs = mvecNN[brainNumber].getOutputs();
+		outputs = vecNN[brainNumber].getOutputs();
 		return outputs;
 	}
 
@@ -315,7 +315,7 @@ namespace Nexus
 		}
 
 		// Save the brain with the highest fitness
-		mvecNN[iBestBrain].save(strFilename);
+		vecNN[iBestBrain].save(strFilename);
 	}
 
 	void NeuralNetGeneticAlgorithm::saveBrain(const std::string& filename, unsigned int brainNumber)
@@ -332,7 +332,7 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 
-		mvecNN[brainNumber].save(filename);
+		vecNN[brainNumber].save(filename);
 	}
 
 	//! Loads an individual brain into all of the Gen algs brains
@@ -340,7 +340,7 @@ namespace Nexus
 	{
 		for (int b = 0; b < populationSize; b++)
 		{
-			mvecNN[b].load(filename);
+			vecNN[b].load(filename);
 		}
 	}
 }

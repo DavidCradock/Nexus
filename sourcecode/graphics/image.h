@@ -181,7 +181,7 @@ namespace Nexus
 		int numChannels;
 
 		// Used by edgeDetect()
-		inline bool _isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b);
+		inline bool isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b);
 
 	};
 
@@ -250,7 +250,7 @@ namespace Nexus
 		}
 	}
 
-	inline bool Image::_isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
+	inline bool Image::isPixelEdge(int iPosX, int iPosY, unsigned char r, unsigned char g, unsigned char b)
 	{
 		// Don't check edge pixels of image
 		if (iPosX == 0)

@@ -55,10 +55,10 @@ namespace Nexus
 		template <class Type> bool read(Type& out);
 
 	private:
-		unsigned char* pData;		//!< Pointer to the data
-		unsigned long datasize;	//!< Size of the data
-		unsigned int offset;		//!< Current offset in bytes
-		unsigned char* pDataTemp;	//!< Pointer to data at current offset
+		unsigned char* pData;		// Pointer to the data
+		unsigned long datasize;		// Size of the data
+		unsigned int offset;		// Current offset in bytes
+		unsigned char* pDataTemp;	// Pointer to data at current offset
 	};
 
 	template<class Type> bool ArchiveData::read(Type& out)

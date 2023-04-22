@@ -12,78 +12,78 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pRD->createWindow("Nexus");
 
             // Initialise input
-            Nexus::ManagerInputDevices* pIM = Nexus::ManagerInputDevices::getPointer();
-            pIM->init(pRD->getWindowHandle());
+            Nexus::ManagerInputDevices* pManInputDevices = Nexus::ManagerInputDevices::getPointer();
+            pManInputDevices->init(pRD->getWindowHandle());
 
             // Timing
             Nexus::Timing timing;
             timing.setStatFPSSrate(1);
 
             // Shaders
-            Nexus::ManagerShaders* pSM = Nexus::ManagerShaders::getPointer();
-            pSM->addNewGroup("default");
-            pSM->addShader("sprites", "shaders/simple.vs", "shaders/simple.fs", "default");
-            pSM->addShader("sprites", "shaders/sprites.vs", "shaders/sprites.fs", "default");
-            pSM->addShader("textFont", "shaders/textFont.vs", "shaders/textFont.fs", "default");
-            pSM->addShader("gui", "shaders/gui.vs", "shaders/gui.fs", "default");
-            pSM->loadGroup("default");
+            Nexus::ManagerShaders* pManShaders = Nexus::ManagerShaders::getPointer();
+            pManShaders->addNewGroup("default");
+            pManShaders->addShader("sprites", "shaders/simple.vs", "shaders/simple.fs", "default");
+            pManShaders->addShader("sprites", "shaders/sprites.vs", "shaders/sprites.fs", "default");
+            pManShaders->addShader("textFont", "shaders/textFont.vs", "shaders/textFont.fs", "default");
+            pManShaders->addShader("gui", "shaders/gui.vs", "shaders/gui.fs", "default");
+            pManShaders->loadGroup("default");
 
             // Texture manager groups
-            Nexus::ManagerTextures* pTM = Nexus::ManagerTextures::getPointer();
-            pTM->addNewGroup("default");     
+            Nexus::ManagerTextures* pManTextures = Nexus::ManagerTextures::getPointer();
+            pManTextures->addNewGroup("default");
 
             // GUI
-            Nexus::ManagerGUI* pGUI = Nexus::ManagerGUI::getPointer();
+            Nexus::ManagerGUI* pManGUI = Nexus::ManagerGUI::getPointer();
             // Create default theme and set as default
-            Nexus::GUITheme* pTheme = pGUI->addTheme("default");
-            pGUI->setCurrentTheme("default");
-            pGUI->loadAllThemes();
+            Nexus::GUITheme* pTheme = pManGUI->addTheme("default");
+            pManGUI->setCurrentTheme("default");
+            pManGUI->loadAllThemes();
             
             // Text fonts
-            Nexus::ManagerTextFonts* pTFM = Nexus::ManagerTextFonts::getPointer();
-            pTFM->loadAll();
+            Nexus::ManagerTextFonts* pManTextFonts = Nexus::ManagerTextFonts::getPointer();
+            pManTextFonts->loadAll();
             
             // Sprite manager
-            Nexus::ManagerSprites* pSpriteMan = Nexus::ManagerSprites::getPointer();
+            Nexus::ManagerSprites* pManSprites = Nexus::ManagerSprites::getPointer();
 
             // Initialise all applications
-            Nexus::ManagerApplications* pAM = Nexus::ManagerApplications::getPointer();
+            Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();
             std::string applicationName = "Development";
             Nexus::ApplicationDevelopment applicationDevelopment(applicationName);
-            pAM->callAllApps_initOnce();
+            pManApplications->callAllApps_initOnce();
 
             // Load all textures
-            pTM->loadGroup("default");
-            pTM->loadGroup("fonts");
+            pManTextures->loadGroup("default");
+            pManTextures->loadGroup("fonts");
 
-            Nexus::TextFont *pTextFont = pTFM->addTextFont("fonts/publicsans_16");
-            pTFM->loadAll();
+            Nexus::TextFont *pTextFont = pManTextFonts->addTextFont("fonts/publicsans_16");
+            pManTextFonts->loadAll();
 
             // Main loop
             while (pRD->updateWindow())
             {
                 timing.update();
 
-                pIM->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
-                if (!pAM->callCurrentApp_onUpdate())
+                pManInputDevices->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
+                if (!pManApplications->callCurrentApp_onUpdate())
                     break;
 
-                pSpriteMan->update();
-                pSpriteMan->render();
-                pGUI->render();
+                pManSprites->update();
+                pManSprites->render();
+                pManGUI->render();
                 std::string strFramerate("Framerate: ");
                 strFramerate.append(std::to_string((int)timing.getStatFPSS()));
                 strFramerate.append(" fps");
-                pTextFont->print(strFramerate, 0, 0, Nexus::CColouruc(255, 255, 255, 255));
+                pTextFont->print(strFramerate, 0, 0, Nexus::Colouruc(255, 255, 255, 255));
                 std::string strMouseInfo("Mouse cursor pos: ");
-                strMouseInfo.append(std::to_string(int(pIM->mouse.getCursorPos().x)));
+                strMouseInfo.append(std::to_string(int(pManInputDevices->mouse.getCursorPos().x)));
                 strMouseInfo.append("x");
-                strMouseInfo.append(std::to_string(int(pIM->mouse.getCursorPos().y)));
-                pTextFont->print(strMouseInfo, 0, 15, Nexus::CColouruc(255, 255, 255, 255));
+                strMouseInfo.append(std::to_string(int(pManInputDevices->mouse.getCursorPos().y)));
+                pTextFont->print(strMouseInfo, 0, 15, Nexus::Colouruc(255, 255, 255, 255));
                 pRD->swapBuffers();
                 Sleep(0);
             }
-            pIM->shutdown();
+            pManInputDevices->shutdown();
             pRD->closeWindow();
     }
     catch (const std::exception& e)

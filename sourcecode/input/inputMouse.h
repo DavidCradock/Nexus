@@ -69,8 +69,8 @@ namespace Nexus
 		inline Vector2 getCursorPos(void) { return Vector2(mouseX, mouseY); }
 
 	private:
-		LPDIRECTINPUT8 _mlpDI;				// Pointer to main DirectX input object
-		LPDIRECTINPUTDEVICE8 _mlpDIDeviceM;	// DirectX input device object for the mouse
+		LPDIRECTINPUT8 lpDI;				// Pointer to main DirectX input object
+		LPDIRECTINPUTDEVICE8 lpDIDeviceM;	// DirectX input device object for the mouse
 
 		bool mouseLeft;			// Left mouse button down?
 		bool leftButOnce[2];		// Element 0 holds actual return value for mouseButOnce?(). 1 holds if button was held last frame

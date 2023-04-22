@@ -13,7 +13,7 @@ namespace Nexus
 {
 	ApplicationDevelopment::ApplicationDevelopment(std::string& applicationName)
 	{
-		_addAppToManager(applicationName);
+		addAppToManager(applicationName);
 	}
 
 	void ApplicationDevelopment::initOnce(void)
@@ -69,7 +69,7 @@ namespace Nexus
 		// Rotate sprite
 		ManagerSprites* pSpriteMan = ManagerSprites::getPointer();
 		float fSpriteRotDeg = pSpriteMan->getLayer("layer0")->getEntity("entity0", "spriteTest")->getRotationDeg();
-		fSpriteRotDeg += timing.getSecPast() * 90.0f;
+		fSpriteRotDeg += (float)timing.getSecPast() * 90.0f;
 		pSpriteMan->getLayer("layer0")->getEntity("entity0", "spriteTest")->setRotationDeg(fSpriteRotDeg);
 		return true;
 	}

@@ -4,7 +4,6 @@
 
 namespace Nexus
 {
-
 	class Vector3;
 
 	// Quaternion class for 3D rotations
@@ -76,7 +75,7 @@ namespace Nexus
 		// Return a quaternion which is interpolated between this quat and the one given using linear interpolation
 		Quaternion getLERP(const Quaternion& quat, float fInterval) const;
 
-		float mfQuat[4];	// x,y,z,w
+		float fQuat[4];	// x,y,z,w
 	};
 
 }

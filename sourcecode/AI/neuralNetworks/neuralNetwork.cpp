@@ -7,21 +7,21 @@
 namespace Nexus
 {
 	// Set the number of inputs and weights for this neuron
-	SNeuron::SNeuron(int numWeights)
+	Neuron::Neuron(int numWeights)
 	{
-		miNumInputs = numWeights + 1;
-		for (int i = 0; i < miNumInputs; i++)
+		iNumInputs = numWeights + 1;
+		for (int i = 0; i < iNumInputs; i++)
 		{
-			mvecWeight.push_back(randomClamped());
+			vecWeight.push_back(randomClamped());
 		}
 	}
 
-	SNeuronLayer::SNeuronLayer(int numNeurons, int numInputs)
+	NeuronLayer::NeuronLayer(int numNeurons, int numInputs)
 	{
-		miNumNeurons = numNeurons;
-		for (int i = 0; i < miNumNeurons; i++)
+		iNumNeurons = numNeurons;
+		for (int i = 0; i < iNumNeurons; i++)
 		{
-			mvecNeuron.push_back(SNeuron(numInputs));
+			vecNeuron.push_back(Neuron(numInputs));
 		}
 	}
 
@@ -53,20 +53,20 @@ namespace Nexus
 		if (numLayers > 0)
 		{
 			// Create first hidden layer
-			layers.push_back(SNeuronLayer(numNeuronsPerLayer, numInputs));
+			layers.push_back(NeuronLayer(numNeuronsPerLayer, numInputs));
 
 			for (int i = 0; i < numLayers - 1; i++)
 			{
-				layers.push_back(SNeuronLayer(numNeuronsPerLayer, numNeuronsPerLayer));
+				layers.push_back(NeuronLayer(numNeuronsPerLayer, numNeuronsPerLayer));
 			}
 
 			// Create output layer
-			layers.push_back(SNeuronLayer(numOutputs, numNeuronsPerLayer));
+			layers.push_back(NeuronLayer(numOutputs, numNeuronsPerLayer));
 		}
 		else
 		{
 			// Create output layer
-			layers.push_back(SNeuronLayer(numOutputs, numInputs));
+			layers.push_back(NeuronLayer(numOutputs, numInputs));
 		}
 		return true;
 	}
@@ -178,21 +178,21 @@ namespace Nexus
 
 			// For each neuron sum the (inputs * corresponding weights).Throw 
 			// the total at our sigmoid function to get the output.
-			for (int j = 0; j < layers[i].miNumNeurons; j++)
+			for (int j = 0; j < layers[i].iNumNeurons; j++)
 			{
 				double netinput = 0;
 
-				int	NumInputs = layers[i].mvecNeuron[j].miNumInputs;
+				int	NumInputs = layers[i].vecNeuron[j].iNumInputs;
 
 				// For each weight
 				for (int k = 0; k < NumInputs - 1; k++)
 				{
 					// Sum the weights x inputs
-					netinput += layers[i].mvecNeuron[j].mvecWeight[k] * inputs[cWeight++];
+					netinput += layers[i].vecNeuron[j].vecWeight[k] * inputs[cWeight++];
 				}
 
 				// Add in the bias
-				netinput += layers[i].mvecNeuron[j].mvecWeight[NumInputs - 1] *
+				netinput += layers[i].vecNeuron[j].vecWeight[NumInputs - 1] *
 					-1; // Bias value
 
 				// We can store the outputs from each layer as we generate them. 
@@ -240,12 +240,12 @@ namespace Nexus
 		for (int i = 0; i < numLayers + 1; i++)
 		{
 			// For each neuron
-			for (int j = 0; j < layers[i].miNumNeurons; j++)
+			for (int j = 0; j < layers[i].iNumNeurons; j++)
 			{
 				// For each weight
-				for (int k = 0; k < layers[i].mvecNeuron[j].miNumInputs; k++)
+				for (int k = 0; k < layers[i].vecNeuron[j].iNumInputs; k++)
 				{
-					weights.push_back(layers[i].mvecNeuron[j].mvecWeight[k]);
+					weights.push_back(layers[i].vecNeuron[j].vecWeight[k]);
 				}
 			}
 		}
@@ -278,17 +278,17 @@ namespace Nexus
 		for (int i = 0; i < numLayers + 1; i++)
 		{
 			// For each neuron
-			for (int j = 0; j < layers[i].miNumNeurons; j++)
+			for (int j = 0; j < layers[i].iNumNeurons; j++)
 			{
 				// For each weight
-				for (int k = 0; k < layers[i].mvecNeuron[j].miNumInputs; k++)
+				for (int k = 0; k < layers[i].vecNeuron[j].iNumInputs; k++)
 				{
 					if (cWeight >= (int)weights.size())
 					{
 						break;
-						Log::getPointer()->exception("Neuralnet error");
+						Log::getPointer()->exception("NeuralNet::putWeights() failed");
 					}
-					layers[i].mvecNeuron[j].mvecWeight[k] = weights[cWeight];
+					layers[i].vecNeuron[j].vecWeight[k] = weights[cWeight];
 					cWeight++;
 
 				}
@@ -304,10 +304,10 @@ namespace Nexus
 		for (int i = 0; i < numLayers + 1; i++)
 		{
 			// For each neuron
-			for (int j = 0; j < layers[i].miNumNeurons; j++)
+			for (int j = 0; j < layers[i].iNumNeurons; j++)
 			{
 				// For each weight
-				for (int k = 0; k < layers[i].mvecNeuron[j].miNumInputs; k++)
+				for (int k = 0; k < layers[i].vecNeuron[j].iNumInputs; k++)
 				{
 					weights++;
 				}
@@ -326,10 +326,10 @@ namespace Nexus
 		for (int i = 0; i < numLayers + 1; i++)
 		{
 			// For each neuron
-			for (int j = 0; j < layers[i].miNumNeurons; j++)
+			for (int j = 0; j < layers[i].iNumNeurons; j++)
 			{
 				// For each weight
-				for (int k = 0; k < layers[i].mvecNeuron[j].miNumInputs; k++)
+				for (int k = 0; k < layers[i].vecNeuron[j].iNumInputs; k++)
 				{
 					weightCounter++;
 				}

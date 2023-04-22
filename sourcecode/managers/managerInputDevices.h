@@ -7,7 +7,6 @@
 
 namespace Nexus
 {
-
 	// Main device input class for mouse, keyboard and joystick data. 
 	// This class automatically manages three objects, one of each class...
 	// InputJoystick, member name = joy - for accessing joystick data.

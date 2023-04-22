@@ -31,11 +31,11 @@ namespace Nexus
 		strFontFNTFilename.append(".fnt");
 		std::string strFontTGAFilename = strFontFilePairName;
 		strFontTGAFilename.append(".tga");
-		fontTypes.mstrTextureName = strFontTGAFilename;
+		fontTypes.strTextureName = strFontTGAFilename;
 
 		// Add textures to texture manager
 		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		pManTextures->add2DTexture(fontTypes.mstrTextureName, fontTypes.mstrTextureName, "fonts", false, TextureFiltering::nearest);
+		pManTextures->add2DTexture(fontTypes.strTextureName, fontTypes.strTextureName, "fonts", false, TextureFiltering::nearest);
 
 		// Load in font data
 		ArchiveData archiveData;
@@ -47,12 +47,12 @@ namespace Nexus
 		}
 
 		// Read in max char height of each of the fonts
-		if (!archiveData.read(fontTypes.mfMaxCharHeight))
+		if (!archiveData.read(fontTypes.fMaxCharHeight))
 			Log::getPointer()->exception("TextFont::load() failed.");
 
 		for (int i = 0; i < 256; ++i)
 		{
-			if (!archiveData.read(fontTypes.mCharDesc[i]))
+			if (!archiveData.read(fontTypes.charDesc[i]))
 				Log::getPointer()->exception("TextFont::load() failed. Error whilst loading in data from font data file");
 		}
 
@@ -65,18 +65,18 @@ namespace Nexus
 			return;
 
 		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		pManTextures->remove2DTexture(fontTypes.mstrTextureName, "fonts");
+		pManTextures->remove2DTexture(fontTypes.strTextureName, "fonts");
 		bLoaded = false;
 	}
 
-	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const CColouruc& colour)
+	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour)
 	{
 		if (!bLoaded)
 			return;
 
 		RenderDevice* pRD = RenderDevice::getPointer();
 		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		Texture* pTexture = pManTextures->get2DTexture(fontTypes.mstrTextureName, "fonts");
+		Texture* pTexture = pManTextures->get2DTexture(fontTypes.strTextureName, "fonts");
 		pTexture->bind();
 		Shader* pShader = ManagerShaders::getPointer()->getShader("textFont");
 		pShader->use();
@@ -105,7 +105,7 @@ namespace Nexus
 		char charIndex = 0;
 		Vector2 vPosition((float)iPosX, (float)iPosY);
 		Vector2 vDimensions;
-		vDimensions.y = fontTypes.mfMaxCharHeight;
+		vDimensions.y = fontTypes.fMaxCharHeight;
 		Vector3 vColour(float(colour.r/255), float(colour.g / 255), float(colour.b / 255));
 		Vector2 tcBL, tcBR, tcTR, tcTL;
 		vertexBuffer.reset();
@@ -116,22 +116,22 @@ namespace Nexus
 			charIndex = pCh[i];
 
 			// Compute everything for this character 
-			vPosition.x += fontTypes.mCharDesc[charIndex].fABCa;
-			vDimensions.x = fontTypes.mCharDesc[charIndex].fABCb;
+			vPosition.x += fontTypes.charDesc[charIndex].fABCa;
+			vDimensions.x = fontTypes.charDesc[charIndex].fABCb;
 			
-			tcBL.x = fontTypes.mCharDesc[charIndex].vTexMin.x;
-			tcBL.y = fontTypes.mCharDesc[charIndex].vTexMin.y;
-			tcTR.x = fontTypes.mCharDesc[charIndex].vTexMax.x;
-			tcTR.y = fontTypes.mCharDesc[charIndex].vTexMax.y;
-			tcBR.x = fontTypes.mCharDesc[charIndex].vTexMax.x;
-			tcBR.y = fontTypes.mCharDesc[charIndex].vTexMin.y;
-			tcTL.x = fontTypes.mCharDesc[charIndex].vTexMin.x;
-			tcTL.y = fontTypes.mCharDesc[charIndex].vTexMax.y;
+			tcBL.x = fontTypes.charDesc[charIndex].vTexMin.x;
+			tcBL.y = fontTypes.charDesc[charIndex].vTexMin.y;
+			tcTR.x = fontTypes.charDesc[charIndex].vTexMax.x;
+			tcTR.y = fontTypes.charDesc[charIndex].vTexMax.y;
+			tcBR.x = fontTypes.charDesc[charIndex].vTexMax.x;
+			tcBR.y = fontTypes.charDesc[charIndex].vTexMin.y;
+			tcTL.x = fontTypes.charDesc[charIndex].vTexMin.x;
+			tcTL.y = fontTypes.charDesc[charIndex].vTexMax.y;
 
 			// Add quad to vertex buffer
 			vertexBuffer.addQuad(vPosition, vDimensions, vColour, tcBL, tcBR, tcTR, tcTL);
 
-			vPosition.x += fontTypes.mCharDesc[charIndex].fABCb + fontTypes.mCharDesc[charIndex].fABCc;
+			vPosition.x += fontTypes.charDesc[charIndex].fABCb + fontTypes.charDesc[charIndex].fABCc;
 		}
 		// Then finally upload to the GPU and draw everything.
 		vertexBuffer.upload();
@@ -149,9 +149,9 @@ namespace Nexus
 		for (int i = 0; i < (int)strText.length(); ++i)
 		{
 			ch = unsigned char(strText[i]);
-			fWidth += fontTypes.mCharDesc[ch].fABCa;
-			fWidth += fontTypes.mCharDesc[ch].fABCb;
-			fWidth += fontTypes.mCharDesc[ch].fABCc;
+			fWidth += fontTypes.charDesc[ch].fABCa;
+			fWidth += fontTypes.charDesc[ch].fABCb;
+			fWidth += fontTypes.charDesc[ch].fABCc;
 		}
 		return fWidth;
 	}

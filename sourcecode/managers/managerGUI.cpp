@@ -147,8 +147,8 @@ namespace Nexus
 			{
 				TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
 				pTextFont->print(itr->second->strTitlebarText, 
-					(int)itr->second->vPosition.x + (int)vWndTexDimsDiv3.x + pTheme->vWindowTitlebarTextOffset.x,
-					(int)itr->second->vPosition.y + pTheme->vWindowTitlebarTextOffset.y);
+					(int)itr->second->vPosition.x + (int)vWndTexDimsDiv3.x + (int)pTheme->vWindowTitlebarTextOffset.x,
+					(int)itr->second->vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y);
 			}
 			itr++;
 		}

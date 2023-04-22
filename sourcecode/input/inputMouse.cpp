@@ -7,7 +7,7 @@ namespace Nexus
 	InputMouse::InputMouse(void)
 	{
 		windowHandle = NULL;
-		_mlpDIDeviceM = NULL;
+		lpDIDeviceM = NULL;
 		leftButOnce[0] = false;
 		leftButOnce[1] = false;
 		midButOnce[0] = false;
@@ -34,28 +34,28 @@ namespace Nexus
 	{
 		windowHandle = hApplicationWindow;
 
-		_mlpDI = pMainDirectXinputDevice;
-		if (!_mlpDI)
+		lpDI = pMainDirectXinputDevice;
+		if (!lpDI)
 			return false;
 
 		// Create mouse device
-		_mlpDI->CreateDevice(GUID_SysMouse, &_mlpDIDeviceM, NULL);
-		if (_mlpDIDeviceM == NULL)
+		lpDI->CreateDevice(GUID_SysMouse, &lpDIDeviceM, NULL);
+		if (lpDIDeviceM == NULL)
 			return false;
 
 		// Set mouse data format
-		HRESULT hr = _mlpDIDeviceM->SetDataFormat(&c_dfDIMouse);
+		HRESULT hr = lpDIDeviceM->SetDataFormat(&c_dfDIMouse);
 		if (FAILED(hr))
 			return false;
 
 		// Set mouse behavior
-		hr = _mlpDIDeviceM->SetCooperativeLevel(hApplicationWindow, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
+		hr = lpDIDeviceM->SetCooperativeLevel(hApplicationWindow, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
 		//	hr = _mlpDIDeviceM->SetCooperativeLevel(hWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
 		if (FAILED(hr))
 			return false;
 
 		// Acquire the Mouse
-		hr = _mlpDIDeviceM->Acquire();
+		hr = lpDIDeviceM->Acquire();
 		if (FAILED(hr))
 			return false;
 
@@ -65,12 +65,12 @@ namespace Nexus
 	void InputMouse::update(bool fullscreen, unsigned int screenWidth, unsigned int screenHeight)
 	{
 		DIMOUSESTATE mouseState;	// Struct to store state of mouse
-		HRESULT hr = _mlpDIDeviceM->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mouseState);
+		HRESULT hr = lpDIDeviceM->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mouseState);
 		if (FAILED(hr))
 		{
 			if (hr = DIERR_INPUTLOST)
 			{
-				hr = _mlpDIDeviceM->Acquire();
+				hr = lpDIDeviceM->Acquire();
 				if (FAILED(hr))
 				{
 					// Device lost
@@ -204,11 +204,11 @@ namespace Nexus
 
 	void InputMouse::release(void)
 	{
-		if (_mlpDIDeviceM)	// Mouse object exists?
+		if (lpDIDeviceM)	// Mouse object exists?
 		{
-			_mlpDIDeviceM->Unacquire();
-			_mlpDIDeviceM->Release();
-			_mlpDIDeviceM = NULL;
+			lpDIDeviceM->Unacquire();
+			lpDIDeviceM->Release();
+			lpDIDeviceM = NULL;
 		}
 	}
 

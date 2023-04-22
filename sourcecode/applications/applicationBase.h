@@ -29,7 +29,7 @@ namespace Nexus
 	protected:
 
 		// Called by all derived classes, to add themselves to the application manager
-		void _addAppToManager(const std::string& applicationName);
+		void addAppToManager(const std::string& applicationName);
 
 	};
 

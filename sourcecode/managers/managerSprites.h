@@ -10,9 +10,8 @@
 
 namespace Nexus
 {
-
 	// Holds an entity's name, the layer it is in, the description's name it is using, it's dimensions and position (Used for checking collisions between sprite entities)
-	struct SEntityDetailsEx
+	struct EntityDetailsEx
 	{
 		std::string strLayerName;			// The layer name which the sprite it stored in
 		std::string strEntityName;			// The sprite name
@@ -21,10 +20,10 @@ namespace Nexus
 		Vector2 vSpritePos;					// The sprite's position
 	};
 
-	struct SEntityCollisionPairs		// Holds sprite entity details for a pair of colliding sprite entities
+	struct EntityCollisionPairs		// Holds sprite entity details for a pair of colliding sprite entities
 	{
-		SEntityDetailsEx spriteEntity1;
-		SEntityDetailsEx spriteEntity2;
+		EntityDetailsEx spriteEntity1;
+		EntityDetailsEx spriteEntity2;
 	};
 
 	// This is the sprite manager
@@ -61,7 +60,7 @@ namespace Nexus
 		void resetCamera(void);
 
 		// Returns the total number of added layers
-		int getLayerCount(void) { return int(_mvecLayerNameZOrder.size()); }
+		int getLayerCount(void) { return int(vecLayerNameZOrder.size()); }
 
 		// Returns the name of the layer at specified z order
 		// A z order of 0 would give you the back most layer
@@ -111,23 +110,23 @@ namespace Nexus
 		void removeAll(void);
 
 		// Sets the camera position
-		inline void setCameraPosition(const Vector2& vCameraPosition) { _mvCameraPositionCurrent = vCameraPosition;	_mvCameraPositionTarget = vCameraPosition; }
+		inline void setCameraPosition(const Vector2& vCameraPosition) { vCameraPositionCurrent = vCameraPosition;	vCameraPositionTarget = vCameraPosition; }
 
 		// Moves the camera from it's current position to the new specified position
 		void setCameraPosition(const Vector2& vCameraTargetPosition, float fSpeed);
 
 		// Returns camera's current position
-		inline Vector2 getCameraPosition(void) { return _mvCameraPositionCurrent; }
+		inline Vector2 getCameraPosition(void) { return vCameraPositionCurrent; }
 
 		// Sets the camera zoom
 		// You can think of the zoom level as distance from the scene along z axis.
 		// This value is clamped between to prevent "inverted projection" to 0.0001f and FLT_MAX
 		// 1.0f = no zoom in or out
 		// 0.00f = really, really zoomed in!
-		inline void setCameraZoom(float fZoom) { clamp(fZoom, 0.0001f, FLT_MAX);	_mfCameraZoomCurrent = fZoom;	_mfCameraZoomTarget = fZoom; }
+		inline void setCameraZoom(float fZoom) { clamp(fZoom, 0.0001f, FLT_MAX);	fCameraZoomCurrent = fZoom;	fCameraZoomTarget = fZoom; }
 
 		// Returns the camera's current zoom
-		inline float getCameraZoom(void) { return _mfCameraZoomCurrent; }
+		inline float getCameraZoom(void) { return fCameraZoomCurrent; }
 
 		// Sets the camera zoom level which will be moved towards over time
 		// You can think of the zoom level as distance from the scene along z axis.
@@ -135,10 +134,10 @@ namespace Nexus
 		// 1.0f = no zoom in or out
 		// 0.00f = really, really zoomed in!
 		// The higher the value of fZoomSpeed, the quicker the camera will move towards the target value
-		inline void setCameraZoom(float fZoomTarget, float fZoomSpeed) { _mfCameraZoomTarget = fZoomTarget;	_mfCameraZoomSpeed = fZoomSpeed; }
+		inline void setCameraZoom(float fZoomTarget, float fZoomSpeed) { fCameraZoomTarget = fZoomTarget;	fCameraZoomSpeed = fZoomSpeed; }
 
 		// If setCameraZoom has been called, this will returns the camera's currently set zoom target
-		inline float getCameraZoomTarget(void) { return _mfCameraZoomTarget; }
+		inline float getCameraZoomTarget(void) { return fCameraZoomTarget; }
 
 		// Using the currently set camera position and zoom, this will take a screen space position and compute it's
 		// position in world space and return the result
@@ -158,18 +157,18 @@ namespace Nexus
 		// Returns whether there is anything which needs rendering
 		bool hasStuffToRender(void);
 
-		std::map<std::string, SpriteLayer*> _mmapLayers;				// Each named layer which holds sprite entities
-		std::map<std::string, SpriteDescription*> _mmapDescriptions;	// Each named sprite description
+		std::map<std::string, SpriteLayer*> mapLayers;				// Each named layer which holds sprite entities
+		std::map<std::string, SpriteDescription*> mapDescriptions;	// Each named sprite description
 
-		std::vector<std::string> _mvecLayerNameZOrder;		// Holds names of each layer, in their rendering order (first added = first rendered)
+		std::vector<std::string> vecLayerNameZOrder;		// Holds names of each layer, in their rendering order (first added = first rendered)
 
-		Timing _mcTimer;					// Timer object 
-		Vector2 _mvCameraPositionCurrent;	// This is the camera's current position
-		Vector2 _mvCameraPositionTarget;	// This is the camera's target position
-		float _mfCameraPositionSpeed;		// This is used to move _mvCameraPositionCurrent towards _mvCameraPositionTarget over time
-		float _mfCameraZoomCurrent;			// Used by this class's setCameraZoom???? methods. This is the actual current camera zoom level (The level used to build the projection matrix)
-		float _mfCameraZoomTarget;			// Used by this class's setCameraZoom???? methods. This is the target zoom level, we move the current camera zoom level towards this value over time.
-		float _mfCameraZoomSpeed;			// Used to move _mfCameraZoomCurrent towards _mfCameraZoomTarget over time
+		Timing timing;					// Timer object 
+		Vector2 vCameraPositionCurrent;	// This is the camera's current position
+		Vector2 vCameraPositionTarget;	// This is the camera's target position
+		float fCameraPositionSpeed;		// This is used to move _mvCameraPositionCurrent towards _mvCameraPositionTarget over time
+		float fCameraZoomCurrent;		// Used by this class's setCameraZoom???? methods. This is the actual current camera zoom level (The level used to build the projection matrix)
+		float fCameraZoomTarget;		// Used by this class's setCameraZoom???? methods. This is the target zoom level, we move the current camera zoom level towards this value over time.
+		float fCameraZoomSpeed;			// Used to move _mfCameraZoomCurrent towards _mfCameraZoomTarget over time
 	};
 
 }

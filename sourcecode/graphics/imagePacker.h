@@ -85,7 +85,7 @@ namespace Nexus
 		Image imageFinal;	// Final image
 
 		// Holds final data after pack() has been called
-		struct SImagePackerImg
+		struct ImagePackerImg
 		{
 			Image* pImage;			// An added image
 			Vector2 position;		// A 2D vector holding an added image's bottom left position within the final image
@@ -94,7 +94,7 @@ namespace Nexus
 			Vector2 TCTR;			// A 2D vector holding an added image's top right x/y texture coordinate
 			Vector2 TCTL;			// A 2D vector holding an added image's top left x/y texture coordinate
 		};
-		std::map<std::string, SImagePackerImg*>	addedImages;	// A map holding each added image
+		std::map<std::string, ImagePackerImg*>	addedImages;	// A map holding each added image
 
 		// Used by pack()
 		void packInsertImg(Image* pImageSrc, unsigned int iIndex, int iPosX, int iPosY);	// Insert given image into final at specified position

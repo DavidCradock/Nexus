@@ -9,7 +9,6 @@
 
 namespace Nexus
 {
-
 	// Use this to deal with everything related to the graphical user interface.
 	// Create text, buttons, windows and all sorts of fun interactive things.
 	class ManagerGUI : public Singleton<ManagerGUI>

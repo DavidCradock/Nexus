@@ -13,48 +13,48 @@ namespace Nexus
 		RenderDevice* pRenderDevice = RenderDevice::getPointer();
 		pManTextures->addNewGroup("sprites");
 
-		_mfCameraZoomCurrent = 1.0f;
-		_mfCameraZoomTarget = 1.0f;
-		_mfCameraZoomSpeed = 0.0f;
-		_mvCameraPositionCurrent.x = pRenderDevice->getWindowWidth() * 0.5f;
-		_mvCameraPositionCurrent.y = pRenderDevice->getWindowHeight() * 0.5f;
-		_mvCameraPositionTarget = _mvCameraPositionCurrent;
-		_mfCameraPositionSpeed = 0.0f;
+		fCameraZoomCurrent = 1.0f;
+		fCameraZoomTarget = 1.0f;
+		fCameraZoomSpeed = 0.0f;
+		vCameraPositionCurrent.x = pRenderDevice->getWindowWidth() * 0.5f;
+		vCameraPositionCurrent.y = pRenderDevice->getWindowHeight() * 0.5f;
+		vCameraPositionTarget = vCameraPositionCurrent;
+		fCameraPositionSpeed = 0.0f;
 	}
 
 
 	void ManagerSprites::update(void)
 	{
-		_mcTimer.update();
+		timing.update();
 
 		// Update camera zoom
-		float fCameraCurTarDelta = _mfCameraZoomCurrent - _mfCameraZoomTarget;
+		float fCameraCurTarDelta = fCameraZoomCurrent - fCameraZoomTarget;
 		absolute(fCameraCurTarDelta);
-		if (_mfCameraZoomCurrent < _mfCameraZoomTarget)
-			_mfCameraZoomCurrent += float(_mcTimer.getSecPast()) * _mfCameraZoomSpeed * fCameraCurTarDelta;
+		if (fCameraZoomCurrent < fCameraZoomTarget)
+			fCameraZoomCurrent += float(timing.getSecPast()) * fCameraZoomSpeed * fCameraCurTarDelta;
 		else
-			_mfCameraZoomCurrent -= float(_mcTimer.getSecPast()) * _mfCameraZoomSpeed * fCameraCurTarDelta;
+			fCameraZoomCurrent -= float(timing.getSecPast()) * fCameraZoomSpeed * fCameraCurTarDelta;
 
 		// Update camera position
 		Vector2 vCameraCurTarDelta;
-		vCameraCurTarDelta.x = _mvCameraPositionCurrent.x - _mvCameraPositionTarget.x;
-		vCameraCurTarDelta.y = _mvCameraPositionCurrent.y - _mvCameraPositionTarget.y;
+		vCameraCurTarDelta.x = vCameraPositionCurrent.x - vCameraPositionTarget.x;
+		vCameraCurTarDelta.y = vCameraPositionCurrent.y - vCameraPositionTarget.y;
 		absolute(vCameraCurTarDelta.x);
 		absolute(vCameraCurTarDelta.y);
-		if (_mvCameraPositionCurrent.x < _mvCameraPositionTarget.x)
-			_mvCameraPositionCurrent.x += float(_mcTimer.getSecPast()) * _mfCameraPositionSpeed * vCameraCurTarDelta.x;
+		if (vCameraPositionCurrent.x < vCameraPositionTarget.x)
+			vCameraPositionCurrent.x += float(timing.getSecPast()) * fCameraPositionSpeed * vCameraCurTarDelta.x;
 		else
-			_mvCameraPositionCurrent.x -= float(_mcTimer.getSecPast()) * _mfCameraPositionSpeed * vCameraCurTarDelta.x;
-		if (_mvCameraPositionCurrent.y < _mvCameraPositionTarget.y)
-			_mvCameraPositionCurrent.y += float(_mcTimer.getSecPast()) * _mfCameraPositionSpeed * vCameraCurTarDelta.y;
+			vCameraPositionCurrent.x -= float(timing.getSecPast()) * fCameraPositionSpeed * vCameraCurTarDelta.x;
+		if (vCameraPositionCurrent.y < vCameraPositionTarget.y)
+			vCameraPositionCurrent.y += float(timing.getSecPast()) * fCameraPositionSpeed * vCameraCurTarDelta.y;
 		else
-			_mvCameraPositionCurrent.y -= float(_mcTimer.getSecPast()) * _mfCameraPositionSpeed * vCameraCurTarDelta.y;
+			vCameraPositionCurrent.y -= float(timing.getSecPast()) * fCameraPositionSpeed * vCameraCurTarDelta.y;
 
 	}
 
 	void ManagerSprites::setCameraPosition(const Vector2& vCameraTargetPosition, float fSpeed)
 	{
-		_mvCameraPositionTarget = vCameraTargetPosition;
+		vCameraPositionTarget = vCameraTargetPosition;
 
 		// Compute camera movement speed based on initial distance from current and target positions
 	//	clamp(fSpeed, 0.0001f, FLT_MAX);
@@ -63,7 +63,7 @@ namespace Nexus
 	//	vCur.x -= vTar.x;
 	//	vCur.y -= vTar.y;
 	//	_mfCameraPositionSpeed = vCur.getLength() * (1.0f / fSpeed);
-		_mfCameraPositionSpeed = fSpeed;
+		fCameraPositionSpeed = fSpeed;
 	}
 
 	void ManagerSprites::render(void)
@@ -77,23 +77,23 @@ namespace Nexus
 	//		itlayer++;
 	//	}
 		// Render each layer based on it's z order
-		for (size_t i = 0; i < _mvecLayerNameZOrder.size(); ++i)
+		for (size_t i = 0; i < vecLayerNameZOrder.size(); ++i)
 		{
-			std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(_mvecLayerNameZOrder[i]);
-			if (itlayer != _mmapLayers.end())
-				itlayer->second->_render(_mvCameraPositionCurrent, _mfCameraZoomCurrent);
+			std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.find(vecLayerNameZOrder[i]);
+			if (itlayer != mapLayers.end())
+				itlayer->second->render(vCameraPositionCurrent, fCameraZoomCurrent);
 		}
 	}
 
 	bool ManagerSprites::hasStuffToRender(void)
 	{
 		// For each layer
-		for (size_t i = 0; i < _mvecLayerNameZOrder.size(); ++i)
+		for (size_t i = 0; i < vecLayerNameZOrder.size(); ++i)
 		{
-			std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(_mvecLayerNameZOrder[i]);
-			if (itlayer != _mmapLayers.end())
+			std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.find(vecLayerNameZOrder[i]);
+			if (itlayer != mapLayers.end())
 			{
-				if (itlayer->second->_hasStuffToRender())
+				if (itlayer->second->hasStuffToRender())
 					return true;
 			}
 		}
@@ -105,8 +105,8 @@ namespace Nexus
 	SpriteLayer* ManagerSprites::addLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
-		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer != _mmapLayers.end())
+		std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.find(strUniqueName);
+		if (itlayer != mapLayers.end())
 		{
 			std::string err("ManagerSprites::addLayer(\"");
 			err.append(strUniqueName);
@@ -119,25 +119,25 @@ namespace Nexus
 			Log::getPointer()->exception("ManagerSprites memory allocation error.");
 
 		// Add layer to hash map
-		_mmapLayers[strUniqueName] = pNewLayer;
+		mapLayers[strUniqueName] = pNewLayer;
 
 		// Add layer name to z order vector
-		_mvecLayerNameZOrder.push_back(strUniqueName);
+		vecLayerNameZOrder.push_back(strUniqueName);
 
 		return pNewLayer;
 	}
 
 	bool ManagerSprites::layerExists(const std::string& strUniqueName)
 	{
-		if (_mmapLayers.find(strUniqueName) == _mmapLayers.end())
+		if (mapLayers.find(strUniqueName) == mapLayers.end())
 			return false;
 		return true;
 	}
 	SpriteLayer* ManagerSprites::getLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
-		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer == _mmapLayers.end())
+		std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.find(strUniqueName);
+		if (itlayer == mapLayers.end())
 		{
 			std::string err("ManagerSprites::getLayer(\"");
 			err.append(strUniqueName);
@@ -150,8 +150,8 @@ namespace Nexus
 	void ManagerSprites::removeLayer(const std::string& strUniqueName)
 	{
 		// Attempt to find if the layer name already exists
-		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.find(strUniqueName);
-		if (itlayer == _mmapLayers.end())
+		std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.find(strUniqueName);
+		if (itlayer == mapLayers.end())
 		{
 			std::string err("ManagerSprites::removeLayer(\"");
 			err.append(strUniqueName);
@@ -164,15 +164,15 @@ namespace Nexus
 		delete pLayer;
 
 		// Remove layer from hash map
-		itlayer = _mmapLayers.erase(itlayer);
+		itlayer = mapLayers.erase(itlayer);
 
 		// Remove layer name from z order vector
-		std::vector<std::string>::iterator itv = _mvecLayerNameZOrder.begin();
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		std::vector<std::string>::iterator itv = vecLayerNameZOrder.begin();
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strUniqueName)
+			if (vecLayerNameZOrder[i] == strUniqueName)
 			{
-				itv = _mvecLayerNameZOrder.erase(itv);
+				itv = vecLayerNameZOrder.erase(itv);
 				break;
 			}
 			itv++;
@@ -183,8 +183,8 @@ namespace Nexus
 	{
 		// Get names of each layer
 		std::vector<std::string> vNames;
-		std::map<std::string, SpriteLayer*>::iterator itlayer = _mmapLayers.begin();
-		while (itlayer != _mmapLayers.end())
+		std::map<std::string, SpriteLayer*>::iterator itlayer = mapLayers.begin();
+		while (itlayer != mapLayers.end())
 		{
 			std::string name = itlayer->first;
 			vNames.push_back(name);
@@ -199,23 +199,23 @@ namespace Nexus
 	std::string ManagerSprites::getLayerName(int iZorder)
 	{
 		// Make sure valid index given
-		if (iZorder < 0 || iZorder >= (int)_mvecLayerNameZOrder.size())
+		if (iZorder < 0 || iZorder >= (int)vecLayerNameZOrder.size())
 		{
 			std::string err("ManagerSprites::getLayerName(");
 			err.append(std::to_string(iZorder));
 			err.append(") failed. Invalid iZorder value given!");
 			Log::getPointer()->exception(err);
 		}
-		return _mvecLayerNameZOrder[iZorder];
+		return vecLayerNameZOrder[iZorder];
 	}
 
 	int ManagerSprites::getLayerZorder(const std::string& strLayerName)
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				iCurrentIndex = i;
 				break;
@@ -238,9 +238,9 @@ namespace Nexus
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				iCurrentIndex = i;
 				break;
@@ -258,21 +258,21 @@ namespace Nexus
 		}
 
 		// If it's already at the front, do nothing
-		if ((int)_mvecLayerNameZOrder.size() - 1 == iCurrentIndex)
+		if ((int)vecLayerNameZOrder.size() - 1 == iCurrentIndex)
 			return;
 
 		// Move it to front by one...
-		_mvecLayerNameZOrder[iCurrentIndex] = _mvecLayerNameZOrder[iCurrentIndex + 1];
-		_mvecLayerNameZOrder[iCurrentIndex + 1] = strLayerName;
+		vecLayerNameZOrder[iCurrentIndex] = vecLayerNameZOrder[iCurrentIndex + 1];
+		vecLayerNameZOrder[iCurrentIndex + 1] = strLayerName;
 	}
 
 	void ManagerSprites::moveLayerToBackByOne(const std::string& strLayerName)
 	{
 		// Find current position of the named layer
 		int iCurrentIndex = -1;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				iCurrentIndex = i;
 				break;
@@ -294,8 +294,8 @@ namespace Nexus
 			return;
 
 		// Move it back one...
-		_mvecLayerNameZOrder[iCurrentIndex] = _mvecLayerNameZOrder[iCurrentIndex - 1];
-		_mvecLayerNameZOrder[iCurrentIndex - 1] = strLayerName;
+		vecLayerNameZOrder[iCurrentIndex] = vecLayerNameZOrder[iCurrentIndex - 1];
+		vecLayerNameZOrder[iCurrentIndex - 1] = strLayerName;
 	}
 
 
@@ -303,9 +303,9 @@ namespace Nexus
 	{
 		// Make sure the layer name exists
 		bool bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				bFound = true;
 				break;
@@ -329,9 +329,9 @@ namespace Nexus
 	{
 		// Make sure the layer name exists
 		bool bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				bFound = true;
 				break;
@@ -354,9 +354,9 @@ namespace Nexus
 	{
 		// Make sure both layer names exist
 		bool bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				bFound = true;
 				break;
@@ -374,9 +374,9 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 		bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerNameOther)
+			if (vecLayerNameZOrder[i] == strLayerNameOther)
 			{
 				bFound = true;
 				break;
@@ -408,9 +408,9 @@ namespace Nexus
 	{
 		// Make sure both layer names exist
 		bool bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerName)
+			if (vecLayerNameZOrder[i] == strLayerName)
 			{
 				bFound = true;
 				break;
@@ -428,9 +428,9 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 		bFound = false;
-		for (int i = 0; i < (int)_mvecLayerNameZOrder.size(); ++i)
+		for (int i = 0; i < (int)vecLayerNameZOrder.size(); ++i)
 		{
-			if (_mvecLayerNameZOrder[i] == strLayerNameOther)
+			if (vecLayerNameZOrder[i] == strLayerNameOther)
 			{
 				bFound = true;
 				break;
@@ -460,8 +460,8 @@ namespace Nexus
 	SpriteDescription* ManagerSprites::addDescription(const std::string& strUniqueName)
 	{
 		// Attempt to find if the named object already exists
-		std::map<std::string, SpriteDescription*>::iterator itlayer = _mmapDescriptions.find(strUniqueName);
-		if (itlayer != _mmapDescriptions.end())
+		std::map<std::string, SpriteDescription*>::iterator itlayer = mapDescriptions.find(strUniqueName);
+		if (itlayer != mapDescriptions.end())
 		{
 			std::string err("ManagerSprites::addDescription(\"");
 			err.append(strUniqueName);
@@ -474,7 +474,7 @@ namespace Nexus
 			Log::getPointer()->exception("ManagerSprites memory allocation error.");
 
 		// Add layer to hash map
-		_mmapDescriptions[strUniqueName] = pNewDesc;
+		mapDescriptions[strUniqueName] = pNewDesc;
 
 		return pNewDesc;
 	}
@@ -482,8 +482,8 @@ namespace Nexus
 	SpriteDescription* ManagerSprites::getDescription(const std::string& strUniqueName)
 	{
 		// Attempt to find if the named object already exists
-		std::map<std::string, SpriteDescription*>::iterator itdesc = _mmapDescriptions.find(strUniqueName);
-		if (itdesc == _mmapDescriptions.end())
+		std::map<std::string, SpriteDescription*>::iterator itdesc = mapDescriptions.find(strUniqueName);
+		if (itdesc == mapDescriptions.end())
 			return 0;
 		return itdesc->second;
 	}
@@ -595,25 +595,25 @@ namespace Nexus
 	void ManagerSprites::removeAll(void)
 	{
 		// Remove all sprite descriptions
-		std::map<std::string, SpriteDescription*>::iterator it = _mmapDescriptions.begin();
+		std::map<std::string, SpriteDescription*>::iterator it = mapDescriptions.begin();
 		std::vector<std::string> vNames;
-		while (it != _mmapDescriptions.end())
+		while (it != mapDescriptions.end())
 		{
 			delete it->second;
-			it = _mmapDescriptions.erase(it);
+			it = mapDescriptions.erase(it);
 		}
 		removeAllLayers();
 	}
 
 	void ManagerSprites::resetCamera(void)
 	{
-		_mfCameraZoomCurrent = 1.0f;
-		_mfCameraZoomTarget = 1.0f;
-		_mfCameraZoomSpeed = 0.0f;
-		_mvCameraPositionCurrent.x = RenderDevice::getPointer()->getWindowWidth() * 0.5f;
-		_mvCameraPositionCurrent.y = RenderDevice::getPointer()->getWindowHeight() * 0.5f;
-		_mvCameraPositionTarget = _mvCameraPositionCurrent;
-		_mfCameraPositionSpeed = 0.0f;
+		fCameraZoomCurrent = 1.0f;
+		fCameraZoomTarget = 1.0f;
+		fCameraZoomSpeed = 0.0f;
+		vCameraPositionCurrent.x = RenderDevice::getPointer()->getWindowWidth() * 0.5f;
+		vCameraPositionCurrent.y = RenderDevice::getPointer()->getWindowHeight() * 0.5f;
+		vCameraPositionTarget = vCameraPositionCurrent;
+		fCameraPositionSpeed = 0.0f;
 	}
 
 

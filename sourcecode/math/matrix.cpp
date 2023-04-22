@@ -135,17 +135,17 @@ namespace Nexus
 
 	void Matrix::setFromQuaternion(const Quaternion& quat)
 	{
-		matrix[0] = 1.0f - 2.0f * (quat.mfQuat[1] * quat.mfQuat[1] + quat.mfQuat[2] * quat.mfQuat[2]);
-		matrix[1] = 2.0f * (quat.mfQuat[0] * quat.mfQuat[1] - quat.mfQuat[2] * quat.mfQuat[3]);
-		matrix[2] = 2.0f * (quat.mfQuat[0] * quat.mfQuat[2] + quat.mfQuat[1] * quat.mfQuat[3]);
+		matrix[0] = 1.0f - 2.0f * (quat.fQuat[1] * quat.fQuat[1] + quat.fQuat[2] * quat.fQuat[2]);
+		matrix[1] = 2.0f * (quat.fQuat[0] * quat.fQuat[1] - quat.fQuat[2] * quat.fQuat[3]);
+		matrix[2] = 2.0f * (quat.fQuat[0] * quat.fQuat[2] + quat.fQuat[1] * quat.fQuat[3]);
 
-		matrix[4] = 2.0f * (quat.mfQuat[0] * quat.mfQuat[1] + quat.mfQuat[2] * quat.mfQuat[3]);
-		matrix[5] = 1.0f - 2.0f * (quat.mfQuat[0] * quat.mfQuat[0] + quat.mfQuat[2] * quat.mfQuat[2]);
-		matrix[6] = 2.0f * (quat.mfQuat[1] * quat.mfQuat[2] - quat.mfQuat[0] * quat.mfQuat[3]);
+		matrix[4] = 2.0f * (quat.fQuat[0] * quat.fQuat[1] + quat.fQuat[2] * quat.fQuat[3]);
+		matrix[5] = 1.0f - 2.0f * (quat.fQuat[0] * quat.fQuat[0] + quat.fQuat[2] * quat.fQuat[2]);
+		matrix[6] = 2.0f * (quat.fQuat[1] * quat.fQuat[2] - quat.fQuat[0] * quat.fQuat[3]);
 
-		matrix[8] = 2.0f * (quat.mfQuat[0] * quat.mfQuat[2] - quat.mfQuat[1] * quat.mfQuat[3]);
-		matrix[9] = 2.0f * (quat.mfQuat[1] * quat.mfQuat[2] + quat.mfQuat[0] * quat.mfQuat[3]);
-		matrix[10] = 1.0f - 2.0f * (quat.mfQuat[0] * quat.mfQuat[0] + quat.mfQuat[1] * quat.mfQuat[1]);
+		matrix[8] = 2.0f * (quat.fQuat[0] * quat.fQuat[2] - quat.fQuat[1] * quat.fQuat[3]);
+		matrix[9] = 2.0f * (quat.fQuat[1] * quat.fQuat[2] + quat.fQuat[0] * quat.fQuat[3]);
+		matrix[10] = 1.0f - 2.0f * (quat.fQuat[0] * quat.fQuat[0] + quat.fQuat[1] * quat.fQuat[1]);
 
 		matrix[15] = 1.0f;
 	}

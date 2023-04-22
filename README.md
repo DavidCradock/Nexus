@@ -12,10 +12,8 @@
 ![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/bf2bbfdd9524f6150c3152bedb34e96715ae0dd8/git_images/current_state.jpg)
 
 **To do**
-
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
-- Remove all the old coding style of underscores etc. Tidy up all the code with new.
 - Check all the /graphics/sprites/ code and test the hell out of it.
 - Check RenderTexture code.
 - Add more GUI objects. Generic buttons, image buttons, sliders, progress bars, text, listbox, scroll bars, render texture, tabs, graphs for statistics, static and animated images(sprites), text edit boxes, generic file requestor load/save pre-built windows and statistics (Framerate, CPU, RAMM etc) pre-built window.
@@ -34,6 +32,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Remove all the old coding style of underscores, C/S at beginning of class/structs, "_m" for private members etc. Tidy up all the code with new.
 - Go through all code and standardize pointer names to all the managers
 - Added saveAsJPG to Image
 - Replace all Log::getPointer()->exception() call to Log::getPointer()->exception()

@@ -23,13 +23,13 @@ namespace Nexus
 		// iPosX is the left position of the clip rect
 		// iPosY is the top position of the clip rect
 		// colour is the RGB and alpha colour to use to render the text.
-		void print(const std::string& strText, int iPosX, int iPosY, const CColouruc& colour = CColouruc(255, 255, 255, 255));
+		void print(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour = Colouruc(255, 255, 255, 255));
 
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
 		float getTextWidth(const std::string& strText);
 
 		// Get the maximum height in pixels, of the font
-		float getTextHeight(void) { return fontTypes.mfMaxCharHeight; }
+		float getTextHeight(void) { return fontTypes.fMaxCharHeight; }
 
 		
 	private:
@@ -45,7 +45,7 @@ namespace Nexus
 		bool bLoaded;	// Whether the resource is loaded or not
 
 		// Each character description (width, height, offset etc
-		struct SCharDesc
+		struct CharDesc
 		{
 			float fABCa;		// The distance to add to the current position before drawing the character glyph.
 			float fABCb;		// The width of the drawn portion of the character glyph. 
@@ -54,14 +54,14 @@ namespace Nexus
 			Vector2 vTexMax;	// Top right texture coordinates
 		};
 		// Gets loaded in when calling load()
-		struct SFontTypes
+		struct FontTypes
 		{
-			SCharDesc mCharDesc[256];		// Each characters dims etc
-			std::string mstrTextureName;	// Name of the texture filename this font "retrieves" the RGBA data from.
-			float mfMaxCharHeight;			// The tallest character's height
+			CharDesc charDesc[256];		// Each characters dims etc
+			std::string strTextureName;	// Name of the texture filename this font "retrieves" the RGBA data from.
+			float fMaxCharHeight;			// The tallest character's height
 
 		};
-		SFontTypes fontTypes;
+		FontTypes fontTypes;
 		VertexBuffer vertexBuffer;		// Used during rendering
 		unsigned int refCount;			// Used by the manager 
 	};

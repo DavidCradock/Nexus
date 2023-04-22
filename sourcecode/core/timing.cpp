@@ -6,7 +6,7 @@ namespace Nexus
 
     Timing::Timing()
     {
-        _reset();
+        reset();
     }
 
 
@@ -53,7 +53,7 @@ namespace Nexus
         Sleep(uiMilliseconds);
     }
 
-    void Timing::_reset(void)
+    void Timing::reset(void)
     {
         timePointNew = std::chrono::steady_clock::now();
         timePointOld = std::chrono::steady_clock::now();

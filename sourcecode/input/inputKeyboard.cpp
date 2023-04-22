@@ -6,8 +6,8 @@ namespace Nexus
 
 	InputKeyboard::InputKeyboard(void)
 	{
-		_mlpDIDeviceK = NULL;
-		_reset();
+		lpDIDeviceK = NULL;
+		reset();
 		// Default key repeat settings
 		setRepeatInitialDelay();
 		setRepeatRate();
@@ -17,7 +17,7 @@ namespace Nexus
 	{
 	}
 
-	void InputKeyboard::_reset(void)
+	void InputKeyboard::reset(void)
 	{
 		ZeroMemory(keyState, sizeof(char) * 256);
 		anyKeyPressed = false;
@@ -28,31 +28,31 @@ namespace Nexus
 
 	bool InputKeyboard::init(LPDIRECTINPUT8 pMainDirectXinputDevice, HWND hApplicationWindow)
 	{
-		_mlpDI = pMainDirectXinputDevice;
+		lpDI = pMainDirectXinputDevice;
 		HRESULT hr;
 
-		hr = _mlpDI->CreateDevice(GUID_SysKeyboard, &_mlpDIDeviceK, NULL);
+		hr = lpDI->CreateDevice(GUID_SysKeyboard, &lpDIDeviceK, NULL);
 		if (hr != DI_OK)
 		{
 			release();
 			return false;
 		}
 
-		hr = _mlpDIDeviceK->SetDataFormat(&c_dfDIKeyboard);
+		hr = lpDIDeviceK->SetDataFormat(&c_dfDIKeyboard);
 		if (hr != DI_OK)
 		{
 			release();
 			return false;
 		}
 
-		hr = _mlpDIDeviceK->SetCooperativeLevel(hApplicationWindow, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+		hr = lpDIDeviceK->SetCooperativeLevel(hApplicationWindow, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 		if (hr != DI_OK)
 		{
 			release();
 			return false;
 		}
 
-		_acquire();
+		acquire();
 
 		return true;
 	}
@@ -61,14 +61,14 @@ namespace Nexus
 	{
 		timing.update();
 
-		if (!_acquire())
+		if (!acquire())
 		{
-			_reset();
+			reset();
 			return;
 		}
 
 		ZeroMemory(keyState, 256 * sizeof(char));
-		_mlpDIDeviceK->GetDeviceState(256, (void*)&keyState);
+		lpDIDeviceK->GetDeviceState(256, (void*)&keyState);
 
 		anyKeyPressed = false;
 
@@ -98,12 +98,12 @@ namespace Nexus
 		}	// Check each key state
 
 		// Update _mpchKeyOnce2char
-		_updateOnceChar();
+		updateOnceChar();
 
-		_updateKeyRepeat();
+		updateKeyRepeat();
 	}
 
-	void InputKeyboard::_updateOnceChar(void)
+	void InputKeyboard::updateOnceChar(void)
 	{
 		keyOnce2Char.clear();
 		if (!anyPressed())
@@ -227,26 +227,26 @@ namespace Nexus
 
 	void InputKeyboard::release(void)
 	{
-		if (_mlpDIDeviceK)
+		if (lpDIDeviceK)
 		{
-			_mlpDIDeviceK->Unacquire();
-			_mlpDIDeviceK->Release();
-			_mlpDIDeviceK = NULL;
+			lpDIDeviceK->Unacquire();
+			lpDIDeviceK->Release();
+			lpDIDeviceK = NULL;
 		}
-		_reset();
+		reset();
 	}
 
-	bool InputKeyboard::_acquire(void)
+	bool InputKeyboard::acquire(void)
 	{
-		if (!_mlpDIDeviceK)
+		if (!lpDIDeviceK)
 			return false;
-		HRESULT	hr = _mlpDIDeviceK->Acquire();
+		HRESULT	hr = lpDIDeviceK->Acquire();
 		if (hr == S_FALSE || hr == DI_OK)	// Already acquired (S_FALSE) or re-acquired (DI_OK)
 			return true;
 		return false;
 	}
 
-	void InputKeyboard::_updateKeyRepeat(void)
+	void InputKeyboard::updateKeyRepeat(void)
 	{
 		float fMS = float(timing.getSecPast()) * 1000.0f;	// Already updated in main update method.
 		unsigned int iKey = 0;

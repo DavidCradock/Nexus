@@ -7,15 +7,14 @@
 
 namespace Nexus
 {
-
 	// A structure which holds each unique sprite description and any associated sprite entities using that description
 	struct SpriteDescAndEnt
 	{
-		std::map<std::string, SpriteEntity*> _mmapSpriteEntities;	// Hash map of each uniquely named sprite entity using this description
+		std::map<std::string, SpriteEntity*> mapSpriteEntities;	// Hash map of each uniquely named sprite entity using this description
 	};
 
 	// Holds an entity's name and the layer it is in (Used for checking collisions between mouse and entities)
-	struct SEntityDetails
+	struct EntityDetails
 	{
 		std::string strLayerName;				// The layer name which the sprite it stored in
 		std::string strEntityName;			// The sprite name
@@ -53,48 +52,48 @@ namespace Nexus
 		// Adds a line to be rendered before any sprites to this layer
 		// Positions are in world space.
 		// These lines are rendered using the line renderer found in render2DLineWS.h/cpp with no texture applied
-		void addLine(const Vector2& vLinePos1, const Vector2& vLinePos2, const CColouruc& lineColour1, const CColouruc& lineColour2, float fLineWidth);
+		void addLine(const Vector2& vLinePos1, const Vector2& vLinePos2, const Colouruc& lineColour1, const Colouruc& lineColour2, float fLineWidth);
 
 		// Removes all lines
 		void removeAllLines(void);
 
 		// Adds a circle to be rendered before any sprites to this layer, this circle is rendered with lines
-		void addCircle(const Vector2& vCirclePos, float fRadius, const CColouruc& circleColour, float fLineWidth = 0, unsigned int iNumSegments = 18);
+		void addCircle(const Vector2& vCirclePos, float fRadius, const Colouruc& circleColour, float fLineWidth = 0, unsigned int iNumSegments = 18);
 
 		// Removes all circles
 		void removeAllCircles(void);
 
 	private:
 
-		std::map<std::string, SpriteDescAndEnt*> _mmapSpriteDescAndSprites;	// Hash map of each uniquely named sprite description type and all of it's sprite entities
+		std::map<std::string, SpriteDescAndEnt*> mapSpriteDescAndSprites;	// Hash map of each uniquely named sprite description type and all of it's sprite entities
 
 		// Renders everything (called by SC2DSpriteManager)
-		void _render(const Vector2& vCameraPosition, float fCameraZoom);
+		void render(const Vector2& vCameraPosition, float fCameraZoom);
 
 		// Determines if this layer has anything to be rendered (called by SC2DSpriteManager)
-		bool _hasStuffToRender(void);
+		bool hasStuffToRender(void);
 
 		// Used by addLine and removeAllLines
-		struct SLineRender
+		struct LineRender
 		{
 			Vector2 vPos[2];
-			CColouruc cCol[2];
+			Colouruc cCol[2];
 			float fLineWidth;
 		};
-		std::vector<SLineRender*> mvecLines;
+		std::vector<LineRender*> vecLines;
 
 		// Used by addCircle and removeAllCircles
-		struct SCircleRender
+		struct CircleRender
 		{
 			Vector2 vPos;
 			float fRadius;
-			CColouruc cCol;
+			Colouruc cCol;
 			float fLineWidth;
 			unsigned int iNumSegments;
 		};
-		std::vector<SCircleRender*> mvecCircles;
+		std::vector<CircleRender*> vecCircles;
 
-		Timing _mcTimer;	// Used to update frames for entitys
+		Timing timing;	// Used to update frames for entitys
 	};
 
 }

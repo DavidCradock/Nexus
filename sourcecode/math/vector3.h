@@ -317,9 +317,9 @@ namespace Nexus
 	{
 		Quaternion qv(x, y, z, 0);
 		Quaternion qF = quat * qv * quat.getConjugate();
-		x = qF.mfQuat[0];
-		y = qF.mfQuat[1];
-		z = qF.mfQuat[2];
+		x = qF.fQuat[0];
+		y = qF.fQuat[1];
+		z = qF.fQuat[2];
 	}
 
 	inline void Vector3::multiply(float f)

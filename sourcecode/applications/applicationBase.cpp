@@ -4,7 +4,7 @@
 
 namespace Nexus
 {
-	void ApplicationBase::_addAppToManager(const std::string& applicationName)
+	void ApplicationBase::addAppToManager(const std::string& applicationName)
 	{
 		ManagerApplications* pAM = ManagerApplications::getPointer();
 		pAM->addApp(applicationName, this);

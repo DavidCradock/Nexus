@@ -28,15 +28,15 @@ namespace Nexus
 	SpriteEntity* SpriteLayer::addEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription, Vector2 vSpritePosition, float fSpriteRotationDegrees, float fSpriteScale)
 	{
 		// Does the sprite description already exist?
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.find(strSpriteDescription);
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.find(strSpriteDescription);
 		SpriteDescAndEnt* pSpriteDesc = 0;
-		if (itsde == _mmapSpriteDescAndSprites.end())
+		if (itsde == mapSpriteDescAndSprites.end())
 		{
 			// It doesn't, add new description
 			pSpriteDesc = new SpriteDescAndEnt;
 			if (!pSpriteDesc)
-				Log::getPointer()->exception("Memory allocation error");
-			_mmapSpriteDescAndSprites[strSpriteDescription] = pSpriteDesc;
+				Log::getPointer()->exception("SpriteLayer::addEntity() memory allocation error");
+			mapSpriteDescAndSprites[strSpriteDescription] = pSpriteDesc;
 		}
 		else
 		{
@@ -47,8 +47,8 @@ namespace Nexus
 		// If we get here, pSpriteDesc points to the sprite description struct which holds the sprite entities
 
 		// Does the sprite entity name already exist?
-		std::map<std::string, SpriteEntity*>::iterator itse = pSpriteDesc->_mmapSpriteEntities.find(strSpriteEntityUniqueName);
-		if (itse != pSpriteDesc->_mmapSpriteEntities.end())
+		std::map<std::string, SpriteEntity*>::iterator itse = pSpriteDesc->mapSpriteEntities.find(strSpriteEntityUniqueName);
+		if (itse != pSpriteDesc->mapSpriteEntities.end())
 		{
 			std::string err("SpriteLayer::addEntity() failed. The sprite entity name of ");
 			err.append(strSpriteEntityUniqueName);
@@ -58,23 +58,23 @@ namespace Nexus
 		SpriteEntity* pNewSpriteEntity = new SpriteEntity;
 		if (!pNewSpriteEntity)
 			Log::getPointer()->exception("Memory allocation error");
-		pNewSpriteEntity->mfRotationRadians = deg2rad(fSpriteRotationDegrees);
-		pNewSpriteEntity->mvPos = vSpritePosition;
-		pNewSpriteEntity->mfScale = fSpriteScale;
-		pNewSpriteEntity->mStrSpriteDescName = strSpriteDescription;
-		pSpriteDesc->_mmapSpriteEntities[strSpriteEntityUniqueName] = pNewSpriteEntity;
+		pNewSpriteEntity->fRotationRadians = deg2rad(fSpriteRotationDegrees);
+		pNewSpriteEntity->vPos = vSpritePosition;
+		pNewSpriteEntity->fScale = fSpriteScale;
+		pNewSpriteEntity->strSpriteDescName = strSpriteDescription;
+		pSpriteDesc->mapSpriteEntities[strSpriteEntityUniqueName] = pNewSpriteEntity;
 		return pNewSpriteEntity;
 	}
 
 	bool SpriteLayer::entityExists(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription)
 	{
 		// Does the sprite description already exist?
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.find(strSpriteDescription);
-		if (itsde == _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.find(strSpriteDescription);
+		if (itsde == mapSpriteDescAndSprites.end())
 			return false;
 		// Does the sprite entity name already exist?
-		std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.find(strSpriteEntityUniqueName);
-		if (itse == itsde->second->_mmapSpriteEntities.end())
+		std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->mapSpriteEntities.find(strSpriteEntityUniqueName);
+		if (itse == itsde->second->mapSpriteEntities.end())
 			return false;
 		return true;
 	}
@@ -82,8 +82,8 @@ namespace Nexus
 	SpriteEntity* SpriteLayer::getEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription)
 	{
 		// Does the sprite description exist?
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.find(strSpriteDescription);
-		if (itsde == _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.find(strSpriteDescription);
+		if (itsde == mapSpriteDescAndSprites.end())
 		{
 			std::string err("SpriteLayer::getEntity(\"");
 			err.append(strSpriteEntityUniqueName);
@@ -93,8 +93,8 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 		// Does the sprite entity name exist?
-		std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.find(strSpriteEntityUniqueName);
-		if (itse != itsde->second->_mmapSpriteEntities.end())
+		std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->mapSpriteEntities.find(strSpriteEntityUniqueName);
+		if (itse != itsde->second->mapSpriteEntities.end())
 			return itse->second;
 
 		std::string err("SpriteLayer::getEntity(\"");
@@ -109,12 +109,12 @@ namespace Nexus
 	void SpriteLayer::removeEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription)
 	{
 		// Does the sprite description already exist?
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.find(strSpriteDescription);
-		if (itsde != _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.find(strSpriteDescription);
+		if (itsde != mapSpriteDescAndSprites.end())
 		{
 			// Does the sprite entity name exist?
-			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.find(strSpriteEntityUniqueName);
-			if (itse == itsde->second->_mmapSpriteEntities.end())
+			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->mapSpriteEntities.find(strSpriteEntityUniqueName);
+			if (itse == itsde->second->mapSpriteEntities.end())
 			{
 				std::string err("SpriteLayer::removeEntity() failed. The sprite entity name of ");
 				err.append(strSpriteEntityUniqueName);
@@ -122,22 +122,22 @@ namespace Nexus
 				Log::getPointer()->exception(err);
 			}
 			delete itse->second;
-			itse = itsde->second->_mmapSpriteEntities.erase(itse);
+			itse = itsde->second->mapSpriteEntities.erase(itse);
 		}
 	}
 
 	void SpriteLayer::removeEntityAll(void)
 	{
 		// For each sprite description (holding sprite entities)
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.begin();
-		while (itsde != _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.begin();
+		while (itsde != mapSpriteDescAndSprites.end())
 		{
 			// For each sprite entity
-			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.begin();
-			while (itse != itsde->second->_mmapSpriteEntities.end())
+			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->mapSpriteEntities.begin();
+			while (itse != itsde->second->mapSpriteEntities.end())
 			{
 				delete itse->second;
-				itse = itsde->second->_mmapSpriteEntities.erase(itse);
+				itse = itsde->second->mapSpriteEntities.erase(itse);
 			}
 			itsde++;
 		}
@@ -202,22 +202,22 @@ namespace Nexus
 	}
 	*/
 
-	bool SpriteLayer::_hasStuffToRender(void)
+	bool SpriteLayer::hasStuffToRender(void)
 	{
 		// We have lines?
-		if (mvecLines.size())
+		if (vecLines.size())
 			return true;
 
 		// We have circles?
-		if (mvecCircles.size())
+		if (vecCircles.size())
 			return true;
 
 		// For each sprite description
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.begin();
-		while (itsde != _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.begin();
+		while (itsde != mapSpriteDescAndSprites.end())
 		{
 			// If this sprite desc has added entities
-			if (itsde->second->_mmapSpriteEntities.size())
+			if (itsde->second->mapSpriteEntities.size())
 				return true;
 			itsde++;
 		}
@@ -226,9 +226,9 @@ namespace Nexus
 		return false;
 	}
 
-	void SpriteLayer::_render(const Vector2& vCameraPosition, float fCameraZoom)
+	void SpriteLayer::render(const Vector2& vCameraPosition, float fCameraZoom)
 	{
-		_mcTimer.update();
+		timing.update();
 
 		ManagerTextures* pManTextures = ManagerTextures::getPointer();
 		pManTextures->disableTexturing();
@@ -246,8 +246,8 @@ namespace Nexus
 		ManagerSprites* pManSprites = ManagerSprites::getPointer();
 
 		// For each sprite description
-		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = _mmapSpriteDescAndSprites.begin();
-		while (itsde != _mmapSpriteDescAndSprites.end())
+		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.begin();
+		while (itsde != mapSpriteDescAndSprites.end())
 		{
 			// Get this layer's sprite description
 			SpriteDescription* pDesc = pManSprites->getDescription(itsde->first);
@@ -261,9 +261,9 @@ namespace Nexus
 			Texture* pTex = pManTextures->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
 
 			// Set description's dimensions to the size of the diffuse texture map
-			if (pDesc->mvNonScaledDims.x == 0 || pDesc->mvNonScaledDims.y == 0)
+			if (pDesc->nonScaledDims.x == 0 || pDesc->nonScaledDims.y == 0)
 			{
-				pDesc->mvNonScaledDims.set((float)pTex->getWidth(), (float)pTex->getHeight());
+				pDesc->nonScaledDims.set((float)pTex->getWidth(), (float)pTex->getHeight());
 
 				// While we're here, compute bounding circle radius
 //				pDesc->mfBoundingCircleRadius = float(D3DXVec2Length((D3DXVECTOR2*)&pDesc->mvNonScaledDims)) * 0.5f;
@@ -287,48 +287,48 @@ namespace Nexus
 			VertexBuffer vertexBuffer;
 
 			// For each sprite entity of this sprite description
-			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.begin();
+			std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->mapSpriteEntities.begin();
 
-			while (itse != itsde->second->_mmapSpriteEntities.end())
+			while (itse != itsde->second->mapSpriteEntities.end())
 			{
 				// Update current frame
-				itse->second->mfFrameNumber += (float(_mcTimer.getSecPast()) * 1000.0f) / pDesc->getFrameDelayMS(unsigned int(itse->second->mfFrameNumber));	// CHECK THIS!
-				if (itse->second->mfFrameNumber >= (float)pDesc->getNumFrames())
-					itse->second->mfFrameNumber = 0.0f;
+				itse->second->fFrameNumber += (float(timing.getSecPast()) * 1000.0f) / pDesc->getFrameDelayMS(unsigned int(itse->second->fFrameNumber));	// CHECK THIS!
+				if (itse->second->fFrameNumber >= (float)pDesc->getNumFrames())
+					itse->second->fFrameNumber = 0.0f;
 
 				// Compute position and scale of entity
 				// Determine whether this sprite entity has a parent, if it has, concatenate parent's position and rotation with this sprite entity
-				if (itse->second->mbHasParent)
+				if (itse->second->bHasParent)
 				{
 					// Get parent sprite entity
-					SpriteLayer* pParentLayer = pManSprites->getLayer(itse->second->mstrParentEntityLayerName);
-					SpriteEntity* pParentEntity = pParentLayer->getEntity(itse->second->mstrParentEntityUniqueName, itse->second->mstrParentEntitySpriteDesc);
+					SpriteLayer* pParentLayer = pManSprites->getLayer(itse->second->strParentEntityLayerName);
+					SpriteEntity* pParentEntity = pParentLayer->getEntity(itse->second->strParentEntityUniqueName, itse->second->strParentEntitySpriteDesc);
 
 					// Compute combined scale
-					vSpriteDims.x = pParentEntity->mfScale * itse->second->mfScale;
+					vSpriteDims.x = pParentEntity->fScale * itse->second->fScale;
 					vSpriteDims.y = vSpriteDims.x;
 
 					// Compute combined rotation
-					fSpriteRotRad = pParentEntity->mfRotationRadians;
-					fSpriteRotRad += itse->second->mfRotationRadians;
+					fSpriteRotRad = pParentEntity->fRotationRadians;
+					fSpriteRotRad += itse->second->fRotationRadians;
 
 					// Compute combined position
-					v2SpritePos = pParentEntity->mvPos;
-					Vector2 vVectorToChild = itse->second->mvPos;
-					vVectorToChild.rotateRad(-pParentEntity->mfRotationRadians);
-					vVectorToChild.multiply(pParentEntity->mfScale);	// Take into consideration scale of parent
+					v2SpritePos = pParentEntity->vPos;
+					Vector2 vVectorToChild = itse->second->vPos;
+					vVectorToChild.rotateRad(-pParentEntity->fRotationRadians);
+					vVectorToChild.multiply(pParentEntity->fScale);	// Take into consideration scale of parent
 					v2SpritePos += vVectorToChild;
 					v3SpritePos.x = v2SpritePos.x;
 					v3SpritePos.y = v2SpritePos.y;
 				}
 				else
 				{
-					v2SpritePos = itse->second->mvPos;
+					v2SpritePos = itse->second->vPos;
 					v3SpritePos.x = v2SpritePos.x;
 					v3SpritePos.y = v2SpritePos.y;
-					fSpriteRotRad = itse->second->mfRotationRadians;
-					vSpriteDims.x = itse->second->mfScale;
-					vSpriteDims.y = itse->second->mfScale;
+					fSpriteRotRad = itse->second->fRotationRadians;
+					vSpriteDims.x = itse->second->fScale;
+					vSpriteDims.y = itse->second->fScale;
 				}
 
 				// Render the sprite
@@ -359,48 +359,48 @@ namespace Nexus
 		}
 	}
 
-	void SpriteLayer::addLine(const Vector2& vLinePos1, const Vector2& vLinePos2, const CColouruc& lineColour1, const CColouruc& lineColour2, float fLineWidth)
+	void SpriteLayer::addLine(const Vector2& vLinePos1, const Vector2& vLinePos2, const Colouruc& lineColour1, const Colouruc& lineColour2, float fLineWidth)
 	{
-		SLineRender* pNewLine = new SLineRender;
+		LineRender* pNewLine = new LineRender;
 		if (!pNewLine)
-			Log::getPointer()->exception("Memory allocation error.");
+			Log::getPointer()->exception("SpriteLayer::addLine() memory allocation error.");
 		pNewLine->vPos[0] = vLinePos1;
 		pNewLine->vPos[1] = vLinePos2;
 		pNewLine->cCol[0] = lineColour1;
 		pNewLine->cCol[1] = lineColour2;
 		pNewLine->fLineWidth = fLineWidth;
-		mvecLines.push_back(pNewLine);
+		vecLines.push_back(pNewLine);
 	}
 
 	void SpriteLayer::removeAllLines(void)
 	{
-		for (int i = 0; i < (int)mvecLines.size(); ++i)
+		for (int i = 0; i < (int)vecLines.size(); ++i)
 		{
-			delete mvecLines[i];
+			delete vecLines[i];
 		}
-		mvecLines.clear();
+		vecLines.clear();
 	}
 
-	void SpriteLayer::addCircle(const Vector2& vCirclePos, float fRadius, const CColouruc& circleColour, float fLineWidth, unsigned int iNumSegments)
+	void SpriteLayer::addCircle(const Vector2& vCirclePos, float fRadius, const Colouruc& circleColour, float fLineWidth, unsigned int iNumSegments)
 	{
-		SCircleRender* pNewCircle = new SCircleRender;
+		CircleRender* pNewCircle = new CircleRender;
 		if (!pNewCircle)
-			Log::getPointer()->exception("Memory allocation error.");
+			Log::getPointer()->exception("SpriteLayer::addCircle() memory allocation error.");
 		pNewCircle->vPos = vCirclePos;
 		pNewCircle->fRadius = fRadius;
 		pNewCircle->cCol = circleColour;
 		pNewCircle->fLineWidth = fLineWidth;
 		pNewCircle->iNumSegments = iNumSegments;
-		mvecCircles.push_back(pNewCircle);
+		vecCircles.push_back(pNewCircle);
 	}
 
 	void SpriteLayer::removeAllCircles(void)
 	{
-		for (int i = 0; i < (int)mvecCircles.size(); ++i)
+		for (int i = 0; i < (int)vecCircles.size(); ++i)
 		{
-			delete mvecCircles[i];
+			delete vecCircles[i];
 		}
-		mvecCircles.clear();
+		vecCircles.clear();
 	}
 
 }

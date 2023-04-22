@@ -146,7 +146,7 @@ namespace Nexus
 		GetTextMetrics(hDC, &tm);
 		float fMaxHeight = (float)tm.tmHeight;
 
-		TextFont::SCharDesc charDesc[256];
+		TextFont::CharDesc charDesc[256];
 
 
 		ABCFLOAT abcf;
@@ -271,7 +271,7 @@ namespace Nexus
 		std::string strImagename = strOutputNameBase;
 		strImagename.append(".tga");
 
-		CColouruc colTmp;
+		Colouruc colTmp;
 		unsigned int iIndex;
 		for (int iX = 0; iX < (int)vFinalTextureDims.x; iX++)
 		{
@@ -327,7 +327,7 @@ namespace Nexus
 			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed. Error while saving.");
 
 		// Write out each of the characters' info, for the normal font
-		if (256 != fwrite(charDesc, sizeof(TextFont::SCharDesc), 256, f))
+		if (256 != fwrite(charDesc, sizeof(TextFont::CharDesc), 256, f))
 		{
 			fclose(f);
 			if (!f)

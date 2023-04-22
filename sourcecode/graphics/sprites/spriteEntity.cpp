@@ -9,11 +9,11 @@ namespace Nexus
 
 	SpriteEntity::SpriteEntity()
 	{
-		mvPos.setZero();
-		mfRotationRadians = 0.0f;
-		mfScale = 1.0f;
-		mvColour.set(255, 255, 255, 255);
-		mfFrameNumber = 0.0f;
+		vPos.setZero();
+		fRotationRadians = 0.0f;
+		fScale = 1.0f;
+		colour.set(255, 255, 255, 255);
+		fFrameNumber = 0.0f;
 
 		// Clear parent entity information
 		removeParentEntity();
@@ -24,18 +24,18 @@ namespace Nexus
 		// Get dims of the texture this sprite is using
 		ManagerSprites* pManSprites = ManagerSprites::getPointer();
 
-		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(mStrSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getRenderDims() failed to acquire texture from resource manager: ");
-			err.append(mStrSpriteDescName);
+			err.append(strSpriteDescName);
 			Log::getPointer()->exception(err);
 		}
 		Vector2 vDims;
 		vDims.x = float(pResTex->getWidth());
 		vDims.y = float(pResTex->getHeight());
-		vDims.x *= mfScale;
-		vDims.y *= mfScale;
+		vDims.x *= fScale;
+		vDims.y *= fScale;
 		return vDims;
 	}
 
@@ -43,11 +43,11 @@ namespace Nexus
 	{
 		ManagerSprites* pManSprites = ManagerSprites::getPointer();
 
-		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(mStrSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getSpriteDescDims() failed to acquire texture from resource manager: ");
-			err.append(mStrSpriteDescName);
+			err.append(strSpriteDescName);
 			Log::getPointer()->exception(err);
 		}
 		Vector2 vDims;
@@ -63,33 +63,33 @@ namespace Nexus
 		Vector2 thisDims = getRenderDims();
 		Vector2 otherDims = otherSprite.getRenderDims();
 
-		rectThis.left = (int)mvPos.x;
-		rectThis.top = (int)mvPos.y;
-		rectThis.right = int(mvPos.x + thisDims.x);
-		rectThis.bottom = int(mvPos.y + thisDims.y);
+		rectThis.left = (int)vPos.x;
+		rectThis.top = (int)vPos.y;
+		rectThis.right = int(vPos.x + thisDims.x);
+		rectThis.bottom = int(vPos.y + thisDims.y);
 
-		rectOther.left = (int)otherSprite.mvPos.x;
-		rectOther.top = (int)otherSprite.mvPos.y;
-		rectOther.right = int(otherSprite.mvPos.x + otherDims.x);
-		rectOther.bottom = int(otherSprite.mvPos.y + otherDims.y);
+		rectOther.left = (int)otherSprite.vPos.x;
+		rectOther.top = (int)otherSprite.vPos.y;
+		rectOther.right = int(otherSprite.vPos.x + otherDims.x);
+		rectOther.bottom = int(otherSprite.vPos.y + otherDims.y);
 		return rectThis.collision(rectOther);
 	}
 
-	void SpriteEntity::setParentEntity(const std::string& strParentEntityLayerName, const std::string& strParentSpriteEntityUniqueName, const std::string& strParentSpriteDescription)
+	void SpriteEntity::setParentEntity(const std::string& strParentEntityLayerNameIn, const std::string& strParentSpriteEntityUniqueNameIn, const std::string& strParentSpriteDescriptionIn)
 	{
 		// Store values for later use
-		mbHasParent = true;
-		mstrParentEntityLayerName = strParentEntityLayerName;
-		mstrParentEntityUniqueName = strParentSpriteEntityUniqueName;
-		mstrParentEntitySpriteDesc = strParentSpriteDescription;
+		bHasParent = true;
+		strParentEntityLayerName = strParentEntityLayerNameIn;
+		strParentEntityUniqueName = strParentSpriteEntityUniqueNameIn;
+		strParentEntitySpriteDesc = strParentSpriteDescriptionIn;
 	}
 
 	void SpriteEntity::removeParentEntity(void)
 	{
-		mbHasParent = false;
-		mstrParentEntityLayerName.clear();
-		mstrParentEntityUniqueName.clear();
-		mstrParentEntitySpriteDesc.clear();
+		bHasParent = false;
+		strParentEntityLayerName.clear();
+		strParentEntityUniqueName.clear();
+		strParentEntitySpriteDesc.clear();
 	}
 
 }

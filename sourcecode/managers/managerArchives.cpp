@@ -26,7 +26,7 @@ namespace Nexus
 				return false;
 		}
 
-		SarchiveFile tmp;
+		ArchiveFile tmp;
 		tmp.strFilename = strFilename;
 		tmp.strPassword = strPassword;
 		archiveList.push_back(tmp);

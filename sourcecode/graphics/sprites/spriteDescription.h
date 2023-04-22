@@ -33,16 +33,16 @@ namespace Nexus
 		const std::string& getFrameTextureName(unsigned int iFrameNumber);
 
 		// Returns the total number of animation frames added to this sprite desc
-		unsigned int getNumFrames(void) { return unsigned int(mvFrameTextures.size()); }
+		unsigned int getNumFrames(void) { return unsigned int(vstrFrameTextures.size()); }
 
 		// Returns the frame number's delay time in milliseconds (for animation)
 		// If invalid frame number is given, an exception occurs
 		float getFrameDelayMS(unsigned int iFrameNumber);
 	private:
-		std::vector<std::string> mvFrameTextures;	// Name of all the textures that the sprite will use to render itself. May only be one, in which case it's a static sprite instead of animated.
-		std::vector<float> mvfFrameDelay;	// Delay of each frame, in milliseconds
-		Vector2 mvNonScaledDims;		// This is the width/height of the diffuse texture and therefore the non-scaled dimensions of a sprite using this description
-		float mfBoundingCircleRadius;	// The bounding circle radius (computed along with mvNonScaledDims in C2DSpriteLayer::_renderEntities
+		std::vector<std::string> vstrFrameTextures;	// Name of all the textures that the sprite will use to render itself. May only be one, in which case it's a static sprite instead of animated.
+		std::vector<float> vfFrameDelay;			// Delay of each frame, in milliseconds
+		Vector2 nonScaledDims;						// This is the width/height of the diffuse texture and therefore the non-scaled dimensions of a sprite using this description
+		float fBoundingCircleRadius;				// The bounding circle radius (computed along with mvNonScaledDims in C2DSpriteLayer::_renderEntities
 	};
 
 }

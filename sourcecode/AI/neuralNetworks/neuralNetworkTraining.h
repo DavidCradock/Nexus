@@ -5,12 +5,12 @@
 namespace Nexus
 {
 	// Represents a single brain's genes
-	struct SGenome
+	struct Genome
 	{
-		SGenome() :dFitness(0) {}
-		SGenome(std::vector <double> w, double f) : vecWeights(w), dFitness(f) {}
+		Genome() :dFitness(0) {}
+		Genome(std::vector <double> w, double f) : vecWeights(w), dFitness(f) {}
 		//overload '<' used for sorting
-		friend bool operator<(const SGenome& lhs, const SGenome& rhs)
+		friend bool operator<(const Genome& lhs, const Genome& rhs)
 		{
 			return (lhs.dFitness < rhs.dFitness);
 		}
@@ -93,8 +93,8 @@ namespace Nexus
 
 	private:
 		void calculateFitness(void);							// Calculates best/worst/avr etc of current population
-		void insertElite(std::vector<SGenome>& newPopulation);	// Inserts the some of the best performing genomes into a vector of SGenome representing the new population
-		SGenome getGenomeViaRoulette(void);						// Returns a genome from the current population via random roulette method
+		void insertElite(std::vector<Genome>& newPopulation);	// Inserts the some of the best performing genomes into a vector of SGenome representing the new population
+		Genome getGenomeViaRoulette(void);						// Returns a genome from the current population via random roulette method
 
 		// Creates a couple of babies from the given mvecWeights of mum and dad 
 		void crossOver(std::vector<double>& mum, std::vector<double>& dad, std::vector<double>& baby1, std::vector<double>& baby2);
@@ -112,15 +112,15 @@ namespace Nexus
 		int totalElite;             // Total number of elite NN's copied each new population
 		double crossoverRate;       // Crossover rate (try 0.7)
 
-		std::vector<SGenome> mvecPop;	// Population genomes
-		std::vector<NeuralNet> mvecNN;	// Brains
-		std::vector<int> mvecNeuronSplitPoints;  // A vector of integers which represents the boundaries of each neuron within a brain
+		std::vector<Genome> vecPop;				// Population genomes
+		std::vector<NeuralNet> vecNN;			// Brains
+		std::vector<int> vecNeuronSplitPoints;  // A vector of integers which represents the boundaries of each neuron within a brain
 		// Used on newGeneration to prevent crossover in the middle of a neuron
 
 		int generationNumber;       // Current generation number
-		double mdTotalFitness;        // Total fitness of entire previous generation
+		double mdTotalFitness;      // Total fitness of entire previous generation
 		float bestFitness;          // Best fitness for previous generation
-		float averageFitness;           // Average fitness for previous generation
+		float averageFitness;		// Average fitness for previous generation
 		float worstFitness;         // Worst fitness for previous generation
 	};
 

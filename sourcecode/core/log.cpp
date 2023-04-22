@@ -55,6 +55,6 @@ namespace Nexus
 		add(strErrorText, true);
 		std::string err("Log::exception() called. ");
 		err.append(strErrorText);
-		Log::getPointer()->exception(err);
+		throw std::runtime_error(err);
 	}
 }

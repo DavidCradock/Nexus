@@ -18,11 +18,11 @@ namespace Nexus
 	bool ImagePacker::addImage(const Image& newImage, const std::string& strID)
 	{
 		// Attempt to find named image
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.find(strID);
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.find(strID);
 		if (it != addedImages.end())	// Already added
 			return false;
 
-		SImagePackerImg* pNew = new SImagePackerImg;
+		ImagePackerImg* pNew = new ImagePackerImg;
 		if (!pNew)
 		{
 			std::string err("ImagePacker::addImage(const Image &newImage, \"");
@@ -56,7 +56,7 @@ namespace Nexus
 		rotated.clear();
 
 		// Copy data into temporary arrays
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.begin();
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.begin();
 		bool bRotated = false;
 		while (it != addedImages.end())
 		{
@@ -183,7 +183,7 @@ namespace Nexus
 		float fOneOverWidth = 1.0f / float(imageFinal.getWidth());
 		float fOneOverHeight = 1.0f / float(imageFinal.getHeight());
 
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.find(ID[iIndex]);
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.find(ID[iIndex]);
 		if (it == addedImages.end())
 			Log::getPointer()->exception("ImagePacker::packInsertImg() Critical error (this should never happen)");
 		it->second->position.set(float(iPosX), float(iPosY));
@@ -212,7 +212,7 @@ namespace Nexus
 	//! Resets everything so we can start over
 	void ImagePacker::reset(void)
 	{
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.begin();
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.begin();
 		while (it != addedImages.end())
 		{
 			delete it->second->pImage;
@@ -236,7 +236,7 @@ namespace Nexus
 		Vector2 vResult;
 
 		// Attempt to find named image
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.find(strID);
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.find(strID);
 		if (it == addedImages.end())	// Couldn't be found
 			return vResult;
 		return it->second->position;
@@ -245,7 +245,7 @@ namespace Nexus
 	void ImagePacker::getImageTextureCoords(const std::string& strID, Vector2& vTCBL, Vector2& vTCBR, Vector2& vTCTR, Vector2& vTCTL)
 	{
 		// Attempt to find named image
-		std::map<std::string, SImagePackerImg*>::iterator it = addedImages.find(strID);
+		std::map<std::string, ImagePackerImg*>::iterator it = addedImages.find(strID);
 		if (it == addedImages.end())	// Couldn't be found
 			return;
 		vTCBL = it->second->TCBL;

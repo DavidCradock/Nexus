@@ -4,24 +4,24 @@
 namespace Nexus
 {
 	// Represents a neuron for use within CNeuralNet class
-	struct SNeuron
+	struct Neuron
 	{
 		// Constructor to set the number of weights for this neuron
-		SNeuron(int numWeights);
+		Neuron(int numWeights);
 
-		std::vector<double>  mvecWeight;	// The weights
-		int miNumInputs;					// Number of weights for this neuron
+		std::vector<double>  vecWeight;	// The weights
+		int iNumInputs;					// Number of weights for this neuron
 	};
 
 	// Represents a layer of neurons
-	struct SNeuronLayer
+	struct NeuronLayer
 	{
 	public:
 		// Constructor to create neurons for this layer
-		SNeuronLayer(int numNeurons, int numInputs);
+		NeuronLayer(int numNeurons, int numInputs);
 
-		std::vector<SNeuron> mvecNeuron;	// The neurons
-		int miNumNeurons;					// Number of neurons in this layer
+		std::vector<Neuron> vecNeuron;	// The neurons
+		int iNumNeurons;				// Number of neurons in this layer
 	};
 
 	// Neural network class
@@ -80,7 +80,7 @@ namespace Nexus
 		int numOutputs;						// Number of outputs
 		int numLayers;						// Number of layers
 		int numNeuronsPerLayer;				// Number of neurons per layer
-		std::vector<SNeuronLayer> layers;	// Each neuron layer containing the neurons including the output layer
+		std::vector<NeuronLayer> layers;	// Each neuron layer containing the neurons including the output layer
 		std::vector<double> inputs;			// This brain's inputs
 		std::vector<double> outputs;		// This brain's outputs
 	};

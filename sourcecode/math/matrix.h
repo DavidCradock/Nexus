@@ -90,8 +90,6 @@ namespace Nexus
 		void getUpVector(Vector3& vec);
 		void getForwardVector(Vector3& vec);
 
-		
-
 		float matrix[16];
 	};
 

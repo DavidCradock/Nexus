@@ -4,7 +4,6 @@
 
 namespace Nexus
 {
-
 	// Keyboard codes
 	#define KC_ESCAPE          0x01		//
 	#define KC_1               0x02		//
@@ -202,8 +201,8 @@ namespace Nexus
 		void setRepeatRate(float fMilliseconds = 33.33f);
 
 	private:
-		LPDIRECTINPUT8 _mlpDI;				// Pointer to main DirectX input object
-		LPDIRECTINPUTDEVICE8 _mlpDIDeviceK;	// DirectX input device object for the keyboard
+		LPDIRECTINPUT8 lpDI;				// Pointer to main DirectX input object
+		LPDIRECTINPUTDEVICE8 lpDIDeviceK;	// DirectX input device object for the keyboard
 
 		char keyState[256];				// Holds each keys state (up/down) (Use bitwise AND operator for down state (if (mchKeystate[1] & 0x80) //Escape key down
 		bool anyKeyPressed;				// Any key is down?
@@ -213,28 +212,27 @@ namespace Nexus
 
 		// Acquires the device so I can receive input data from it.
 		// Returns false if device could not be acquired. 
-		bool _acquire(void);
+		bool acquire(void);
 
 		// Resets members which hold key status.
-		void _reset(void);
+		void reset(void);
 
 		// Updates _mpchKeyOnce2char for keyOnce2Char method
-		void _updateOnceChar(void);
+		void updateOnceChar(void);
 
 		std::string keyOnce2Char;	    /// Used by keyOnce2Char()
 
-
 		// Key repeat stuff
-		struct SKeyRep
+		struct KeyRep
 		{
 			float fTimeDownMS;			// Time since last time bRepeatOk==true
 			bool bRepeatingStarted;		// The intial delay time period has passed, key repeating has started
 			bool bRepeatOK;				// Return result for keyRepeat method for this key
 		};
-		SKeyRep keyRep[256];
-		SKeyRep keyAny;
+		KeyRep keyRep[256];
+		KeyRep keyAny;
 		Timing timing;
-		void _updateKeyRepeat(void);
+		void updateKeyRepeat(void);
 
 		// Key repeat settings
 		float keyRepRateMS;			// The time duration between keyRepeat method returning true

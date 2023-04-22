@@ -45,7 +45,7 @@ namespace Nexus
         double deltaSec;        // Holds time delta since last call to update() method in seconds.
 
         // Resets all values to sane values.
-        void _reset(void);
+        void reset(void);
 
         // Stuff for FPS
         double statsFPS;                 // Holds computed current frames per second value

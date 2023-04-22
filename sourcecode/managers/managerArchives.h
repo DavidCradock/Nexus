@@ -64,12 +64,12 @@ namespace Nexus
 
 	private:
 
-		struct SarchiveFile
+		struct ArchiveFile
 		{
 			std::string strFilename;	// Filename of archive file
 			std::string strPassword;	// Password
 		};
-		std::vector <SarchiveFile> archiveList; //!< Dynamic list of each registered archive's filename
+		std::vector <ArchiveFile> archiveList; //!< Dynamic list of each registered archive's filename
 	};
 
 }

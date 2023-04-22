@@ -561,7 +561,7 @@ namespace Nexus
 		{
 			while (iY < (int)height)
 			{
-				if (_isPixelEdge(iX, iY, r, g, b))
+				if (isPixelEdge(iX, iY, r, g, b))
 					outputImage.setPixel(iX, iY, 255, 255, 255, 255);
 				else
 					outputImage.setPixel(iX, iY, 0, 0, 0, 0);

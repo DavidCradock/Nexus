@@ -3,7 +3,6 @@
 
 namespace Nexus
 {
-
 	// Represents a neuron for use within CNeuralNet class
 	struct SNeuron
 	{
@@ -32,7 +31,7 @@ namespace Nexus
 		NeuralNet();
 
 		// Create a new network with random weights, ready for training or calculations
-		bool create(int numInputs,	// Number of inputs
+		bool create(int numInputs,		// Number of inputs
 			int numOutputs,				// Number of outputs
 			int numLayers,				// Number of layers
 			int numNeuronsPerLayer		// Number of neurons for each layer

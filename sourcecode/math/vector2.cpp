@@ -8,7 +8,7 @@ namespace Nexus
 	inline const Vector2 Vector2::operator /(const float f) const
 	{
 		if (f == 0)
-			throw std::runtime_error("Vector2::operator / passed a scalar of zero");
+			Log::getPointer()->exception("Vector2::operator / passed a scalar of zero");
 		float	reciprocal = 1.0f / f;
 		return Vector2(x * reciprocal, y * reciprocal);
 	}

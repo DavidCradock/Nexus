@@ -5,7 +5,6 @@
 
 namespace Nexus
 {
-
 	void NeuralNetGeneticAlgorithm::init(int populationSizeIn,
 		int numInputsPerBrainIn,
 		int numOutputsPerBrainIn,
@@ -24,7 +23,7 @@ namespace Nexus
 
 		// Make sure if ( (miNumElite * miNumEliteCopies)%2 == 0)
 		if ((numEliteIn * numEliteCopiesIn) % 2 != 0)
-			throw std::runtime_error("NeuralNetGeneticAlgorithm::init failed. iNumElite and iNumEliteCopies, when multiplied must give an even number.");
+			Log::getPointer()->exception("NeuralNetGeneticAlgorithm::init failed. iNumElite and iNumEliteCopies, when multiplied must give an even number.");
 
 		// Store given params in members
 		populationSize = populationSizeIn;
@@ -330,7 +329,7 @@ namespace Nexus
 		if (brainNumber >= (unsigned int)populationSize)
 		{
 			err.append(" Invalid brain number given");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		mvecNN[brainNumber].save(filename);

@@ -3,7 +3,6 @@
 
 namespace Nexus
 {
-
     // Time stuff
     class Timing
     {

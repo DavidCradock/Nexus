@@ -45,7 +45,7 @@ namespace Nexus
 			std::string err("Log::getEntryText() with given index of ");
 			err.append(std::to_string(entryIndex));
 			err.append(" failed as given index is invalid");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return logEntry[entryIndex];
 	}
@@ -55,6 +55,6 @@ namespace Nexus
 		add(strErrorText, true);
 		std::string err("Log::exception() called. ");
 		err.append(strErrorText);
-		throw std::runtime_error(err);
+		Log::getPointer()->exception(err);
 	}
 }

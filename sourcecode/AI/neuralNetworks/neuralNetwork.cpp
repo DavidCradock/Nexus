@@ -6,7 +6,6 @@
 
 namespace Nexus
 {
-
 	// Set the number of inputs and weights for this neuron
 	SNeuron::SNeuron(int numWeights)
 	{
@@ -79,19 +78,19 @@ namespace Nexus
 		err.append(filename);
 		err.append("\" failed.");
 		if (!ad.loadZipDisk(filename))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		if (!ad.read(numInputs))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		if (!ad.read(numOutputs))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		if (!ad.read(numLayers))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		if (!ad.read(numNeuronsPerLayer))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		// create the neural network, ready to load in the values
 		create(numInputs, numOutputs, numLayers, numNeuronsPerLayer);
@@ -99,7 +98,7 @@ namespace Nexus
 		// Read in number of weights
 		int size = 0;
 		if (!ad.read(size))
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		// Read in weights
 		std::vector<double> weights;
@@ -107,7 +106,7 @@ namespace Nexus
 		for (int i = 0; i < size; i++)
 		{
 			if (!ad.read(temp))
-				throw std::runtime_error(err);
+				Log::getPointer()->exception(err);
 			weights.push_back(temp);
 		}
 
@@ -123,7 +122,7 @@ namespace Nexus
 		FILE* f = NULL;
 		fopen_s(&f, filename.c_str(), "wb");
 		if (f == NULL)
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 
 		fwrite(&numInputs, 1, sizeof(int), f);
 		fwrite(&numOutputs, 1, sizeof(int), f);
@@ -162,7 +161,7 @@ namespace Nexus
 			err.append(" inputs but was given ");
 			err.append(std::to_string(inputs.size()));
 
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// For each layer....
@@ -287,7 +286,7 @@ namespace Nexus
 					if (cWeight >= (int)weights.size())
 					{
 						break;
-						throw std::runtime_error("Neuralnet error");
+						Log::getPointer()->exception("Neuralnet error");
 					}
 					layers[i].mvecNeuron[j].mvecWeight[k] = weights[cWeight];
 					cWeight++;

@@ -4,7 +4,6 @@
 
 namespace Nexus
 {
-
 	// Logging of information
 	class Log : public Singleton<Log>
 	{
@@ -30,5 +29,4 @@ namespace Nexus
 	private:
 		std::vector<std::string> logEntry;	// A vector of strings, to hole each entry added by add() method
 	};
-
 }

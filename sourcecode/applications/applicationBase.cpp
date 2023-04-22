@@ -21,5 +21,4 @@ namespace Nexus
 	void ApplicationBase::onStop(void)
 	{
 	}
-
 }

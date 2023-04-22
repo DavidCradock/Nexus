@@ -29,7 +29,7 @@ namespace Nexus
 		{
 			std::string err("SpriteEntity::getRenderDims() failed to acquire texture from resource manager: ");
 			err.append(mStrSpriteDescName);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		Vector2 vDims;
 		vDims.x = float(pResTex->getWidth());
@@ -48,7 +48,7 @@ namespace Nexus
 		{
 			std::string err("SpriteEntity::getSpriteDescDims() failed to acquire texture from resource manager: ");
 			err.append(mStrSpriteDescName);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		Vector2 vDims;
 		vDims.x = float(pResTex->getWidth());

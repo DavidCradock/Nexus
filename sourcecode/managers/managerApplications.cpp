@@ -18,7 +18,7 @@ namespace Nexus
 			std::string err("ManagerApplications::addApp(");
 			err.append(applicationName);
 			err.append(" failed. Name already exists");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// If we get here, we can add it
@@ -42,7 +42,7 @@ namespace Nexus
 			err.append(std::to_string(index));
 			err.append(") failed. Invalid index given, maximum number of added applications is ");
 			err.append(std::to_string(applications.size()));
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		std::map<std::string, ApplicationBase*>::iterator it = applications.begin();
@@ -62,7 +62,7 @@ namespace Nexus
 			std::string err("ManagerApplications::switchToApp(\"");
 			err.append(applicationToSwitchTo);
 			err.append("\") failed. Application by given name doesn't exist.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		// Attempt to find the application that's currently set as current
 		std::map<std::string, ApplicationBase*>::iterator itOldApp = applications.find(currentApp);
@@ -73,7 +73,7 @@ namespace Nexus
 			err.append(" failed. Prior to changing to the new application, the old application called ");
 			err.append(currentApp);
 			err.append(" doesn't exist which is mental!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Change current app name and call the various methods for each
@@ -130,7 +130,7 @@ namespace Nexus
 			std::string str("ApplicationManager::callCurrentApp_onUpdate(");
 			str.append(currentApp);
 			str.append(" failed. Unable to find the named application");
-			throw std::runtime_error(str);
+			Log::getPointer()->exception(str);
 		}
 		return it->second->onUpdate();
 	}

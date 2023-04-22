@@ -22,7 +22,7 @@ namespace Nexus
 			std::string err("ManagerRenderTextures::getNumResInGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		std::map<std::string, RenderTextureGroup*>::iterator itg = group.find(strGroupName);
 		return (unsigned int)itg->second->_mmapResource.size();
@@ -37,7 +37,7 @@ namespace Nexus
 			err.append(std::to_string(iGroupIndex));
 			err.append(") failed. Invalid index given. Number of groups is ");
 			err.append(std::to_string(getNumGroups()));
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		std::map<std::string, RenderTextureGroup*>::iterator itg = group.begin();
 		unsigned int i = 0;
@@ -56,7 +56,7 @@ namespace Nexus
 			std::string err("ManagerRenderTextures::addNewGroup() has been given the new group name of \"");
 			err.append(strNewGroupName);
 			err.append("\" but it already exists! Only new groups can be added.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		RenderTextureGroup* pNewGroup = new RenderTextureGroup;
 		group[strNewGroupName] = pNewGroup;
@@ -82,7 +82,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the new resource was to be placed into, doesn't exist!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Resource already exists in the group?
@@ -112,7 +112,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" doesn't exist!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -127,7 +127,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" exists, the named resource couldn't be found!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return (RenderTexture*)itr->second;
 	}
@@ -158,7 +158,7 @@ namespace Nexus
 			err.append("\") failed. As the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, doesn't exist!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Resource doesn't exist in the group?
@@ -173,7 +173,7 @@ namespace Nexus
 			err.append("\") failed. Although the given named group of \"");
 			err.append(strGroupName);
 			err.append("\" which the resource is supposed to be in, exists, the named resource couldn't be found!");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// If we get here, we've found the resource in the group

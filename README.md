@@ -22,7 +22,6 @@
 - Implement archiveManager to all classes which load from files
 - Add line rendering.
 - Add a loading screen mechanism of some kind.
-- Add additional save formats to Image
 - Add logging all over the place
 - Add 2D particle systems with emitters, forces, physics etc, ala Blender.
 - Rewrite AI neural network and genetic algorithm training classes to be multithreaded and perhaps also able to run on GPU?
@@ -35,5 +34,6 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
-- Replace all throw std::runtime_error() call to Log::getPointer()->exception()
+- Added saveAsJPG to Image
+- Replace all Log::getPointer()->exception() call to Log::getPointer()->exception()
 - Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects

@@ -17,7 +17,7 @@ namespace Nexus
 		// Saves all settings to given file.
 		bool save(std::string filename = "settings.cfg");
 
-		int screenmode;	// 0=True fullscreen. 1=borderless window fullscreen. 2=decorated window
+		int screenmode;				// 0=True fullscreen. 1=borderless window fullscreen. 2=decorated window
 		unsigned int screenWidth;
 		unsigned int screenHeight;
 		int vsyncEnabled;

@@ -187,7 +187,7 @@ namespace Nexus
 			err.append("x");
 			err.append(std::to_string(_miDesktopDim[1]));
 			err.append(")");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		_mfDesktopRatio = float(_miDesktopDim[0]) / float(_miDesktopDim[1]);
@@ -425,7 +425,7 @@ namespace Nexus
 		dm.dmDisplayFrequency = iFrequency;
 		dm.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_DISPLAYFREQUENCY;
 		if (ChangeDisplaySettings(&dm, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
-			throw std::runtime_error("changeScreenmode() failed to change display settings.");
+			Log::getPointer()->exception("changeScreenmode() failed to change display settings.");
 	}
 
 	void System::_setUserAppDataDir(void)

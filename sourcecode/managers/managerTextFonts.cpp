@@ -39,7 +39,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return (TextFont*)itr->second;
 	}
@@ -61,7 +61,7 @@ namespace Nexus
 			std::string err("ManagerTextFonts::remove(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		itr->second->refCount--;
@@ -125,14 +125,14 @@ namespace Nexus
 			strFontName.c_str());		// Font Name
 		if (font == NULL)	// Unable to generate new font?
 		{
-			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateFont()");
+			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateFont()");
 		}
 
 		hDC = CreateCompatibleDC(0);
 		if (0 == hDC)
 		{
 			DeleteObject(font);
-			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
+			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed upon call to Win32 API call CreateCompatibleDC()");
 		}
 
 		SetTextColor(hDC, RGB(255, 255, 255));
@@ -245,7 +245,7 @@ namespace Nexus
 			SelectObject(hDC, oldFont);
 			DeleteObject(font);
 			DeleteDC(hDC);
-			throw std::runtime_error("TextFontManager::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
+			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed upon call to Win32 API call Create DIBSection()");
 		}
 		// Draw chars into bitmap
 		SelectObject(hDC, hBMP);
@@ -320,18 +320,18 @@ namespace Nexus
 		strOutputNameBase.append(".fnt");
 		fopen_s(&f, strOutputNameBase.c_str(), "wb");
 		if (!f)
-			throw std::runtime_error("TextFontManager::buildFontFiles() failed. Unable to open file for saving.");
+			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed. Unable to open file for saving.");
 
 		// Write out max char height of each of the fonts
 		if (1 != fwrite(&fMaxHeight, sizeof(float), 1, f))
-			throw std::runtime_error("TextFontManager::buildFontFiles() failed. Error while saving.");
+			Log::getPointer()->exception("TextFontManager::buildFontFiles() failed. Error while saving.");
 
 		// Write out each of the characters' info, for the normal font
 		if (256 != fwrite(charDesc, sizeof(TextFont::SCharDesc), 256, f))
 		{
 			fclose(f);
 			if (!f)
-				throw std::runtime_error("TextFontManager::buildFontFiles() failed. Error while saving.");
+				Log::getPointer()->exception("TextFontManager::buildFontFiles() failed. Error while saving.");
 		}
 
 		fclose(f);

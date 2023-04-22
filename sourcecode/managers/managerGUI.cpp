@@ -20,7 +20,7 @@ namespace Nexus
 			return;
 
 		if (!strCurrentTheme.length())
-			throw std::runtime_error("ManagerGUI::render() failed as currently set theme is not set.");
+			Log::getPointer()->exception("ManagerGUI::render() failed as currently set theme is not set.");
 
 		ManagerTextures* pTM = ManagerTextures::getPointer();
 		ManagerTextFonts* pTFM = ManagerTextFonts::getPointer();
@@ -162,7 +162,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -190,7 +190,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return (GUITheme*)itr->second;
 	}
@@ -212,7 +212,7 @@ namespace Nexus
 			std::string err("ManagerGUI::removeTheme(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Destroy the resource
@@ -230,7 +230,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -253,7 +253,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return (GUIWindow*)itr->second;
 	}
@@ -275,7 +275,7 @@ namespace Nexus
 			std::string err("ManagerGUI::removeWindow(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Destroy the resource

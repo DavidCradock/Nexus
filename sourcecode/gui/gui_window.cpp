@@ -137,7 +137,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// If we get here, we have got to create, then add the resource
@@ -159,7 +159,7 @@ namespace Nexus
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		return (GUIButton*)itr->second;
 	}
@@ -181,7 +181,7 @@ namespace Nexus
 			std::string err("GUIWindow::removeButton(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Destroy the resource

@@ -3,7 +3,6 @@
 
 namespace Nexus
 {
-
 	// A class for creating/loading/saving/modifying 2D images
 	// Can read the following formats...
 	// JPEG baseline & progressive (12 bpc/arithmetic not supported, same as stock IJG lib)
@@ -103,8 +102,12 @@ namespace Nexus
 		void swapRedAndBlue(void);
 
 		// Save image to TGA file on disk
-		// szFilename The filename to save the image to. Extension will be added if not given 
+		// szFilename The filename to save the image to.
 		void saveAsTGA(const std::string& strFilename, bool bFlipOnSave = false);
+
+		// Save image to JPG file on disk
+		// szFilename The filename to save the image to.
+		void saveAsJPG(const std::string& strFilename, bool bFlipOnSave = false, int iQuality = 100);
 
 		// Save image to TGA file on disk
 		// szFilename The filename to save the image to. Extension will be added if not given 

@@ -39,7 +39,7 @@ namespace Nexus
         }
         catch (std::ifstream::failure e)
         {
-			throw std::runtime_error("Shader::compile() failed to read in program code.");
+			Log::getPointer()->exception("Shader::compile() failed to read in program code.");
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
@@ -59,7 +59,7 @@ namespace Nexus
             glGetShaderInfoLog(vertex, 512, NULL, infoLog);
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
         };
 
         // Fragment Shader
@@ -72,7 +72,7 @@ namespace Nexus
             glGetShaderInfoLog(fragment, 512, NULL, infoLog);
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
         };
 
         // Shader Program
@@ -86,7 +86,7 @@ namespace Nexus
         {
             std::string err("Shader::compile() failed. ");
             err.append(infoLog);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
         }
 
         // Delete the shaders as they're linked into our program now and no longer necessary

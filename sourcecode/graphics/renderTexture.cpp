@@ -31,7 +31,7 @@ namespace Nexus
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, iWidth, iHeight); // Use a single renderbuffer object for both a depth and stencil buffer.
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferID); // Attach it
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			throw std::runtime_error("RenderTarget() failed. Framebuffer is not complete.");
+			Log::getPointer()->exception("RenderTarget() failed. Framebuffer is not complete.");
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	}

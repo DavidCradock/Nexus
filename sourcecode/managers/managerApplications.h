@@ -5,10 +5,9 @@
 
 namespace Nexus
 {
-
-	// App manager class to handle all apps which are derived from CAppBase found in "app base.h"
-	// By default, the current application to be run each loop is the CAppDevelopment application
-	// This can be changed by called ApplicationManager::getPointer()->switchToApp("YourApplicationName");
+	// App manager class to handle all apps which are derived from ApplicationBase found in "applicationBase.h"
+	// By default, the current application to be run each loop is the AppDevelopment application
+	// This can be changed by called ManagerApplications::getPointer()->switchToApp("YourApplicationName");
 	class ManagerApplications : public Singleton<ManagerApplications>
 	{
 	public:
@@ -33,9 +32,9 @@ namespace Nexus
 		// Returns the name of the currently set application
 		std::string getCurrentAppName(void) { return currentApp; }
 
-		// Add a new application class object pointer derived from the CAppBass class to the manager
-		// If the name of the application already exists, a critical error occurs.
-		// This has to be called inside the CAppBass derived class's constructor.. CExampleApp(CText &strAppName);
+		// Add a new application class object pointer derived from the ApplicationBase class to the manager
+		// If the name of the application already exists, an exception occurs.
+		// This has to be called inside the ApplicationBase derived class's constructor.. CExampleApp(CText &strAppName);
 		// The first time this is called from the class's constructor, that application is set as currently active.
 		void addApp(const std::string& applicationName, ApplicationBase* pTheApplication);
 
@@ -48,6 +47,6 @@ namespace Nexus
 
 	private:
 		std::map<std::string, ApplicationBase*> applications;	// Hash map which holds each named application
-		std::string currentApp;						// Application name of the current application.
+		std::string currentApp;									// Application name of the current application.
 	};
 }

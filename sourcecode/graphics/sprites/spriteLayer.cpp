@@ -259,7 +259,7 @@ namespace Nexus
 			if (0 == pDesc->getFrameTextureName(0).length())
 			{
 				std::string err("SpriteLayer::_renderEntities() failed!");
-				throw std::runtime_error(err);
+				Log::getPointer()->exception(err);
 			}
 			Texture* pTex = pTM->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
 
@@ -366,7 +366,7 @@ namespace Nexus
 	{
 		SLineRender* pNewLine = new SLineRender;
 		if (!pNewLine)
-			throw std::runtime_error("Memory allocation error.");
+			Log::getPointer()->exception("Memory allocation error.");
 		pNewLine->vPos[0] = vLinePos1;
 		pNewLine->vPos[1] = vLinePos2;
 		pNewLine->cCol[0] = lineColour1;

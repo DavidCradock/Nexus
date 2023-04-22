@@ -5,7 +5,6 @@
 
 namespace Nexus
 {
-
 	ArchiveData::ArchiveData()
 	{
 		pData = 0;
@@ -59,20 +58,20 @@ namespace Nexus
 		pData = new unsigned char[datasize];
 		if (0 == pData)
 		{
-			std::string err("Failed to find file \"");
+			std::string err("ArchiveData::loadZipDisk() failed to find file \"");
 			err.append(strFilename);
 			err.append("\" in zip archive, but found on disk, but failed to allocate memory for it");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		fseek(f, 0, SEEK_SET);
 		size_t amountRead = fread_s(pData, sizeof(unsigned char) * datasize, sizeof(unsigned char), datasize, f);
 
 		if (datasize != amountRead && !bReadInTextMode)
 		{
-			std::string err("Failed to find file \"");
+			std::string err("ArchiveData::loadZipDisk() failed to find file \"");
 			err.append(strFilename);
 			err.append("\" in zip archive, but found on disk and allocated memory for it, but there was a file I/O error.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		if (bReadInTextMode)
 		{

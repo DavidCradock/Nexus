@@ -129,5 +129,4 @@ namespace Nexus
 		float fZeroToOne = (float)rand() / float(RAND_MAX + 1.0);
 		return fMin + (fMax - fMin) * fZeroToOne;
 	}
-
 }

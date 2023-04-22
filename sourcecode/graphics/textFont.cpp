@@ -45,17 +45,17 @@ namespace Nexus
 		{
 			std::string err("TextFont::load() failed. Unable to load font data file: ");
 			err.append(strFontFNTFilename);
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 
 		// Read in max char height of each of the fonts
 		if (!archiveData.read(fontTypes.mfMaxCharHeight))
-			throw std::runtime_error("TextFont::load() failed.");
+			Log::getPointer()->exception("TextFont::load() failed.");
 
 		for (int i = 0; i < 256; ++i)
 		{
 			if (!archiveData.read(fontTypes.mCharDesc[i]))
-				throw std::runtime_error("TextFont::load() failed. Error whilst loading in data from font data file");
+				Log::getPointer()->exception("TextFont::load() failed. Error whilst loading in data from font data file");
 		}
 
 		bLoaded = true;

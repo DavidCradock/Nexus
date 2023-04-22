@@ -4,7 +4,6 @@
 
 namespace Nexus
 {
-
 	// Holds system memory information which is set by System::getMemInfo()
 	struct SMemInfo
 	{
@@ -116,15 +115,12 @@ namespace Nexus
 		// strAppWindowTitle The title of the window which is owned by the process. 
 		bool isProcessInForeground(const std::string& strAppWindowTitle);
 
-		/*! \brief Copies the given text to the system's clipboard
-		 *
-		 * \returns true if the text was successfully copied.
-		 * \param strText The text to copy to the clipboard.
-		 */
+		// Copies the given text to the system's clipboard
+		// Returns true if the text was successfully copied.
 		bool copyTextToClipboard(const std::string& strText);
 
 		// Obtains the current display mode width and height
-		//iWidth Holds the current width, in pixels
+		// iWidth Holds the current width, in pixels
 		// iHeight Holds the current height, in pixels 
 		void getCurrentDisplayModeDims(unsigned int& iWidth, unsigned int& iHeight);
 

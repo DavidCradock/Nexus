@@ -104,7 +104,6 @@ namespace Nexus
 		err.append("\") failed!\nThe sprite entity doesn't exist!");
 		Log::getPointer()->exception(err);
 		return 0;	// Keep compiler happy
-
 	}
 
 	void SpriteLayer::removeEntity(const std::string& strSpriteEntityUniqueName, const std::string& strSpriteDescription)
@@ -231,14 +230,12 @@ namespace Nexus
 	{
 		_mcTimer.update();
 
-		ManagerTextures* pTM = ManagerTextures::getPointer();
-		pTM->disableTexturing();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		pManTextures->disableTexturing();
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		//		SCSpriteRenderer* pSR = SCSpriteRenderer::getPointer();
 
 		float fRenderTargetHeight = float(RenderDevice::getPointer()->getWindowHeight());
 
@@ -261,7 +258,7 @@ namespace Nexus
 				std::string err("SpriteLayer::_renderEntities() failed!");
 				Log::getPointer()->exception(err);
 			}
-			Texture* pTex = pTM->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
+			Texture* pTex = pManTextures->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
 
 			// Set description's dimensions to the size of the diffuse texture map
 			if (pDesc->mvNonScaledDims.x == 0 || pDesc->mvNonScaledDims.y == 0)
@@ -340,7 +337,7 @@ namespace Nexus
 				vSpriteDims.y *= renderDims.y;
 
 				// Get texture of sprite entity
-				pTex = pTM->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
+				pTex = pManTextures->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
 				pTex->bind();
 				matrixTranslation.setTranslation(v2SpritePos.x - (0.5f * renderDims.x), v2SpritePos.y - (0.5f * renderDims.y), 0.0f);
 				matrixRotation.setFromAxisAngle(Vector3(0, 0, -1), fSpriteRotRad);

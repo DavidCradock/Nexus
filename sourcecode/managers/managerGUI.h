@@ -19,7 +19,6 @@ namespace Nexus
 		ManagerGUI();
 
 		// Updates and renders the GUI.
-		// Called from main
 		void render(void);
 
 		// Creates a new theme, ready for customization

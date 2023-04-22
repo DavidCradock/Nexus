@@ -28,10 +28,10 @@ namespace Nexus
 //		pWindow->setWindowDimensions(640, 480);
 
 		// Sprite manager
-		ManagerSprites* pSpriteMan = ManagerSprites::getPointer();
-		SpriteDescription *pSpriteDesc = pSpriteMan->addDescription("spriteTest");
+		ManagerSprites* pManSprites = ManagerSprites::getPointer();
+		SpriteDescription *pSpriteDesc = pManSprites->addDescription("spriteTest");
 		pSpriteDesc->addFrame("sprites/sprite_test.png");
-		SpriteLayer *pSpriteLayer = pSpriteMan->addLayer("layer0");
+		SpriteLayer *pSpriteLayer = pManSprites->addLayer("layer0");
 		SpriteEntity *pSpriteEntity = pSpriteLayer->addEntity("entity0", "spriteTest", Vector2(500, 500), 0.0f, 1.0f);
 		
 		

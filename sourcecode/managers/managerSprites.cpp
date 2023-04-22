@@ -9,17 +9,15 @@ namespace Nexus
 	ManagerSprites::ManagerSprites()
 	{
 		// Add the resource group "sprites"
-		ManagerTextures* pTM = ManagerTextures::getPointer();
-		pTM->addNewGroup("sprites");
-
-		// Add sprite material
-//		pRM->addMaterial("SPRITE_MATERIAL_DIFFUSE", "../data/core/materials/matSpriteDiffuse.fx", "CORE");				// Diffuse only
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		RenderDevice* pRenderDevice = RenderDevice::getPointer();
+		pManTextures->addNewGroup("sprites");
 
 		_mfCameraZoomCurrent = 1.0f;
 		_mfCameraZoomTarget = 1.0f;
 		_mfCameraZoomSpeed = 0.0f;
-		_mvCameraPositionCurrent.x = RenderDevice::getPointer()->getWindowWidth() * 0.5f;
-		_mvCameraPositionCurrent.y = RenderDevice::getPointer()->getWindowHeight() * 0.5f;
+		_mvCameraPositionCurrent.x = pRenderDevice->getWindowWidth() * 0.5f;
+		_mvCameraPositionCurrent.y = pRenderDevice->getWindowHeight() * 0.5f;
 		_mvCameraPositionTarget = _mvCameraPositionCurrent;
 		_mfCameraPositionSpeed = 0.0f;
 	}

@@ -34,6 +34,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Go through all code and standardize pointer names to all the managers
 - Added saveAsJPG to Image
 - Replace all Log::getPointer()->exception() call to Log::getPointer()->exception()
 - Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects

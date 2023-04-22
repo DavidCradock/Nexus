@@ -13,22 +13,22 @@ namespace Nexus
 
 	void SpriteDescription::addFrame(const std::string& strTextureFilename, float fTimeToShowThisFrameMS)
 	{
-		ManagerTextures* pTM = ManagerTextures::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
 
 		mvFrameTextures.push_back(strTextureFilename);
 		if (fTimeToShowThisFrameMS < 1.0f)
 			fTimeToShowThisFrameMS = 1.0f;
 		mvfFrameDelay.push_back(fTimeToShowThisFrameMS);
-		pTM->add2DTexture(strTextureFilename, strTextureFilename, "sprites", true);
+		pManTextures->add2DTexture(strTextureFilename, strTextureFilename, "sprites", true);
 		mvNonScaledDims.setZero();	// So it's re-calculated (In case the diffuse texture has changed
 	}
 
 	void SpriteDescription::removeAllFrames(void)
 	{
-		ManagerTextures* pTM = ManagerTextures::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
 		for (int i = 0; i < (int)mvFrameTextures.size(); ++i)
 		{
-			pTM->remove2DTexture(mvFrameTextures[i], "sprites");
+			pManTextures->remove2DTexture(mvFrameTextures[i], "sprites");
 		}
 		for (int i = 0; i < (int)mvFrameTextures.size(); ++i)
 		{

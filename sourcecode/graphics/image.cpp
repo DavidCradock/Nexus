@@ -525,8 +525,6 @@ namespace Nexus
 
 	}
 
-
-
 	void Image::rotateClockwise(void)
 	{
 		Image oldImage;

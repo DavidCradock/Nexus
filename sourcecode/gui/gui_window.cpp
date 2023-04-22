@@ -103,12 +103,11 @@ namespace Nexus
 		vTexCoordsR.vTCTR.y = point6;
 		vTexCoordsR.vTCBR.y = point3;
 		vTexCoordsR.vTCTL.y = point6;
-
 	}
 
 	void GUIWindow::setWindowEnabled(bool bEnabledIn)
 	{
-		bEnabled = bEnabled;
+		bEnabled = bEnabledIn;
 	}
 
 	void GUIWindow::setWindowDimensions(int iWidthIn, int iHeightIn)

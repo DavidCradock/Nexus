@@ -5,12 +5,14 @@
 #include "managerTextures.h"
 #include "../graphics/renderDevice.h"
 #include "managerTextFonts.h"
+#include "managerInputDevices.h"
 
 namespace Nexus
 {
 	ManagerGUI::ManagerGUI()
 	{
 		pShader = ManagerShaders::getPointer()->getShader("gui", "default");
+		bMouseIsOverGUI = false;
 	}
 
 	void ManagerGUI::render(void)
@@ -22,20 +24,20 @@ namespace Nexus
 		if (!strCurrentTheme.length())
 			Log::getPointer()->exception("ManagerGUI::render() failed as currently set theme is not set.");
 
-		ManagerTextures* pTM = ManagerTextures::getPointer();
-		ManagerTextFonts* pTFM = ManagerTextFonts::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
+		RenderDevice* pRenderDevice = RenderDevice::getPointer();
+		ManagerInputDevices* pManInput = ManagerInputDevices::getPointer();
+		ManagerShaders* pManShaders = ManagerShaders::getPointer();
 
 		// Get currently set theme
 		GUITheme* pTheme = getTheme(strCurrentTheme);
 
 		// Windows backgrounds
-		Texture* pTexture = pTM->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Texture* pTexture = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
 		Vector2 vWindowTextureDims((float)pTexture->getWidth(), (float)pTexture->getHeight());
 		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
 		vWndTexDimsDiv3.multiply(0.3333333f);
-
-		RenderDevice* pRD = RenderDevice::getPointer();
-
 
 		// For each window
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.begin();
@@ -53,7 +55,7 @@ namespace Nexus
 
 			// Prepare rendering of background
 			pTexture->bind();
-			Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
+			Shader* pShader = pManShaders->getShader("gui");
 			pShader->use();
 			pShader->setInt("texture1", pTexture->getID());
 			glEnable(GL_BLEND);
@@ -143,7 +145,7 @@ namespace Nexus
 			// Now render the text for the titlebar
 			if (itr->second->strTitlebarText.length())
 			{
-				TextFont* pTextFont = pTFM->getTextFont(pTheme->strFontnameWindowTitlebar);
+				TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
 				pTextFont->print(itr->second->strTitlebarText, 
 					(int)itr->second->vPosition.x + (int)vWndTexDimsDiv3.x + pTheme->vWindowTitlebarTextOffset.x,
 					(int)itr->second->vPosition.y + pTheme->vWindowTitlebarTextOffset.y);
@@ -290,8 +292,8 @@ namespace Nexus
 
 	void ManagerGUI::loadAllThemes(void)
 	{
-		ManagerTextures* pTM = ManagerTextures::getPointer();
-		ManagerTextFonts* pTFM = ManagerTextFonts::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
 
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.begin();
 		while (itr != mapGUIThemes.end())
@@ -299,14 +301,14 @@ namespace Nexus
 			if (!itr->second->bLoaded)
 			{
 				itr->second->bLoaded = true;
-				pTM->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
-				pTM->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
-				pTM->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
-				pTM->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
-				pTFM->addTextFont(itr->second->strFontnameWindowTitlebar);
+				pManTextures->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
+				pManTextures->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
+				pManTextures->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
+				pManTextures->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
+				pManTextFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
 			}
 			itr++;
 		}
-		pTFM->loadAll();
+		pManTextFonts->loadAll();
 	}
 }

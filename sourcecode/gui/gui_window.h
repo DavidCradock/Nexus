@@ -48,7 +48,6 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeButton(const std::string& name);
 
-		
 	private:
 		bool bEnabled;					// Whether this window is enabled or not
 		Vector2 vDimensions;			// Width and height of the object

@@ -13,7 +13,7 @@
 
 **To do**
 
-- Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object.
+- Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
 - Remove all the old coding style of underscores etc. Tidy up all the code with new.
 - Check all the /graphics/sprites/ code and test the hell out of it.
@@ -35,4 +35,5 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Replace all throw std::runtime_error() call to Log::getPointer()->exception()
 - Move each manager into their own files then move them to new filter "managers" and rename each class from ObjectManager to ManagerObjects

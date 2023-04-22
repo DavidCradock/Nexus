@@ -11,7 +11,6 @@ namespace Nexus
 	public:
 		Sprite(void);
 
-		void render(const Vector2 &vPositionIn, float fRotationDegrees = 0.0f);
 		void setTexture(const std::string& textureNameIn);
 		void setDimensions(const Vector2& dimensionsIn);
 		Vector2 vPosition;
@@ -19,7 +18,6 @@ namespace Nexus
 	private:
 		VertexBuffer vertexBuffer;
 		std::string textureName;
-		Matrix matrixTransform;
 	};
 
 

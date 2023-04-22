@@ -35,7 +35,7 @@ namespace Nexus
 			// It doesn't, add new description
 			pSpriteDesc = new SpriteDescAndEnt;
 			if (!pSpriteDesc)
-				throw std::runtime_error("Memory allocation error");
+				Log::getPointer()->exception("Memory allocation error");
 			_mmapSpriteDescAndSprites[strSpriteDescription] = pSpriteDesc;
 		}
 		else
@@ -53,11 +53,11 @@ namespace Nexus
 			std::string err("SpriteLayer::addEntity() failed. The sprite entity name of ");
 			err.append(strSpriteEntityUniqueName);
 			err.append(" already exists.");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		SpriteEntity* pNewSpriteEntity = new SpriteEntity;
 		if (!pNewSpriteEntity)
-			throw std::runtime_error("Memory allocation error");
+			Log::getPointer()->exception("Memory allocation error");
 		pNewSpriteEntity->mfRotationRadians = deg2rad(fSpriteRotationDegrees);
 		pNewSpriteEntity->mvPos = vSpritePosition;
 		pNewSpriteEntity->mfScale = fSpriteScale;
@@ -90,7 +90,7 @@ namespace Nexus
 			err.append("\", \"");
 			err.append(strSpriteDescription);
 			err.append("\") failed!\nThe sprite description doesn't exist.\n This might be because not a single sprite has been added which uses the sprite description");
-			throw std::runtime_error(err);
+			Log::getPointer()->exception(err);
 		}
 		// Does the sprite entity name exist?
 		std::map<std::string, SpriteEntity*>::iterator itse = itsde->second->_mmapSpriteEntities.find(strSpriteEntityUniqueName);
@@ -102,7 +102,7 @@ namespace Nexus
 		err.append("\", \"");
 		err.append(strSpriteDescription);
 		err.append("\") failed!\nThe sprite entity doesn't exist!");
-		throw std::runtime_error(err);
+		Log::getPointer()->exception(err);
 		return 0;	// Keep compiler happy
 
 	}
@@ -120,7 +120,7 @@ namespace Nexus
 				std::string err("SpriteLayer::removeEntity() failed. The sprite entity name of ");
 				err.append(strSpriteEntityUniqueName);
 				err.append(" doesn't exist.");
-				throw std::runtime_error(err);
+				Log::getPointer()->exception(err);
 			}
 			delete itse->second;
 			itse = itsde->second->_mmapSpriteEntities.erase(itse);
@@ -355,10 +355,9 @@ namespace Nexus
 				vertexBuffer.upload();
 				vertexBuffer.draw(false);
 
-//				pSR->addSprite(pTex, v3SpritePos, vSpriteDims, fSpriteRotRad, itse->second->getColour());
 				itse++;
 			}
-			//			pSR->end();
+
 			itsde++;
 		}
 	}
@@ -389,7 +388,7 @@ namespace Nexus
 	{
 		SCircleRender* pNewCircle = new SCircleRender;
 		if (!pNewCircle)
-			throw std::runtime_error("Memory allocation error.");
+			Log::getPointer()->exception("Memory allocation error.");
 		pNewCircle->vPos = vCirclePos;
 		pNewCircle->fRadius = fRadius;
 		pNewCircle->cCol = circleColour;

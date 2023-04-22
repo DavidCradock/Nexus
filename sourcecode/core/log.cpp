@@ -49,4 +49,12 @@ namespace Nexus
 		}
 		return logEntry[entryIndex];
 	}
+
+	void Log::exception(const std::string& strErrorText)
+	{
+		add(strErrorText, true);
+		std::string err("Log::exception() called. ");
+		err.append(strErrorText);
+		throw std::runtime_error(err);
+	}
 }

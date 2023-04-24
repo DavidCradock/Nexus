@@ -23,7 +23,7 @@
 - Add logging all over the place
 - Add 2D particle systems with emitters, forces, physics etc, ala Blender.
 - Rewrite AI neural network and genetic algorithm training classes to be multithreaded and perhaps also able to run on GPU?
-- Rewrite Input stuff, especially the joystick part. We need to support multiple devices with multiple axis and number of buttons and triggers etc (XBox controller). I wishh I could get my hands on a forcefeedback joystick. Remapping of controls needed.
+- Rewrite Input stuff, especially the joystick part. We need to support multiple devices with multiple axis and number of buttons and triggers etc (XBox controller). I wish I could get my hands on a forcefeedback joystick. Remapping of controls needed.
 - Add more AI stuff. Steering, pathfinding, finite state machines and ?
 - Add some kinda 2D map
 - Add 3D octree based renderer using diffuse, emission, roughness, metalic, normal bumpmap and? textures.

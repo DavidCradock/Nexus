@@ -70,6 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
 
                 pManSprites->update();
                 pManSprites->render();
+                pManGUI->update();
                 pManGUI->render();
                 std::string strFramerate("Framerate: ");
                 strFramerate.append(std::to_string((int)timing.getStatFPSS()));

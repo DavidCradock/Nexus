@@ -15,6 +15,87 @@ namespace Nexus
 		bMouseIsOverGUI = false;
 	}
 
+	void ManagerGUI::update(void)
+	{
+		// If there are no windows, do nothing
+		if (!mapGUIWindows.size())
+			return;
+
+		if (!strCurrentTheme.length())
+			Log::getPointer()->exception("ManagerGUI::render() failed as currently set theme is not set.");
+
+		// Get currently set theme dims
+		GUITheme* pTheme = getTheme(strCurrentTheme);
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		Texture* pTexture = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Vector2 vWindowTextureDims((float)pTexture->getWidth(), (float)pTexture->getHeight());
+		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
+		vWndTexDimsDiv3.multiply(0.3333333f);
+
+		// Mouse info
+		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
+		Vector2 vMousePosDelta = pManInputDevices->mouse.getMouseDeltaGUI();
+		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
+		
+		// For each window
+		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.begin();
+		bMouseIsOverGUI = false;
+		while (itr != mapGUIWindows.end())
+		{
+			// If window is disabled
+			if (!itr->second->bEnabled)
+			{
+				itr++;
+				continue;
+			}
+
+			// Get window position and dimensions
+			Vector2 vWindowPos = itr->second->getWindowPosition();
+			Vector2 vWindowDims = itr->second->getWindowDimensions();
+
+			// Is mouse over window?
+			if (vMousePosCurrent.x > vWindowPos.x)
+			{
+				if (vMousePosCurrent.x < vWindowPos.x + vWindowDims.x)
+				{
+					if (vMousePosCurrent.y > vWindowPos.y)
+					{
+						if (vMousePosCurrent.y < vWindowPos.y + vWindowDims.y)
+						{
+							// If we get here, mouse cursor is over the window including edges
+
+							// Is mouse over titlebar?
+							if (vMousePosCurrent.y < vWindowPos.y + vWndTexDimsDiv3.y)
+							{
+								if (pManInputDevices->mouse.leftButtonOnce())
+								{
+									itr->second->bBeingMoved = true;
+									moveWindowToFront(itr->first);
+								}
+							}
+
+							bMouseIsOverGUI = true;
+
+						}
+					}
+				}
+			}
+
+			if (!pManInputDevices->mouse.leftButDown())
+			{
+				itr->second->bBeingMoved = false;
+			}
+
+			if (itr->second->bBeingMoved)
+			{
+				itr->second->vPosition.x += pManInputDevices->mouse.getMouseDeltaGUI().x;
+				itr->second->vPosition.y += pManInputDevices->mouse.getMouseDeltaGUI().y;
+			}
+			itr++;
+		}
+
+	}
+
 	void ManagerGUI::render(void)
 	{
 		// If there are no windows, do nothing
@@ -43,11 +124,21 @@ namespace Nexus
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.begin();
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
-
-		while (itr != mapGUIWindows.end())
+		
+		for (int iWindow = vecStringWindowZorder.size() - 1; iWindow >= 0; iWindow--)
 		{
+			std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(vecStringWindowZorder[iWindow]);
+
 			// If window is disabled
 			if (!itr->second->bEnabled)
+			{
+				itr++;
+				continue;
+			}
+
+
+			// If window is just a container
+			if (itr->second->bWindowIsJustAContainer)
 			{
 				itr++;
 				continue;
@@ -242,6 +333,9 @@ namespace Nexus
 		// Find the object to return a pointer to it
 		itr = mapGUIWindows.find(name);
 		itr->second->setWindowTitlebarText(name);	// Also set a default name used when rendering the window's titlebar text
+
+		// Add window to z-order
+		vecStringWindowZorder.push_back(name);
 		return (GUIWindow*)itr->second;
 	}
 
@@ -283,6 +377,28 @@ namespace Nexus
 		// Destroy the resource
 		delete itr->second;
 		mapGUIWindows.erase(itr);
+	}
+
+	void ManagerGUI::moveWindowToFront(const std::string& name)
+	{
+		for (int iWindow = 0; iWindow < vecStringWindowZorder.size(); iWindow++)
+		{
+			if (vecStringWindowZorder[iWindow].compare(name) == 0)
+			{
+				if (0 == iWindow)	// Already at front?
+				{
+					break;
+				}
+				// Move all windows down one
+				while (iWindow > 0)
+				{
+					vecStringWindowZorder[iWindow] = vecStringWindowZorder[iWindow - 1];
+					iWindow--;
+				}
+				vecStringWindowZorder[0] = name;
+				break;
+			}
+		}
 	}
 
 	void ManagerGUI::setCurrentTheme(const std::string& name)

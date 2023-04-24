@@ -17,7 +17,10 @@ namespace Nexus
 		// Sets defaults and creates the default theme
 		ManagerGUI();
 
-		// Updates and renders the GUI.
+		// Updates the GUI.
+		void update(void);
+
+		// Renders the GUI.
 		void render(void);
 
 		// Creates a new theme, ready for customization
@@ -48,6 +51,9 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeWindow(const std::string& name);
 
+		// Moves window to front zorder
+		void moveWindowToFront(const std::string& name);
+
 		// Sets the current theme
 		void setCurrentTheme(const std::string& name);
 
@@ -63,6 +69,7 @@ namespace Nexus
 		Shader* pShader;									// Shader used for rendering.
 		bool bMouseIsOverGUI;								// Is the mouse cursor over a GUI window that's enabled
 		std::string strCurrentTheme;						// Name of the currently set theme
+		std::vector<std::string> vecStringWindowZorder;		// Holds names of windows in Z order
 	};
 
 }

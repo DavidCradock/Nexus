@@ -19,13 +19,13 @@ namespace Nexus
 	void ApplicationDevelopment::initOnce(void)
 	{
 		// GUI
-		ManagerGUI* pGUI = ManagerGUI::getPointer();
-//		GUIWindow *pWindow = pGUI->addWindow("Test Window1");
-//		pWindow->setWindowPosition(Vector2(320, 240));
-//		pWindow->setWindowDimensions(640, 480);
-//		pWindow = pGUI->addWindow("Test Window2");
-//		pWindow->setWindowPosition(Vector2(320+640+50, 240));
-//		pWindow->setWindowDimensions(640, 480);
+		ManagerGUI* pManGUI = ManagerGUI::getPointer();
+		GUIWindow *pWindow = pManGUI->addWindow("Test Window1");
+		pWindow->setWindowPosition(Vector2(320, 240));
+		pWindow->setWindowDimensions(640, 480);
+		pWindow = pManGUI->addWindow("Test Window2");
+		pWindow->setWindowPosition(Vector2(320+640+50, 240));
+		pWindow->setWindowDimensions(640, 480);
 
 		// Sprite manager
 		ManagerSprites* pManSprites = ManagerSprites::getPointer();

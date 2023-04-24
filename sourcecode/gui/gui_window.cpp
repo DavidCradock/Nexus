@@ -8,7 +8,9 @@ namespace Nexus
 	GUIWindow::GUIWindow()
 	{
 		bEnabled = true;
+		bWindowIsJustAContainer = false;
 		vDimensions.set(320, 240);
+		bBeingMoved = false;
 
 		// Compute texture coordinates for each of the 9 components
 		float point3 = 0.3333333f;

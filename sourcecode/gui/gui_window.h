@@ -34,6 +34,12 @@ namespace Nexus
 		// Sets the text to be rendered over the titlebar
 		void setWindowTitlebarText(const std::string strTitlebarTextIn);
 
+		// Returns window position
+		Vector2 getWindowPosition(void) { return vPosition; }
+
+		// Returns window dimensions
+		Vector2 getWindowDimensions(void) { return vDimensions; }
+
 		// Creates a new button, ready for customization
 		GUIButton* createButton(const std::string& name);
 
@@ -50,9 +56,11 @@ namespace Nexus
 
 	private:
 		bool bEnabled;					// Whether this window is enabled or not
+		bool bWindowIsJustAContainer;	// Is false, then the window background, edges, corners and text is rendered, else the window acts as just a container for it's other GUI objects.
 		Vector2 vDimensions;			// Width and height of the object
 		Vector2 vPosition;				// Position of this object relative to it's parent window.
 		std::string strTitlebarText;	// Text rendered on top of the object. The titlebar text.
+		bool bBeingMoved;				// Whether the window is being moved or not
 
 		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor

@@ -168,7 +168,6 @@ namespace Nexus
 		if (fullscreen)
 		{
 			mouseX = (float)point.x;
-			//		mouseY = SCRenderDevice::getPointer()->getWindowHeight() - (float)point.y - 1;
 			mouseY = (float)point.y;
 		}
 		else
@@ -178,28 +177,9 @@ namespace Nexus
 
 			mouseX = (float)point.x;
 			mouseX -= wndInfo.rcClient.left;
-			/*
-			mouseY = SCRenderDevice::getPointer()->getWindowHeight() - (float)point.y - 1;
-			mouseY += wndInfo.rcClient.top;
-			*/
 			mouseY = (float)point.y;
 			mouseY -= wndInfo.rcClient.top;
 		}
-		/*
-			// Get window dimensions (Not including borders or menu bar, only client area)
-			WINDOWINFO wiWindow;
-			GetWindowInfo(windowHandle, &wiWindow);
-
-			// Modify the rcWindow value to take into account the app's title bar
-			AdjustWindowRect(&wiWindow.rcWindow, WS_POPUPWINDOW|WS_CAPTION, false);
-
-			// Get position of system mouse cursor
-			POINT mPos;	GetCursorPos(&mPos);
-
-			// Set app's cursor position
-			mouseX = float(mPos.x - wiWindow.rcClient.left);
-			mouseY = float(mPos.y - wiWindow.rcClient.top);
-		*/
 	}
 
 	void InputMouse::release(void)

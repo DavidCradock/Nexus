@@ -5,14 +5,6 @@
 
 namespace Nexus
 {
-	struct TexCoords
-	{
-		Vector2 vTCTL;
-		Vector2 vTCTR;
-		Vector2 vTCBL;
-		Vector2 vTCBR;
-	};
-
 	// A GUI object, a window.
 	// A window contains all other GUI objects. I almost called this class a GUIContainer because of this.
 	class GUIWindow
@@ -40,8 +32,8 @@ namespace Nexus
 		// Returns window dimensions
 		Vector2 getWindowDimensions(void) { return vDimensions; }
 
-		// Creates a new button, ready for customization
-		GUIButton* createButton(const std::string& name);
+		// Adds a new button, ready for customization
+		GUIButton* addButton(const std::string& name);
 
 		// Returns a pointer to the named object.
 		// Throws an exception if the object couldn't be found
@@ -62,15 +54,7 @@ namespace Nexus
 		std::string strTitlebarText;	// Text rendered on top of the object. The titlebar text.
 		bool bBeingMoved;				// Whether the window is being moved or not
 
-		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsTR;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsBL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsBR;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsT;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsB;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsR;	// Texture coordinates computed in constructor
+		
 
 		std::map<std::string, GUIButton*>	mapGUIButtons;	// Each named button.
 	};

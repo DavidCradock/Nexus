@@ -11,7 +11,7 @@
 - The beginnings of a 2D rendered GUI. Currently has a window container object which holds and deals with all other GUI objects such as buttons, text edit boxes etc.
 ![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/bf2bbfdd9524f6150c3152bedb34e96715ae0dd8/git_images/current_state.jpg)
 
-**To do**
+**To do*
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
 - Check all the /graphics/sprites/ code and test the hell out of it.
@@ -32,6 +32,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Added Z ordering of GUI windows.
 - Remove all the old coding style of underscores, C/S at beginning of class/structs, "_m" for private members etc. Tidy up all the code with new.
 - Go through all code and standardize pointer names to all the managers
 - Added saveAsJPG to Image

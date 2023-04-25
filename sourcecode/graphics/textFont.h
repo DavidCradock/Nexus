@@ -16,14 +16,11 @@ namespace Nexus
 
 		~TextFont();
 
-		// Prints the given text to the current RT.
-		// This is single line, left aligned.
-		// It's a quick and dirty "I want some text without any hassle" method
-		// strText is the text to be rendered.
-		// iPosX is the left position of the clip rect
-		// iPosY is the top position of the clip rect
-		// colour is the RGB and alpha colour to use to render the text.
+		// Prints the given text as a single line
 		void print(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour = Colouruc(255, 255, 255, 255));
+
+		// Prints the given text as a single line, centered.
+		void printCentered(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour = Colouruc(255, 255, 255, 255));
 
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
 		float getTextWidth(const std::string& strText);

@@ -6,5 +6,7 @@ namespace Nexus
 
 	GUIButton::GUIButton()
 	{
+		vDimensions.set(100, 40);
+		bMouseOver = false;
 	}
 }

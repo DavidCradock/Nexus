@@ -23,6 +23,9 @@ namespace Nexus
 		GUIWindow *pWindow = pManGUI->addWindow("Test Window1");
 		pWindow->setWindowPosition(Vector2(320, 240));
 		pWindow->setWindowDimensions(640, 480);
+		GUIButton *pButton = pWindow->addButton("Button1");
+		pButton->setText("Button1");
+
 		pWindow = pManGUI->addWindow("Test Window2");
 		pWindow->setWindowPosition(Vector2(320+640+50, 240));
 		pWindow->setWindowDimensions(640, 480);

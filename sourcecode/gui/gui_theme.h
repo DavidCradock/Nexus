@@ -19,12 +19,18 @@ namespace Nexus
 
 	private:
 		bool bLoaded;	// Whether the object has been loaded. Used by the GUI manager.
+
+		// Window related
 		std::string strTexturenameWindow;			// Name of the texture containing image data used to render a window.
 		std::string strFontnameWindowTitlebar;		// Name of the font used to render text for a window.
-		Vector2 vWindowTitlebarTextOffset;			// 
+		Vector2 vWindowTitlebarTextOffset;			// Offset used when rendering the text
 		TextFont textFontWindowTitlebar;			// TextFont object used to render the window's titlebar text
+
+		// Button related
 		std::string strTexturenameButton[3];		// Name of the texture containing image data used to render a button in it's up, over and down states.
-		
+		std::string strFontnameButton;				// Name of the font used to render text for a button.
+		Vector2 vButtonTextOffset;					// Offset used when rendering the text
+		TextFont textFontButton;					// TextFont object used to render button text
 	};
 
 }

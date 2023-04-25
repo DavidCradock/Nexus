@@ -14,5 +14,8 @@ namespace Nexus
 		strTexturenameButton[0] = "gui/gui_button_up.png";
 		strTexturenameButton[1] = "gui/gui_button_over.png";
 		strTexturenameButton[2] = "gui/gui_button_down.png";
+		strFontnameButton = "gui/publicsans_20";
+		vButtonTextOffset.set(0, -2);
+		
 	}
 }

@@ -14,10 +14,12 @@ namespace Nexus
 		// Sets default settings for the window
 		GUIButton();
 
+		void setText(const std::string& text) {strText = text;}
 	private:
 		Vector2 vDimensions;	// Width and height of the object
 		Vector2 vPosition;		// Position of this object relative to it's parent window.
 		std::string strText;	// Text rendered on top of the object.
+		bool bMouseOver;		// Whether the mourse cursor is over or not
 	};
 
 }

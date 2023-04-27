@@ -32,6 +32,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Moved updating and rendering of windows from GUIManager to GUIWindow
 - Added Z ordering of GUI windows.
 - Remove all the old coding style of underscores, C/S at beginning of class/structs, "_m" for private members etc. Tidy up all the code with new.
 - Go through all code and standardize pointer names to all the managers

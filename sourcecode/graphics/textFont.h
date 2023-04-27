@@ -19,8 +19,14 @@ namespace Nexus
 		// Prints the given text as a single line
 		void print(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour = Colouruc(255, 255, 255, 255));
 
+		// Prints the given text as a single line
+		void print(const std::string& strText, int iPosX, int iPosY, const Colourf& colour = Colourf(1, 1, 1, 1));
+
 		// Prints the given text as a single line, centered.
 		void printCentered(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour = Colouruc(255, 255, 255, 255));
+
+		// Prints the given text as a single line, centered.
+		void printCentered(const std::string& strText, int iPosX, int iPosY, const Colourf& colour = Colourf(1, 1, 1, 1));
 
 		// Get the width, in pixels, of the parsed text, if it were to be rendered.
 		float getTextWidth(const std::string& strText);

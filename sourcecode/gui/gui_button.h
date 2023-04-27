@@ -9,7 +9,7 @@ namespace Nexus
 	// A button is a GUI object which may be clicked upon by the user
 	class GUIButton
 	{
-		friend class ManagerGUI;
+		friend class GUIWindow;
 	public:
 		// Sets default settings for the window
 		GUIButton();

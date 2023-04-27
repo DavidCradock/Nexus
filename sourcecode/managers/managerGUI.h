@@ -2,21 +2,11 @@
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
 #include "../gui/gui_button.h"
-#include "../gui/gui_theme.h"
 #include "../gui/gui_window.h"
-#include "../graphics/vertexBuffer.h"
-#include "../graphics/shader.h"
+
 
 namespace Nexus
 {
-	struct TexCoords
-	{
-		Vector2 vTCTL;
-		Vector2 vTCTR;
-		Vector2 vTCBL;
-		Vector2 vTCBR;
-	};
-
 	// Use this to deal with everything related to the graphical user interface.
 	// Create text, buttons, windows and all sorts of fun interactive things.
 	class ManagerGUI : public Singleton<ManagerGUI>
@@ -65,6 +55,12 @@ namespace Nexus
 		// Sets the current theme
 		void setCurrentTheme(const std::string& name);
 
+		// Returns the name of the currently set theme
+		std::string getCurrentThemeName(void);
+
+		// Returns currently set theme
+		GUITheme* getCurrentTheme(void);
+
 		// Loads all themes, adding texure
 		void loadAllThemes(void);
 
@@ -73,23 +69,14 @@ namespace Nexus
 	private:
 		std::map<std::string, GUITheme*>	mapGUIThemes;	// Each named theme.
 		std::map<std::string, GUIWindow*>	mapGUIWindows;	// Each named window.
-		VertexBuffer vertexBuffer;							// Vertex buffer used for rendering
-		Shader* pShader;									// Shader used for rendering.
+		
+
 		bool bMouseIsOverGUI;								// Is the mouse cursor over a GUI window that's enabled
 		std::string strCurrentTheme;						// Name of the currently set theme
 		std::vector<std::string> vecStringWindowZorder;		// Holds names of windows in Z order
 
-		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsTR;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsBL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsBR;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsT;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsB;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsL;	// Texture coordinates computed in constructor
-		TexCoords vTexCoordsR;	// Texture coordinates computed in constructor
+		
 
-		void renderWindow(GUIWindow* pWindow);
 	};
 
 }

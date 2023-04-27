@@ -1,6 +1,13 @@
 #include "precompiled_header.h"
 #include "gui_window.h"
 #include "../core/log.h"
+#include "../managers/managerGUI.h"
+#include "../managers/managerInputDevices.h"
+#include "../managers/managerShaders.h"
+#include "../managers/managerTextFonts.h"
+#include "../managers/managerTextures.h"
+#include "../graphics/shader.h"
+#include "../graphics/renderDevice.h"
 
 namespace Nexus
 {
@@ -11,6 +18,458 @@ namespace Nexus
 		bWindowIsJustAContainer = false;
 		vDimensions.set(320, 240);
 		bBeingMoved = false;
+		bMouseIsOverWindow = false;
+
+		// Compute texture coordinates for each of the 9 components
+		float point3 = 0.3333333f;
+		float point6 = 0.6666666f;
+
+		// Centre quad
+		vTexCoordsC.vTCBL.x = point3;
+		vTexCoordsC.vTCTR.x = point6;
+		vTexCoordsC.vTCBR.x = point6;
+		vTexCoordsC.vTCTL.x = point3;
+		vTexCoordsC.vTCBL.y = point3;
+		vTexCoordsC.vTCTR.y = point6;
+		vTexCoordsC.vTCBR.y = point3;
+		vTexCoordsC.vTCTL.y = point6;
+
+		// Top left corner
+		vTexCoordsTL.vTCBL.x = 0.0f;
+		vTexCoordsTL.vTCTR.x = point3;
+		vTexCoordsTL.vTCBR.x = point3;
+		vTexCoordsTL.vTCTL.x = 0.0f;
+		vTexCoordsTL.vTCBL.y = point3;
+		vTexCoordsTL.vTCTR.y = 0.0f;
+		vTexCoordsTL.vTCBR.y = point3;
+		vTexCoordsTL.vTCTL.y = 0.0f;
+
+		// Top right corner
+		vTexCoordsTR.vTCBL.x = point6;
+		vTexCoordsTR.vTCTR.x = 1.0f;
+		vTexCoordsTR.vTCBR.x = 1.0f;
+		vTexCoordsTR.vTCTL.x = point6;
+		vTexCoordsTR.vTCBL.y = point3;
+		vTexCoordsTR.vTCTR.y = 0.0f;
+		vTexCoordsTR.vTCBR.y = point3;
+		vTexCoordsTR.vTCTL.y = 0.0f;
+
+		// Bottom left corner
+		vTexCoordsBL.vTCBL.x = 0.0f;
+		vTexCoordsBL.vTCTR.x = point3;
+		vTexCoordsBL.vTCBR.x = point3;
+		vTexCoordsBL.vTCTL.x = 0.0f;
+		vTexCoordsBL.vTCBL.y = 1.0f;
+		vTexCoordsBL.vTCTR.y = point6;
+		vTexCoordsBL.vTCBR.y = 1.0f;
+		vTexCoordsBL.vTCTL.y = point6;
+
+		// Bottom right corner
+		vTexCoordsBR.vTCBL.x = point6;
+		vTexCoordsBR.vTCTR.x = 1.0f;
+		vTexCoordsBR.vTCBR.x = 1.0f;
+		vTexCoordsBR.vTCTL.x = point6;
+		vTexCoordsBR.vTCBL.y = 1.0f;
+		vTexCoordsBR.vTCTR.y = point6;
+		vTexCoordsBR.vTCBR.y = 1.0f;
+		vTexCoordsBR.vTCTL.y = point6;
+
+		// Top edge
+		vTexCoordsT.vTCBL.x = point3;
+		vTexCoordsT.vTCTR.x = point6;
+		vTexCoordsT.vTCBR.x = point6;
+		vTexCoordsT.vTCTL.x = point3;
+		vTexCoordsT.vTCBL.y = point3;
+		vTexCoordsT.vTCTR.y = 0;
+		vTexCoordsT.vTCBR.y = point3;
+		vTexCoordsT.vTCTL.y = 0;
+
+		// Bottom edge
+		vTexCoordsB.vTCBL.x = point3;
+		vTexCoordsB.vTCTR.x = point6;
+		vTexCoordsB.vTCBR.x = point6;
+		vTexCoordsB.vTCTL.x = point3;
+		vTexCoordsB.vTCBL.y = 1;
+		vTexCoordsB.vTCTR.y = point6;
+		vTexCoordsB.vTCBR.y = 1;
+		vTexCoordsB.vTCTL.y = point6;
+
+		// Left edge
+		vTexCoordsL.vTCBL.x = 0;
+		vTexCoordsL.vTCTR.x = point3;
+		vTexCoordsL.vTCBR.x = point3;
+		vTexCoordsL.vTCTL.x = 0;
+		vTexCoordsL.vTCBL.y = point3;
+		vTexCoordsL.vTCTR.y = point6;
+		vTexCoordsL.vTCBR.y = point3;
+		vTexCoordsL.vTCTL.y = point6;
+
+		// Right edge
+		vTexCoordsR.vTCBL.x = point6;
+		vTexCoordsR.vTCTR.x = 1.0f;
+		vTexCoordsR.vTCBR.x = 1.0f;
+		vTexCoordsR.vTCTL.x = point6;
+		vTexCoordsR.vTCBL.y = point3;
+		vTexCoordsR.vTCTR.y = point6;
+		vTexCoordsR.vTCBR.y = point3;
+		vTexCoordsR.vTCTL.y = point6;
+	}
+
+	bool GUIWindow::update(const std::string& strWindowName)
+	{
+		RenderDevice* pRenderDevice = RenderDevice::getPointer();
+		ManagerGUI* pManGUI = ManagerGUI::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		
+		GUITheme* pTheme = pManGUI->getCurrentTheme();
+		Texture* pTexture = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Vector2 vWindowTextureDims((float)pTexture->getWidth(), (float)pTexture->getHeight());
+		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
+		vWndTexDimsDiv3.multiply(0.3333333f);
+		// Mouse info
+		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
+		Vector2 vMousePosDelta = pManInputDevices->mouse.getMouseDeltaGUI();
+		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
+		// Application window information
+		Vector2 vApplicationWindowDims(pRenderDevice->getWindowWidth(), pRenderDevice->getWindowHeight());
+
+		bMouseIsOverWindow = false;
+		// If window is disabled
+		if (false == bEnabled)
+			return bMouseIsOverWindow;
+
+		// Get window position and dimensions
+		Vector2 vWindowPos = getWindowPosition();
+		Vector2 vWindowDims = getWindowDimensions();
+
+		// Is mouse over window?
+		if (vMousePosCurrent.x > vWindowPos.x)
+		{
+			if (vMousePosCurrent.x < vWindowPos.x + vWindowDims.x)
+			{
+				if (vMousePosCurrent.y > vWindowPos.y)
+				{
+					if (vMousePosCurrent.y < vWindowPos.y + vWindowDims.y)
+					{
+						// If we get here, mouse cursor is over the window including edges
+						bMouseIsOverWindow = true;
+
+						// Is mouse over titlebar?
+						if (vMousePosCurrent.y < vWindowPos.y + vWndTexDimsDiv3.y)
+						{
+							if (pManInputDevices->mouse.leftButtonOnce())
+							{
+								bBeingMoved = true;
+								pManGUI->moveWindowToFront(strWindowName);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Stop moving window if mouse not down
+		if (!pManInputDevices->mouse.leftButDown())
+		{
+			bBeingMoved = false;
+		}
+
+		// Move window
+		if (bBeingMoved)
+		{
+			vPosition.x += pManInputDevices->mouse.getMouseDeltaGUI().x;
+			vPosition.y += pManInputDevices->mouse.getMouseDeltaGUI().y;
+
+			// Limit to screen
+			if (vPosition.x < 0)
+				vPosition.x = 0;
+			if (vPosition.y < 0)
+				vPosition.y = 0;
+			if (vPosition.x + vDimensions.x > vApplicationWindowDims.x)
+				vPosition.x = vApplicationWindowDims.x - vDimensions.x;
+			if (vPosition.y + vDimensions.y > vApplicationWindowDims.y)
+				vPosition.y = vApplicationWindowDims.y - vDimensions.y;
+		}
+
+		// Each button in current window
+		if (bMouseIsOverWindow)
+		{
+			std::map<std::string, GUIButton*>::iterator itb = mapGUIButtons.begin();
+			while (itb != mapGUIButtons.end())
+			{
+				Vector2 vButtonPos = vWindowPos;
+				vButtonPos.x += itb->second->vPosition.x;
+				vButtonPos.y += itb->second->vPosition.y;
+				Vector2 vButtonDims = itb->second->vDimensions;
+				itb->second->bMouseOver = false;
+				if (vMousePosCurrent.x > vButtonPos.x)
+				{
+					if (vMousePosCurrent.x < vButtonPos.x + vButtonDims.x)
+					{
+						if (vMousePosCurrent.y > vButtonPos.y)
+						{
+							if (vMousePosCurrent.y < vButtonPos.y + vButtonDims.y)
+							{
+								itb->second->bMouseOver = true;
+							}
+						}
+					}
+				}
+				itb++;
+			}
+		}
+		return bMouseIsOverWindow;
+	}
+
+	void GUIWindow::render(void)
+	{
+		// If window is disabled
+		if (false == bEnabled)
+			return;
+		ManagerGUI* pManGUI = ManagerGUI::getPointer();
+		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
+		ManagerInputDevices* pManInput = ManagerInputDevices::getPointer();
+		ManagerShaders* pManShaders = ManagerShaders::getPointer();
+		RenderDevice* pRenderDevice = RenderDevice::getPointer();
+
+		GUITheme* pTheme = pManGUI->getCurrentTheme();
+		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
+		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
+		vTextureWindowDimsDiv3.multiply(0.3333333f);
+		Shader* pShader = pManShaders->getShader("gui");
+		Vector2 vFinalPos;
+		Vector2 vFinalDims;
+
+		// Prepare rendering of background
+		pTextureWindow->bind();
+		pShader->setInt("texture1", pTextureWindow->getID());
+		pShader->use();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DEPTH_TEST);
+		Matrix matrixOrtho;
+		matrixOrtho.setOrthographic();
+		Matrix matrixTransform;
+		matrixTransform.setIdentity();
+		VertexBuffer vertexBuffer;
+		vertexBuffer.reset();
+		matrixTransform.setTranslation(vPosition.x, vPosition.y, 0.0f);
+		pShader->setMat4("transform", matrixOrtho * matrixTransform);
+
+		// Centre quad
+		vFinalPos.x = vTextureWindowDimsDiv3.x;
+		vFinalPos.y = 0.0f;
+		vFinalPos.y += vTextureWindowDimsDiv3.y;
+		vFinalDims.x = vDimensions.x;
+		vFinalDims.x -= vTextureWindowDimsDiv3.x * 2.0f;
+		vFinalDims.y = vDimensions.y;
+		vFinalDims.y -= vTextureWindowDimsDiv3.y * 2.0f;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
+
+		// Top left corner
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = 0;
+		vFinalPos.y = 0;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
+
+		// Top right corner
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
+		vFinalPos.y = 0;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
+
+		// Bottom left corner
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = 0;
+		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
+
+		// Bottom right corner
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
+		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
+
+		// Top edge
+		vFinalDims.x = vDimensions.x - (vTextureWindowDimsDiv3.x * 2.0f);
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = vTextureWindowDimsDiv3.x;
+		vFinalPos.y = 0.0f;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
+
+		// Bottom edge
+		vFinalDims.x = vDimensions.x - (vTextureWindowDimsDiv3.x * 2.0f);
+		vFinalDims.y = vTextureWindowDimsDiv3.y;
+		vFinalPos.x = vTextureWindowDimsDiv3.x;
+		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
+
+		// Left edge
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vDimensions.y - (vTextureWindowDimsDiv3.y * 2.0f);
+		vFinalPos.x = 0.0f;
+		vFinalPos.y = vTextureWindowDimsDiv3.y;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
+
+		// Right edge
+		vFinalDims.x = vTextureWindowDimsDiv3.x;
+		vFinalDims.y = vDimensions.y - (vTextureWindowDimsDiv3.y * 2.0f);
+		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
+		vFinalPos.y = vTextureWindowDimsDiv3.y;
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
+
+		// Render the background cells
+		vertexBuffer.upload();
+		vertexBuffer.draw();
+
+		// Render each buttons' background
+		Vector2 vButtonOffset;
+		if (false == bWindowIsJustAContainer)
+		{
+			vButtonOffset.x += vTextureWindowDimsDiv3.x;
+			vButtonOffset.y += vTextureWindowDimsDiv3.y;
+		}
+		Texture* pTextureButtonUp = pManTextures->get2DTexture(pTheme->strTexturenameButton[0], "default");
+		Vector2 vTextureButtonUpDims((float)pTextureButtonUp->getWidth(), (float)pTextureButtonUp->getHeight());
+		Vector2 vTextureButtonUpDimsDiv3 = vTextureButtonUpDims;
+		vTextureButtonUpDimsDiv3.multiply(0.3333333f);
+
+		std::map<std::string, GUIButton*>::iterator itb = mapGUIButtons.begin();
+		while (itb != mapGUIButtons.end())
+		{
+			vertexBuffer.reset();
+
+			// Centre quad
+			vFinalPos.x = vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = 0.0f;
+			vFinalPos.y += vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vFinalDims.x = itb->second->vDimensions.x;
+			vFinalDims.x -= vTextureButtonUpDimsDiv3.x * 2.0f;
+			vFinalDims.y = itb->second->vDimensions.y;
+			vFinalDims.y -= vTextureButtonUpDimsDiv3.y * 2.0f;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
+
+			// Top left corner
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = 0;
+			vFinalPos.y = 0;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
+
+			// Top right corner
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = itb->second->vDimensions.x - vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = 0;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
+
+			// Bottom left corner
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = 0;
+			vFinalPos.y = itb->second->vDimensions.y - vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
+
+			// Bottom right corner
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = itb->second->vDimensions.x - vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = itb->second->vDimensions.y - vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
+
+			// Top edge
+			vFinalDims.x = itb->second->vDimensions.x - (vTextureButtonUpDimsDiv3.x * 2.0f);
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = 0.0f;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
+
+			// Bottom edge
+			vFinalDims.x = itb->second->vDimensions.x - (vTextureButtonUpDimsDiv3.x * 2.0f);
+			vFinalDims.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x = vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = itb->second->vDimensions.y - vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
+
+			// Left edge
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = itb->second->vDimensions.y - (vTextureButtonUpDimsDiv3.y * 2.0f);
+			vFinalPos.x = 0.0f;
+			vFinalPos.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
+
+			// Right edge
+			vFinalDims.x = vTextureButtonUpDimsDiv3.x;
+			vFinalDims.y = itb->second->vDimensions.y - (vTextureButtonUpDimsDiv3.y * 2.0f);
+			vFinalPos.x = itb->second->vDimensions.x - vTextureButtonUpDimsDiv3.x;
+			vFinalPos.y = vTextureButtonUpDimsDiv3.y;
+			vFinalPos.x += vButtonOffset.x;
+			vFinalPos.y += vButtonOffset.y;
+			vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
+
+			// Render the background cells
+			pTextureButtonUp->bind();
+			pShader->setInt("texture1", pTextureButtonUp->getID());
+			vertexBuffer.upload();
+			vertexBuffer.draw();
+
+			itb++;
+		}
+
+		// Now render the text for the titlebar
+		if (strTitlebarText.length())
+		{
+			TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
+			pTextFont->print(strTitlebarText,
+				(int)vPosition.x + (int)vTextureWindowDimsDiv3.x + (int)pTheme->vWindowTitlebarTextOffset.x,
+				(int)vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y, pTheme->windowTitlebarTextColour);
+		}
+
+		// For each button in window
+		itb = mapGUIButtons.begin();
+		while (itb != mapGUIButtons.end())
+		{
+			TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameButton);
+			Vector2 vButtonTextPosition;
+			vButtonTextPosition.x = (int)vPosition.x;
+			vButtonTextPosition.x += (int)itb->second->vPosition.x;
+			vButtonTextPosition.x += vButtonOffset.x;
+			vButtonTextPosition.x += pTheme->vButtonTextOffset.x;
+			vButtonTextPosition.x += (int)itb->second->vDimensions.x * 0.5f;
+			vButtonTextPosition.y = (int)vPosition.y;
+			vButtonTextPosition.y += (int)itb->second->vPosition.y;
+			vButtonTextPosition.y += vButtonOffset.y;
+			vButtonTextPosition.y += pTheme->vButtonTextOffset.y;
+			vButtonTextPosition.y += (int)itb->second->vDimensions.y * 0.5f;
+			Colourf textColour = pTheme->buttonTextColour[0];
+			if (itb->second->bMouseOver)
+				textColour = pTheme->buttonTextColour[1];
+
+			pTextFont->printCentered(itb->second->strText, (int)vButtonTextPosition.x, (int)vButtonTextPosition.y, textColour);
+			itb++;
+		}
 	}
 
 	void GUIWindow::setWindowEnabled(bool bEnabledIn)

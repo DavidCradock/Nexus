@@ -2,9 +2,18 @@
 #include "../precompiled_header.h"
 #include "../math/vector2.h"
 #include "gui_button.h"
+#include "gui_theme.h"
 
 namespace Nexus
 {
+	struct TexCoords
+	{
+		Vector2 vTCTL;
+		Vector2 vTCTR;
+		Vector2 vTCBL;
+		Vector2 vTCBR;
+	};
+
 	// A GUI object, a window.
 	// A window contains all other GUI objects. I almost called this class a GUIContainer because of this.
 	class GUIWindow
@@ -13,6 +22,13 @@ namespace Nexus
 	public:
 		// Sets default settings for the window
 		GUIWindow();
+
+		// Called from GUIManager to update this window and it's objects
+		// Returns true if the mouse is over this window
+		bool update(const std::string &strWindowName);
+
+		// Called from GUIManager to render this window and it's objects
+		void render(void);
 
 		// Sets whether a window is enabled or not
 		void setWindowEnabled(bool bEnabledIn);
@@ -53,8 +69,17 @@ namespace Nexus
 		Vector2 vPosition;				// Position of this object relative to it's parent window.
 		std::string strTitlebarText;	// Text rendered on top of the object. The titlebar text.
 		bool bBeingMoved;				// Whether the window is being moved or not
-
+		bool bMouseIsOverWindow;		// Whether the mouse cursor is over this window or not
 		
+		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsTR;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsBL;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsBR;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsT;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsB;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsL;	// Texture coordinates computed in constructor
+		TexCoords vTexCoordsR;	// Texture coordinates computed in constructor
 
 		std::map<std::string, GUIButton*>	mapGUIButtons;	// Each named button.
 	};

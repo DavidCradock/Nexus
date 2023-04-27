@@ -139,12 +139,30 @@ namespace Nexus
 		
 	}
 
+	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const Colourf& colour)
+	{
+		Colouruc col;
+		col.setf(colour.r, colour.g, colour.b, colour.a);
+		print(strText, iPosX, iPosY, col);
+	}
+
 	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour)
 	{
 		float fTextWidth = getTextWidth(strText);
 		iPosX -= int(fTextWidth * 0.5f);
 		iPosY -= int(getTextHeight() * 0.5f);
 		print(strText, iPosX, iPosY, colour);
+	}
+
+	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, const Colourf& colour)
+	{
+		Colouruc col;
+		col.setf(colour.r, colour.g, colour.b, colour.a);
+		float fTextWidth = getTextWidth(strText);
+		iPosX -= int(fTextWidth * 0.5f);
+		iPosY -= int(getTextHeight() * 0.5f);
+		print(strText, iPosX, iPosY, col);
+
 	}
 
 	float TextFont::getTextWidth(const std::string& strText)

@@ -69,8 +69,6 @@ namespace Nexus
 	private:
 		std::map<std::string, GUITheme*>	mapGUIThemes;	// Each named theme.
 		std::map<std::string, GUIWindow*>	mapGUIWindows;	// Each named window.
-		
-
 		bool bMouseIsOverGUI;								// Is the mouse cursor over a GUI window that's enabled
 		std::string strCurrentTheme;						// Name of the currently set theme
 		std::vector<std::string> vecStringWindowZorder;		// Holds names of windows in Z order

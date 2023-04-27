@@ -14,6 +14,7 @@ namespace Nexus
 	{
 		friend class ManagerGUI;
 		friend class GUIWindow;
+		friend class GUIButton;
 	public:
 		// Sets default settings for the theme using default texture names etc.
 		GUITheme();

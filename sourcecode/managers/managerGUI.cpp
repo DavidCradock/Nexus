@@ -3,16 +3,12 @@
 #include "../core/log.h"
 #include "managerTextFonts.h"
 #include "managerTextures.h"
-//#include "../graphics/renderDevice.h"
-
 
 namespace Nexus
 {
 	ManagerGUI::ManagerGUI()
 	{
 		bMouseIsOverGUI = false;
-
-
 	}
 
 	void ManagerGUI::update(void)
@@ -37,7 +33,6 @@ namespace Nexus
 				bMouseIsOverGUI = true;
 			itw++;
 		}
-
 	}
 
 	void ManagerGUI::render(void)

@@ -6,14 +6,6 @@
 
 namespace Nexus
 {
-	struct TexCoords
-	{
-		Vector2 vTCTL;
-		Vector2 vTCTR;
-		Vector2 vTCBL;
-		Vector2 vTCBR;
-	};
-
 	// A GUI object, a window.
 	// A window contains all other GUI objects. I almost called this class a GUIContainer because of this.
 	class GUIWindow
@@ -25,7 +17,7 @@ namespace Nexus
 
 		// Called from GUIManager to update this window and it's objects
 		// Returns true if the mouse is over this window
-		bool update(const std::string &strWindowName);
+		bool update(const std::string& strWindowName);
 
 		// Called from GUIManager to render this window and it's objects
 		void render(void);
@@ -47,6 +39,13 @@ namespace Nexus
 
 		// Returns window dimensions
 		Vector2 getWindowDimensions(void) { return vDimensions; }
+
+		// Returns whether this window is just a container, or a full window with edges, background etc.
+		bool getWindowIsContainer(void) { return bWindowIsJustAContainer; }
+
+		// Sets window as a container or full window
+		// If just a container, then none of the titlebar text or edges and background are rendered.
+		void setWindowIsContainer(bool bIsContainer) {	bWindowIsJustAContainer = bIsContainer;}
 
 		// Adds a new button, ready for customization
 		GUIButton* addButton(const std::string& name);

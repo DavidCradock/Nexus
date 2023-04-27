@@ -17,8 +17,8 @@ namespace Nexus
 		strTexturenameButton[2] = "gui/gui_button_down.png";
 		strFontnameButton = "gui/publicsans_20";
 		vButtonTextOffset.set(0, -2);
-		buttonTextColour[0].set(1, 0.5f, 0.5f, 1);
-		buttonTextColour[1].set(0.9f, 1, 0.9f, 1);
+		buttonTextColour[0].set(0.8f, 0.8f, 0.8f, 1);
+		buttonTextColour[1].set(0.9f, 0.9f, 0.9f, 1);
 		buttonTextColour[2].set(1, 1, 1, 1);
 		
 	}

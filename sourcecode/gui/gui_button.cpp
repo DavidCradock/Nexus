@@ -14,6 +14,7 @@ namespace Nexus
 	{
 		vDimensions.set(100, 40);
 		bMouseOver = false;
+		bMouseDown = false;
 
 		// Compute texture coordinates for each of the 9 components
 		float point3 = 0.3333333f;
@@ -131,6 +132,7 @@ namespace Nexus
 			vButtonPos.y += vTextureWindowDimsDiv3.y;
 		}
 		bMouseOver = false;
+		bMouseDown = false;
 		// Mouse info
 		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
 		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
@@ -144,6 +146,9 @@ namespace Nexus
 					if (vMousePosCurrent.y < vButtonPos.y + vButtonDims.y)
 					{
 						bMouseOver = true;
+
+						if (pManInputDevices->mouse.leftButDown())
+							bMouseDown = true;
 					}
 				}
 			}
@@ -290,6 +295,8 @@ namespace Nexus
 		Colourf textColour = pTheme->buttonTextColour[0];
 		if (bMouseOver)
 			textColour = pTheme->buttonTextColour[1];
+		if (bMouseDown)
+			textColour = pTheme->buttonTextColour[2];
 
 		pTextFont->printCentered(strText, (int)vButtonTextPosition.x, (int)vButtonTextPosition.y, textColour);
 

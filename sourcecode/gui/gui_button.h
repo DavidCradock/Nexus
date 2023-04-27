@@ -33,8 +33,8 @@ namespace Nexus
 		Vector2 vDimensions;	// Width and height of the object
 		Vector2 vPosition;		// Position of this object relative to it's parent window.
 		std::string strText;	// Text rendered on top of the object.
-		bool bMouseOver;		// Whether the mourse cursor is over or not
-
+		bool bMouseOver;		// Whether the mouse cursor is over or not
+		bool bMouseDown;		// Whether the mouse cursor is over and clicked on
 		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTR;	// Texture coordinates computed in constructor

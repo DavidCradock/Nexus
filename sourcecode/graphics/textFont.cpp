@@ -106,7 +106,7 @@ namespace Nexus
 		Vector2 vPosition((float)iPosX, (float)iPosY);
 		Vector2 vDimensions;
 		vDimensions.y = fontTypes.fMaxCharHeight;
-		Vector3 vColour(float(colour.r/255), float(colour.g / 255), float(colour.b / 255));
+		Vector3 vColour(float(colour.r/255.0f), float(colour.g / 255.0f), float(colour.b / 255.0f));
 		Vector2 tcBL, tcBR, tcTR, tcTL;
 		vertexBuffer.reset();
 		for (unsigned int i = 0; i < strText.length(); ++i)

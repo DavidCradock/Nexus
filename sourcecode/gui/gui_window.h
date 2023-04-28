@@ -2,6 +2,7 @@
 #include "../precompiled_header.h"
 #include "../math/vector2.h"
 #include "gui_button.h"
+#include "gui_text.h"
 #include "gui_theme.h"
 
 namespace Nexus
@@ -61,6 +62,20 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeButton(const std::string& name);
 
+		// Adds new text, ready for customization
+		GUIText* addText(const std::string& name);
+
+		// Returns a pointer to the named object.
+		// Throws an exception if the object couldn't be found
+		GUIText* getText(const std::string& name);
+
+		// Returns true if the named object exists, else false.
+		bool getExistsText(const std::string& name);
+
+		// Removes a text object.
+		// Throws an exception if the named object doesn't exist.
+		void removeText(const std::string& name);
+
 	private:
 		bool bEnabled;					// Whether this window is enabled or not
 		bool bWindowIsJustAContainer;	// Is false, then the window background, edges, corners and text is rendered, else the window acts as just a container for it's other GUI objects.
@@ -81,6 +96,7 @@ namespace Nexus
 		TexCoords vTexCoordsR;	// Texture coordinates computed in constructor
 
 		std::map<std::string, GUIButton*>	mapGUIButtons;	// Each named button.
+		std::map<std::string, GUIText*>		mapGUIText;		// Each named text object.
 	};
 
 }

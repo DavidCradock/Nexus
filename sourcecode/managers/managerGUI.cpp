@@ -245,6 +245,7 @@ namespace Nexus
 				pManTextures->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
 				pManTextFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
 				pManTextFonts->addTextFont(itr->second->strFontnameButton);
+				pManTextFonts->addTextFont(itr->second->strFontnameText);
 			}
 			itr++;
 		}

@@ -329,6 +329,14 @@ namespace Nexus
 			itb->second->render(this);
 			itb++;
 		}
+
+		// Render each text object
+		std::map<std::string, GUIText*>::iterator itt = mapGUIText.begin();
+		while (itt != mapGUIText.end())
+		{
+			itt->second->render(this);
+			itt++;
+		}
 	}
 
 	void GUIWindow::setWindowEnabled(bool bEnabledIn)
@@ -412,5 +420,67 @@ namespace Nexus
 		// Destroy the resource
 		delete itr->second;
 		mapGUIButtons.erase(itr);
+	}
+
+	GUIText* GUIWindow::addText(const std::string& name)
+	{
+		// Resource already exists?
+		std::map<std::string, GUIText*>::iterator itr = mapGUIText.find(name);
+		if (mapGUIText.end() != itr)
+		{
+			std::string err("GUIWindow::addText(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object already exists.");
+			Log::getPointer()->exception(err);
+		}
+
+		// If we get here, we have got to create, then add the resource
+		GUIText* pNewRes = new GUIText();
+		mapGUIText[name] = pNewRes;
+
+		// Find the object to return a pointer to it
+		itr = mapGUIText.find(name);
+		return (GUIText*)itr->second;
+	}
+
+	GUIText* GUIWindow::getText(const std::string& name)
+	{
+		// Resource doesn't exist?
+		std::map<std::string, GUIText*>::iterator itr = mapGUIText.find(name);
+		if (mapGUIText.end() == itr)
+		{
+			std::string err("GUIWindow::getText(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object doesn't exist.");
+			Log::getPointer()->exception(err);
+		}
+		return (GUIText*)itr->second;
+	}
+
+	bool GUIWindow::getExistsText(const std::string& name)
+	{
+		std::map<std::string, GUIText*>::iterator itr = mapGUIText.find(name);
+		if (itr == mapGUIText.end())
+			return false;
+		return true;
+	}
+
+	void GUIWindow::removeText(const std::string& name)
+	{
+		// Resource doesn't exist in the group?
+		std::map<std::string, GUIText*>::iterator itr = mapGUIText.find(name);
+		if (mapGUIText.end() == itr)
+		{
+			std::string err("GUIWindow::removeText(\"");
+			err.append(name);
+			err.append("\") failed because the named object couldn't be found.");
+			Log::getPointer()->exception(err);
+		}
+
+		// Destroy the resource
+		delete itr->second;
+		mapGUIText.erase(itr);
 	}
 }

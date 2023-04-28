@@ -27,12 +27,16 @@ namespace Nexus
 		// Called from GUIWindow to render this object
 		void render(GUIWindow *pWindow);
 
+		// Sets position within it's parent window
+		void setPosition(const Vector2& vNewPosition) { vPosition = vNewPosition; }
+
 		// Sets the text to be rendered over the object
 		void setText(const std::string& text) {strText = text;}
 
 		// Returns true if the button has been clicked.
-		// It's probably more efficient to set a afunction or class method pointer, but this method is here if needed.
+		// It's probably more efficient to set a function or class method pointer, but this method is here if needed.
 		bool getClicked(void) {	return bClickedOn;	}
+
 	private:
 		Vector2 vDimensions;	// Width and height of the object
 		Vector2 vPosition;		// Position of this object relative to it's parent window.

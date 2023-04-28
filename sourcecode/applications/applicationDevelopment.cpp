@@ -23,12 +23,20 @@ namespace Nexus
 		GUIWindow *pWindow = pManGUI->addWindow("Test Window1");
 		pWindow->setWindowPosition(Vector2(320, 240));
 		pWindow->setWindowDimensions(640, 480);
+
 		GUIButton *pButton = pWindow->addButton("Button1");
 		pButton->setText("Button1");
+		
+		GUIText *pText = pWindow->addText("Text1");
+		pText->setText("Hello world!");
 
-		pWindow = pManGUI->addWindow("Test Window2");
+		pWindow = pManGUI->addWindow("Frame Statistics");
 		pWindow->setWindowPosition(Vector2(320+640+50, 240));
 		pWindow->setWindowDimensions(640, 480);
+		pText = pWindow->addText("FPSCurrent");
+		pText->setPosition(Vector2(0,0));
+		pText = pWindow->addText("FPSSmoothed");
+		pText->setPosition(Vector2(0, 20));
 
 		// Sprite manager
 		ManagerSprites* pManSprites = ManagerSprites::getPointer();
@@ -68,6 +76,17 @@ namespace Nexus
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		timing.update();
+
+		// Set GUIWindow "Frame Statistics" text
+		GUIWindow* pWindow = ManagerGUI::getPointer()->getWindow("Frame Statistics");
+		GUIText* pText = pWindow->getText("FPSCurrent");
+		std::string strTextFPS("Framerate Current: ");
+		strTextFPS.append(std::to_string((int)timing.getStatFPS()));
+		pText->setText(strTextFPS);
+		pText = pWindow->getText("FPSSmoothed");
+		strTextFPS = "Framerate Smoothed: ";
+		strTextFPS.append(std::to_string((int)timing.getStatFPSS()));
+		pText->setText(strTextFPS);
 
 		// Rotate sprite
 		ManagerSprites* pSpriteMan = ManagerSprites::getPointer();

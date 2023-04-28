@@ -20,6 +20,8 @@ namespace Nexus
 		buttonTextColour[0].set(0.8f, 0.8f, 0.8f, 1);
 		buttonTextColour[1].set(0.9f, 0.9f, 0.9f, 1);
 		buttonTextColour[2].set(1, 1, 1, 1);
-		
+
+		strFontnameText = "gui/publicsans_20";
+		textColour.set(0.8f, 0.8f, 0.8f, 1.0f);
 	}
 }

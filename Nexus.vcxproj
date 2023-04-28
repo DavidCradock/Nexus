@@ -114,6 +114,7 @@
     <ClCompile Include="sourcecode\graphics\texture.cpp" />
     <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp" />
     <ClCompile Include="sourcecode\gui\gui_button.cpp" />
+    <ClCompile Include="sourcecode\gui\gui_text.cpp" />
     <ClCompile Include="sourcecode\gui\gui_theme.cpp" />
     <ClCompile Include="sourcecode\gui\gui_window.cpp" />
     <ClCompile Include="sourcecode\input\inputJoystick.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="sourcecode\graphics\texture.h" />
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h" />
     <ClInclude Include="sourcecode\gui\gui_button.h" />
+    <ClInclude Include="sourcecode\gui\gui_text.h" />
     <ClInclude Include="sourcecode\gui\gui_theme.h" />
     <ClInclude Include="sourcecode\gui\gui_window.h" />
     <ClInclude Include="sourcecode\input\inputJoystick.h" />

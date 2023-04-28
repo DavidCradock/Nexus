@@ -240,6 +240,9 @@
     <ClCompile Include="sourcecode\managers\managerRenderTextures.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui_text.cpp">
+      <Filter>sourcecode\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="sourcecode\managers\managerRenderTextures.h">
       <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui_text.h">
+      <Filter>sourcecode\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

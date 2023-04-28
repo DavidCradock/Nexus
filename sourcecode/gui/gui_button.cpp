@@ -13,6 +13,7 @@ namespace Nexus
 	GUIButton::GUIButton()
 	{
 		vDimensions.set(100, 40);
+		vPosition.set(0, 0);
 		bMouseOver = false;
 		bMouseDown = false;
 		bClickedOn = false;
@@ -300,12 +301,10 @@ namespace Nexus
 		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameButton);
 		Vector2 vButtonTextPosition;
 		vButtonTextPosition.x = vPosition.x;
-		vButtonTextPosition.x += vPosition.x;
 		vButtonTextPosition.x += vButtonOffset.x;
 		vButtonTextPosition.x += pTheme->vButtonTextOffset.x;
 		vButtonTextPosition.x += vDimensions.x * 0.5f;
 		vButtonTextPosition.y = vPosition.y;
-		vButtonTextPosition.y += vPosition.y;
 		vButtonTextPosition.y += vButtonOffset.y;
 		vButtonTextPosition.y += pTheme->vButtonTextOffset.y;
 		vButtonTextPosition.y += vDimensions.y * 0.5f;

@@ -29,12 +29,17 @@ namespace Nexus
 
 		// Sets the text to be rendered over the object
 		void setText(const std::string& text) {strText = text;}
+
+		// Returns true if the button has been clicked.
+		// It's probably more efficient to set a afunction or class method pointer, but this method is here if needed.
+		bool getClicked(void) {	return bClickedOn;	}
 	private:
 		Vector2 vDimensions;	// Width and height of the object
 		Vector2 vPosition;		// Position of this object relative to it's parent window.
 		std::string strText;	// Text rendered on top of the object.
 		bool bMouseOver;		// Whether the mouse cursor is over or not
 		bool bMouseDown;		// Whether the mouse cursor is over and clicked on
+		bool bClickedOn;		// If the mouse was over and clicked upon, call functions and stuff!
 		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTR;	// Texture coordinates computed in constructor

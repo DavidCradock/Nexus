@@ -15,6 +15,7 @@ namespace Nexus
 		vDimensions.set(100, 40);
 		bMouseOver = false;
 		bMouseDown = false;
+		bClickedOn = false;
 
 		// Compute texture coordinates for each of the 9 components
 		float point3 = 0.3333333f;
@@ -131,11 +132,23 @@ namespace Nexus
 			vButtonPos.x += vTextureWindowDimsDiv3.x;
 			vButtonPos.y += vTextureWindowDimsDiv3.y;
 		}
-		bMouseOver = false;
-		bMouseDown = false;
+
 		// Mouse info
 		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
 		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
+
+		// If the mouse was previously pressed and over but now moue button is up, that's a click!
+		bClickedOn = false;
+		if (!pManInputDevices->mouse.leftButDown())
+		{
+			if (bMouseDown)
+			{
+				bClickedOn = true;
+			}
+		}
+		bMouseOver = false;
+		bMouseDown = false;
+		
 
 		if (vMousePosCurrent.x > vButtonPos.x)
 		{
@@ -147,8 +160,12 @@ namespace Nexus
 					{
 						bMouseOver = true;
 
+
 						if (pManInputDevices->mouse.leftButDown())
+						{
 							bMouseDown = true;
+						}
+						
 					}
 				}
 			}

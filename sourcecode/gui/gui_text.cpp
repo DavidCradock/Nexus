@@ -6,14 +6,16 @@
 #include "../managers/managerTextFonts.h"
 #include "../managers/managerTextures.h"
 #include "../graphics/vertexBuffer.h"
+#include "../core/log.h"
 
 namespace Nexus
 {
-
 	GUIText::GUIText()
 	{
-		vDimensions.set(100, 100);
+		vDimensions.set(200, 200);
 		strText.append("text");
+		bRenderTextureNeedsUpdating = true;
+		pRenderTexture = 0;
 	}
 
 	void GUIText::render(GUIWindow* pWindow)
@@ -44,18 +46,92 @@ namespace Nexus
 		vTextPosition.y = vPosition.y;
 		vTextPosition.y += vOffset.y;
 
+		// Checks to see if the texture needs updating, or needs creating and does so
+		renderToTexture();
+
+		VertexBuffer vertexBuffer;
+		vertexBuffer.addQuad(vTextPosition, vDimensions);
+		vertexBuffer.upload();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DEPTH_TEST);
+		Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
+		pShader->use();
+		pShader->setInt("texture1", pRenderTexture->getTextureID());
+		Matrix matrixOrtho;
+		matrixOrtho.setOrthographic();
+		Matrix matrixTransform;
+		matrixTransform.setIdentity();
+		pShader->setMat4("transform", matrixOrtho * matrixTransform);
+		vertexBuffer.draw();
+		glDisable(GL_BLEND);
+
+	}
+
+	void GUIText::renderToTexture(void)
+	{
+		// Create render texture if doesn't exist
+		if (0 == pRenderTexture)
+		{
+			pRenderTexture = new RenderTexture((int)vDimensions.x, (int)vDimensions.y);
+			if (!pRenderTexture)
+				Log::getPointer()->exception("GUIText::renderToTexture() failed. Memory allocation error.");
+		}
+		// If doesn't need updating, simply return
+		if (false == bRenderTextureNeedsUpdating)
+			return;
+
+		// If we get here, we need to render the text to the render texture
+		ManagerGUI* pManGUI = ManagerGUI::getPointer();
+		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
+		GUITheme* pTheme = pManGUI->getCurrentTheme();
+		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameText);
+		
+		// Bind the render texture as render target
+		pRenderTexture->bindFramebuffer(true, Vector4(1, 0.5f, 0.5f, 0.0f));
+		glClearColor(255, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
+		pShader->use();
+		pShader->setInt("texture1", pRenderTexture->getTextureID());
+		Matrix matrixOrtho;
+		matrixOrtho.setOrthographic();
+		Matrix matrixTransform;
+		matrixTransform.setIdentity();
+		pShader->setMat4("transform", matrixOrtho * matrixTransform);
+
 		// Split string into words seperated by space
-		std::istringstream ss(strText);	// Copy the text into istringstream
-		std::string strWord;	// Holds each word
+		std::istringstream ss(strText);		// Copy the text into istringstream
+		std::string strWord;				// Holds each word
 		while (getline(ss, strWord, ' '))	// For each word, place into strWord
 		{
 			// Do stuff
 		}
+//		pTextFont->print(strText, 0, 0, pTheme->textColour);
 
-		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameText);
-
-		pTextFont->print(strText, (int)vTextPosition.x, (int)vTextPosition.y, pTheme->textColour);
-
+		// Restore window framebuffer as render target
+		pRenderTexture->unbind();
 	}
 
+	void GUIText::setDimensions(const Vector2& vNewDimensions)
+	{
+		if (vDimensions != vNewDimensions)
+		{
+			if (0 != pRenderTexture)
+			{
+				delete pRenderTexture;
+				pRenderTexture = 0;
+			}
+		}
+		bRenderTextureNeedsUpdating = true;
+		vDimensions = vNewDimensions;
+	}
+
+	void GUIText::setText(const std::string& text)
+	{
+		if (strText != text)
+			bRenderTextureNeedsUpdating = true;
+		strText = text;
+	}
 }

@@ -7,6 +7,7 @@
 namespace Nexus
 {
 	// A font rendering object
+	// Used by the various GUI objects
 	class TextFont
 	{
 		friend class ManagerTextFonts;

@@ -1,0 +1,2 @@
+ManagerSprites::getLayer("layer0") failed. Layer name doesn't exist!
+Log::exception() called. ManagerSprites::getLayer("layer0") failed. Layer name doesn't exist!

@@ -134,6 +134,7 @@ namespace Nexus
 		Vector2 vApplicationWindowDims((float)pRenderDevice->getWindowWidth(), (float)pRenderDevice->getWindowHeight());
 
 		bMouseIsOverWindow = false;
+
 		// If window is disabled
 		if (false == bEnabled)
 			return bMouseIsOverWindow;
@@ -159,8 +160,12 @@ namespace Nexus
 						{
 							if (pManInputDevices->mouse.leftButtonOnce())
 							{
-								bBeingMoved = true;
-								pManGUI->moveWindowToFront(strWindowName);
+								if (!pManGUI->getWindowBeingMoved())
+								{
+									pManGUI->setWindowBeingMoved(true);
+									bBeingMoved = true;
+									pManGUI->moveWindowToFront(strWindowName);
+								}
 							}
 						}
 					}

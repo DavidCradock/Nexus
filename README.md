@@ -12,10 +12,11 @@
 ![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/c4bee9c0c5215dea402c1adb611c97c630ce8857/git_images/current_state.jpg)
 
 **To do*
+- Check RenderTexture code.
+- Fix multiple windows being moved at the same time if their title bars are roughly in the same position.
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
 - Check all the /graphics/sprites/ code and test the hell out of it.
-- Check RenderTexture code.
 - Add more GUI objects. Generic buttons, image buttons, sliders, progress bars, text, listbox, scroll bars, render texture, tabs, graphs for statistics, static and animated images(sprites), text edit boxes, generic file requestor load/save pre-built windows and statistics (Framerate, CPU, RAMM etc) pre-built window.
 - Implement archiveManager to all classes which load from files
 - Add line rendering.

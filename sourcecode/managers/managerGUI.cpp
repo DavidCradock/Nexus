@@ -9,6 +9,16 @@ namespace Nexus
 	ManagerGUI::ManagerGUI()
 	{
 		bMouseIsOverGUI = false;
+		bWindowBeingMoved = false;
+
+		// Create framerate window
+		GUIWindow *pWindow = addWindow("Frame Statistics");
+		pWindow->setWindowPosition(Vector2(0, 0));
+		pWindow->setWindowDimensions(640, 480);
+		GUIText *pText = pWindow->addText("FPSCurrent");
+		pText->setPosition(Vector2(0, 0));
+		pText = pWindow->addText("FPSSmoothed");
+		pText->setPosition(Vector2(0, 20));
 	}
 
 	void ManagerGUI::update(void)
@@ -24,9 +34,22 @@ namespace Nexus
 		// Get currently set theme dims
 		GUITheme* pTheme = getTheme(strCurrentTheme);
 
+		// Set GUIWindow "Frame Statistics" text
+		timing.update();
+		GUIWindow* pWindow = getWindow("Frame Statistics");
+		GUIText* pText = pWindow->getText("FPSCurrent");
+		std::string strTextFPS("Framerate Current: ");
+		strTextFPS.append(std::to_string((int)timing.getStatFPS()));
+		pText->setText(strTextFPS);
+		pText = pWindow->getText("FPSSmoothed");
+		strTextFPS = "Framerate Smoothed: ";
+		strTextFPS.append(std::to_string((int)timing.getStatFPSS()));
+		pText->setText(strTextFPS);
+
 		// For each window
 		std::map<std::string, GUIWindow*>::iterator itw = mapGUIWindows.begin();
 		bMouseIsOverGUI = false;
+		bWindowBeingMoved = false;
 		while (itw != mapGUIWindows.end())
 		{
 			if (itw->second->update(itw->first))

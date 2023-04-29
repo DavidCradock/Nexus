@@ -53,6 +53,8 @@ namespace Nexus
 		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
 		glViewport(0, 0, width, height);
 		glClearColor(clearColour.x, clearColour.y, clearColour.z, clearColour.w);
+		if (bClear)
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void RenderTexture::unbind(void)

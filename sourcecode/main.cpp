@@ -56,7 +56,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManTextures->loadGroup("default");
             pManTextures->loadGroup("fonts");
 
-            Nexus::TextFont *pTextFont = pManTextFonts->addTextFont("fonts/publicsans_16");
+ //           Nexus::TextFont *pTextFont = pManTextFonts->addTextFont("fonts/publicsans_16");
             pManTextFonts->loadAll();
 
             // Main loop
@@ -72,15 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
                 pManSprites->render();
                 pManGUI->update();
                 pManGUI->render();
-                std::string strFramerate("Framerate: ");
-                strFramerate.append(std::to_string((int)timing.getStatFPSS()));
-                strFramerate.append(" fps");
-                pTextFont->print(strFramerate, 0, 0, Nexus::Colouruc(255, 255, 255, 255));
-                std::string strMouseInfo("Mouse cursor pos: ");
-                strMouseInfo.append(std::to_string(int(pManInputDevices->mouse.getCursorPos().x)));
-                strMouseInfo.append("x");
-                strMouseInfo.append(std::to_string(int(pManInputDevices->mouse.getCursorPos().y)));
-                pTextFont->print(strMouseInfo, 0, 15, Nexus::Colouruc(255, 255, 255, 255));
+ 
                 pRD->swapBuffers();
                 Sleep(0);
             }

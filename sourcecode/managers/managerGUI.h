@@ -3,7 +3,7 @@
 #include "../core/singleton.h"
 #include "../gui/gui_button.h"
 #include "../gui/gui_window.h"
-
+#include "../core/timing.h"
 
 namespace Nexus
 {
@@ -66,12 +66,20 @@ namespace Nexus
 
 		// Returns true is the mouse is over a gui window that is enabled
 		bool getMouseOverGUIWindow(void) { return bMouseIsOverGUI; }
+
+		// Returns whether a window is being moved or not
+		bool getWindowBeingMoved(void) { return bWindowBeingMoved; }
+
+		// Sets whether a window is being moved or not
+		void setWindowBeingMoved(bool bMoved = true) {bWindowBeingMoved = bMoved;}
 	private:
 		std::map<std::string, GUITheme*>	mapGUIThemes;	// Each named theme.
 		std::map<std::string, GUIWindow*>	mapGUIWindows;	// Each named window.
 		bool bMouseIsOverGUI;								// Is the mouse cursor over a GUI window that's enabled
 		std::string strCurrentTheme;						// Name of the currently set theme
 		std::vector<std::string> vecStringWindowZorder;		// Holds names of windows in Z order
+		Timing timing;										// Used by the Frame Statistics window
+		bool bWindowBeingMoved;								// Prevents multiple windows from being moved if their titlebars are roughly in same location when clicked upon.
 
 		
 

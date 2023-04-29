@@ -165,6 +165,8 @@ namespace Nexus
 
 	}
 
+	
+
 	float TextFont::getTextWidth(const std::string& strText)
 	{
 		if (!bLoaded)

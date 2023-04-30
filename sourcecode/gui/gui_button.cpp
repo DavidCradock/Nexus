@@ -185,6 +185,7 @@ namespace Nexus
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
 		Vector2 vWindowPos = pWindow->getWindowPosition();
+		RenderDevice* pRD = RenderDevice::getPointer();
 
 		// Render background
 		Vector2 vButtonOffset;
@@ -217,7 +218,7 @@ namespace Nexus
 		vFinalDims.x -= vTextureButtonUpDimsDiv3.x * 2.0f;
 		vFinalDims.y = vDimensions.y;
 		vFinalDims.y -= vTextureButtonUpDimsDiv3.y * 2.0f;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
 
 		// Top left corner
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -226,7 +227,7 @@ namespace Nexus
 		vFinalPos.y = 0;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
 
 		// Top right corner
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -235,7 +236,7 @@ namespace Nexus
 		vFinalPos.y = 0;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
 
 		// Bottom left corner
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -244,7 +245,7 @@ namespace Nexus
 		vFinalPos.y = vDimensions.y - vTextureButtonUpDimsDiv3.y;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
 
 		// Bottom right corner
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -253,7 +254,7 @@ namespace Nexus
 		vFinalPos.y = vDimensions.y - vTextureButtonUpDimsDiv3.y;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
 
 		// Top edge
 		vFinalDims.x = vDimensions.x - (vTextureButtonUpDimsDiv3.x * 2.0f);
@@ -262,7 +263,7 @@ namespace Nexus
 		vFinalPos.y = 0.0f;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
 
 		// Bottom edge
 		vFinalDims.x = vDimensions.x - (vTextureButtonUpDimsDiv3.x * 2.0f);
@@ -271,7 +272,7 @@ namespace Nexus
 		vFinalPos.y = vDimensions.y - vTextureButtonUpDimsDiv3.y;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
 
 		// Left edge
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -280,7 +281,7 @@ namespace Nexus
 		vFinalPos.y = vTextureButtonUpDimsDiv3.y;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
 
 		// Right edge
 		vFinalDims.x = vTextureButtonUpDimsDiv3.x;
@@ -289,7 +290,7 @@ namespace Nexus
 		vFinalPos.y = vTextureButtonUpDimsDiv3.y;
 		vFinalPos.x += vButtonOffset.x;
 		vFinalPos.y += vButtonOffset.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
 
 		// Render the background cells
 		pTextureButtonUp->bind();
@@ -314,7 +315,7 @@ namespace Nexus
 		if (bMouseDown)
 			textColour = pTheme->buttonTextColour[2];
 
-		pTextFont->printCentered(strText, (int)vButtonTextPosition.x, (int)vButtonTextPosition.y, textColour);
+		pTextFont->printCentered(strText, (int)vButtonTextPosition.x, (int)vButtonTextPosition.y, pRD->getWindowWidth(), pRD->getWindowHeight(), textColour);
 
 	}
 

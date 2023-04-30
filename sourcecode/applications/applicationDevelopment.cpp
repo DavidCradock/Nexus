@@ -20,17 +20,17 @@ namespace Nexus
 	{
 		// GUI
 		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		GUIWindow *pWindow = pManGUI->addWindow("Test Window1");
+		GUIWindow *pWindow = pManGUI->addWindow("Test Window2");
 		pWindow->setWindowPosition(Vector2(640, 0));
 		pWindow->setWindowDimensions(640, 480);
 
-		GUIButton *pButton = pWindow->addButton("Button1");
-		pButton->setText("Button1");
+		GUIButton *pButton = pWindow->addButton("Exit button");
+		pButton->setText("Exit");
 		
 		GUIText *pText = pWindow->addText("Text1");
 		pText->setText("Hello world! This is lots of text to test the word wrapping code of TextFont with a call to some method or something lol.");
 		pText->setPosition(Vector2(0, 100));
-		pText->setDimensions(Vector2(100, 100));
+		pText->setDimensions(Vector2(640, 100));
 
 		
 	}
@@ -64,7 +64,9 @@ namespace Nexus
 
 		timing.update();
 
-		
+		// Exit application if exit button clicked on
+		if (true == ManagerGUI::getPointer()->getWindow("Test Window2")->getButton("Exit button")->getClicked())
+			return false;
 
 		return true;
 	}

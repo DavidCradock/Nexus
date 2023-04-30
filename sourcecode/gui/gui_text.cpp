@@ -50,7 +50,7 @@ namespace Nexus
 		renderToTexture();
 
 		VertexBuffer vertexBuffer;
-		vertexBuffer.addQuad(vTextPosition, vDimensions);
+		vertexBuffer.addQuad(vTextPosition, vDimensions, Vector4(1,1,1,1));
 		vertexBuffer.upload();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,6 +58,7 @@ namespace Nexus
 		Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
 		pShader->use();
 		pShader->setInt("texture1", pRenderTexture->getTextureID());
+		pRenderTexture->bindTexture();
 		Matrix matrixOrtho;
 		matrixOrtho.setOrthographic();
 		Matrix matrixTransform;
@@ -78,8 +79,8 @@ namespace Nexus
 				Log::getPointer()->exception("GUIText::renderToTexture() failed. Memory allocation error.");
 		}
 		// If doesn't need updating, simply return
-		if (false == bRenderTextureNeedsUpdating)
-			return;
+//		if (false == bRenderTextureNeedsUpdating)
+//			return;
 
 		// If we get here, we need to render the text to the render texture
 		ManagerGUI* pManGUI = ManagerGUI::getPointer();
@@ -88,18 +89,7 @@ namespace Nexus
 		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameText);
 		
 		// Bind the render texture as render target
-		pRenderTexture->bindFramebuffer(true, Vector4(1, 0.5f, 0.5f, 0.0f));
-		glClearColor(255, 0, 0, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
-		pShader->use();
-		pShader->setInt("texture1", pRenderTexture->getTextureID());
-		Matrix matrixOrtho;
-		matrixOrtho.setOrthographic();
-		Matrix matrixTransform;
-		matrixTransform.setIdentity();
-		pShader->setMat4("transform", matrixOrtho * matrixTransform);
+		pRenderTexture->bindFramebuffer(true, Vector4(0.0f, 0.0f, 0.0f, 0.0f));
 
 		// Split string into words seperated by space
 		std::istringstream ss(strText);		// Copy the text into istringstream
@@ -108,7 +98,7 @@ namespace Nexus
 		{
 			// Do stuff
 		}
-//		pTextFont->print(strText, 0, 0, pTheme->textColour);
+		pTextFont->print(strText, 0, 0, pRenderTexture->getWidth(), pRenderTexture->getHeight(), pTheme->textColour);
 
 		// Restore window framebuffer as render target
 		pRenderTexture->unbind();

@@ -13,7 +13,7 @@
 
 **To do*
 - Check RenderTexture code.
-- Fix multiple windows being moved at the same time if their title bars are roughly in the same position.
+- Fix the huge mess I've made with changing vertex buffer colour from RGB to RGBA
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
 - Check all the /graphics/sprites/ code and test the hell out of it.
@@ -33,6 +33,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Fix multiple windows being moved at the same time if their title bars are roughly in the same position.
 - Moved updating and rendering of windows from GUIManager to GUIWindow
 - Added Z ordering of GUI windows.
 - Remove all the old coding style of underscores, C/S at beginning of class/structs, "_m" for private members etc. Tidy up all the code with new.

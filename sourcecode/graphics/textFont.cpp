@@ -69,7 +69,7 @@ namespace Nexus
 		bLoaded = false;
 	}
 
-	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour)
+	void TextFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, const Colouruc& colour)
 	{
 		if (!bLoaded)
 			return;
@@ -87,11 +87,11 @@ namespace Nexus
 		glDisable(GL_DEPTH_TEST);
 
 		Vector2 vRTDims;
-		vRTDims.x = (float)pRD->getWindowWidth();
-		vRTDims.y = (float)pRD->getWindowHeight();
+		vRTDims.x = (float)iRenderTargetWidth;
+		vRTDims.y = (float)iRenderTargetHeight;
 		
 		Matrix matrixOrtho;
-		matrixOrtho.setOrthographic();
+		matrixOrtho.setOrthographic(0.0f, vRTDims.x, 0.0f, vRTDims.y);
 		Matrix matrixTransform;
 		matrixTransform.setIdentity();
 		
@@ -106,7 +106,7 @@ namespace Nexus
 		Vector2 vPosition((float)iPosX, (float)iPosY);
 		Vector2 vDimensions;
 		vDimensions.y = fontTypes.fMaxCharHeight;
-		Vector3 vColour(float(colour.r/255.0f), float(colour.g / 255.0f), float(colour.b / 255.0f));
+		Vector4 vColour(float(colour.r/255.0f), float(colour.g / 255.0f), float(colour.b / 255.0f), float(colour.a / 255.0f));
 		Vector2 tcBL, tcBR, tcTR, tcTL;
 		vertexBuffer.reset();
 		for (unsigned int i = 0; i < strText.length(); ++i)
@@ -139,33 +139,31 @@ namespace Nexus
 		
 	}
 
-	void TextFont::print(const std::string& strText, int iPosX, int iPosY, const Colourf& colour)
+	void TextFont::print(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, const Colourf& colour)
 	{
 		Colouruc col;
 		col.setf(colour.r, colour.g, colour.b, colour.a);
-		print(strText, iPosX, iPosY, col);
+		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, col);
 	}
 
-	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, const Colouruc& colour)
+	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, const Colouruc& colour)
 	{
 		float fTextWidth = getTextWidth(strText);
 		iPosX -= int(fTextWidth * 0.5f);
 		iPosY -= int(getTextHeight() * 0.5f);
-		print(strText, iPosX, iPosY, colour);
+		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, colour);
 	}
 
-	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, const Colourf& colour)
+	void TextFont::printCentered(const std::string& strText, int iPosX, int iPosY, int iRenderTargetWidth, int iRenderTargetHeight, const Colourf& colour)
 	{
 		Colouruc col;
 		col.setf(colour.r, colour.g, colour.b, colour.a);
 		float fTextWidth = getTextWidth(strText);
 		iPosX -= int(fTextWidth * 0.5f);
 		iPosY -= int(getTextHeight() * 0.5f);
-		print(strText, iPosX, iPosY, col);
+		print(strText, iPosX, iPosY, iRenderTargetWidth, iRenderTargetHeight, col);
 
 	}
-
-	
 
 	float TextFont::getTextWidth(const std::string& strText)
 	{

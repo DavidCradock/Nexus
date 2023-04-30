@@ -256,63 +256,63 @@ namespace Nexus
 		vFinalDims.x -= vTextureWindowDimsDiv3.x * 2.0f;
 		vFinalDims.y = vDimensions.y;
 		vFinalDims.y -= vTextureWindowDimsDiv3.y * 2.0f;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsC.vTCBL, vTexCoordsC.vTCBR, vTexCoordsC.vTCTR, vTexCoordsC.vTCTL);
 
 		// Top left corner
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = 0;
 		vFinalPos.y = 0;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsTL.vTCBL, vTexCoordsTL.vTCBR, vTexCoordsTL.vTCTR, vTexCoordsTL.vTCTL);
 
 		// Top right corner
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
 		vFinalPos.y = 0;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsTR.vTCBL, vTexCoordsTR.vTCBR, vTexCoordsTR.vTCTR, vTexCoordsTR.vTCTL);
 
 		// Bottom left corner
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = 0;
 		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsBL.vTCBL, vTexCoordsBL.vTCBR, vTexCoordsBL.vTCTR, vTexCoordsBL.vTCTL);
 
 		// Bottom right corner
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
 		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsBR.vTCBL, vTexCoordsBR.vTCBR, vTexCoordsBR.vTCTR, vTexCoordsBR.vTCTL);
 
 		// Top edge
 		vFinalDims.x = vDimensions.x - (vTextureWindowDimsDiv3.x * 2.0f);
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = vTextureWindowDimsDiv3.x;
 		vFinalPos.y = 0.0f;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 1.0f), vTexCoordsT.vTCBL, vTexCoordsT.vTCBR, vTexCoordsT.vTCTR, vTexCoordsT.vTCTL);
 
 		// Bottom edge
 		vFinalDims.x = vDimensions.x - (vTextureWindowDimsDiv3.x * 2.0f);
 		vFinalDims.y = vTextureWindowDimsDiv3.y;
 		vFinalPos.x = vTextureWindowDimsDiv3.x;
 		vFinalPos.y = vDimensions.y - vTextureWindowDimsDiv3.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 0.5f), vTexCoordsB.vTCBL, vTexCoordsB.vTCBR, vTexCoordsB.vTCTR, vTexCoordsB.vTCTL);
 
 		// Left edge
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vDimensions.y - (vTextureWindowDimsDiv3.y * 2.0f);
 		vFinalPos.x = 0.0f;
 		vFinalPos.y = vTextureWindowDimsDiv3.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 0.5f), vTexCoordsL.vTCBL, vTexCoordsL.vTCBR, vTexCoordsL.vTCTR, vTexCoordsL.vTCTL);
 
 		// Right edge
 		vFinalDims.x = vTextureWindowDimsDiv3.x;
 		vFinalDims.y = vDimensions.y - (vTextureWindowDimsDiv3.y * 2.0f);
 		vFinalPos.x = vDimensions.x - vTextureWindowDimsDiv3.x;
 		vFinalPos.y = vTextureWindowDimsDiv3.y;
-		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector3(1.0f, 1.0f, 1.0f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
+		vertexBuffer.addQuad(vFinalPos, vFinalDims, Vector4(1.0f, 1.0f, 1.0f, 0.5f), vTexCoordsR.vTCBL, vTexCoordsR.vTCBR, vTexCoordsR.vTCTR, vTexCoordsR.vTCTL);
 
 		// Render the background cells
 		vertexBuffer.upload();
@@ -324,7 +324,9 @@ namespace Nexus
 			TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
 			pTextFont->print(strTitlebarText,
 				(int)vPosition.x + (int)vTextureWindowDimsDiv3.x + (int)pTheme->vWindowTitlebarTextOffset.x,
-				(int)vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y, pTheme->windowTitlebarTextColour);
+				(int)vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y,
+				pRenderDevice->getWindowWidth(), pRenderDevice->getWindowHeight(),
+				pTheme->windowTitlebarTextColour);
 		}
 
 		// Render each button

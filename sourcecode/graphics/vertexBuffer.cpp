@@ -38,7 +38,7 @@ namespace Nexus
 		indices.push_back(newIndex);
 	}
 
-	void VertexBuffer::addQuad(const Vector2& vPosition, const Vector2& vDimensions, const Vector3& colour, const Vector2 &tcBottomLeft, const Vector2 &tcBottomRight, const Vector2 &tcTopRight, const Vector2 &tcTopLeft)
+	void VertexBuffer::addQuad(const Vector2& vPosition, const Vector2& vDimensions, const Vector4& colour, const Vector2 &tcBottomLeft, const Vector2 &tcBottomRight, const Vector2 &tcTopRight, const Vector2 &tcTopLeft)
 	{
 		// Build a simple quad
 		Vertex vertex;
@@ -103,7 +103,7 @@ namespace Nexus
 			3,								// Number of components
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(Vertex),					// 8 * sizeof(float) Stride (3 for pos, 3 for colour and 2 for texture coordinates)
+			sizeof(Vertex),					// 8 * sizeof(float) Stride (3 for pos, 4 for colour and 2 for texture coordinates)
 			(void*)0);
 		glEnableVertexAttribArray(0);
 
@@ -112,7 +112,7 @@ namespace Nexus
 			3,								// Number of components
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(Vertex),					// Stride (3 for pos, 3 for colour and 2 for texture coordinates)
+			sizeof(Vertex),					// Stride (3 for pos, 4 for colour and 2 for texture coordinates)
 			(void*)(3 * sizeof(float)));	// Offset
 		glEnableVertexAttribArray(1);
 
@@ -121,8 +121,8 @@ namespace Nexus
 			2,								// Number of components
 			GL_FLOAT,
 			GL_FALSE,
-			sizeof(Vertex),					// Stride (3 for pos, 3 for colour and 2 for texture coordinates)
-			(void*)(6 * sizeof(float)));	// Offset
+			sizeof(Vertex),					// Stride (3 for pos, 4 for colour and 2 for texture coordinates)
+			(void*)(7 * sizeof(float)));	// Offset
 		glEnableVertexAttribArray(2);
 
 		// Unbind stuff as we're done

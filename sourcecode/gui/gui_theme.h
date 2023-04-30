@@ -41,6 +41,7 @@ namespace Nexus
 		std::string strFontnameText;				// Name of the font used to render the text.
 		TextFont textFontText;						// TextFont object used to render text
 		Colourf textColour;							// Colour to render the text with
+		int textLinesHeight;						// Amount of pixels to move down when rendering multiple lines of text
 	};
 
 }

@@ -17,8 +17,10 @@ namespace Nexus
 		pWindow->setWindowDimensions(640, 480);
 		GUIText *pText = pWindow->addText("FPSCurrent");
 		pText->setPosition(Vector2(0, 0));
+		pText->setDimensions(640, 480);
 		pText = pWindow->addText("FPSSmoothed");
 		pText->setPosition(Vector2(0, 20));
+		pText->setDimensions(640, 480);
 	}
 
 	void ManagerGUI::update(void)

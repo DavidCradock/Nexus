@@ -12,7 +12,7 @@
 ![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/c4bee9c0c5215dea402c1adb611c97c630ce8857/git_images/current_state.jpg)
 
 **To do*
-- Check RenderTexture code.
+
 - Fix the huge mess I've made with changing vertex buffer colour from RGB to RGBA
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
@@ -33,6 +33,8 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Fix rendering of windows so that their main centre area is acutally their set dimensions.
+- Check RenderTexture code and fix TextFont print methods to accept render target dimensions
 - Fix multiple windows being moved at the same time if their title bars are roughly in the same position.
 - Moved updating and rendering of windows from GUIManager to GUIWindow
 - Added Z ordering of GUI windows.

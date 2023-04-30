@@ -146,5 +146,12 @@ namespace Nexus
 	void RenderDevice::setVsync(bool bVSyncOn)
 	{
 		glfwSwapInterval(int(bVSyncOn));
+		settings.vsyncEnabled = int(bVSyncOn);
+		settings.save();
+	}
+
+	bool RenderDevice::getVsync(void)
+	{
+		return (bool)settings.vsyncEnabled;
 	}
 }

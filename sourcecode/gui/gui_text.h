@@ -22,6 +22,9 @@ namespace Nexus
 		// Sets dimensions of the object for word wrapping
 		void setDimensions(const Vector2& vNewDimensions);
 
+		// Sets dimensions of the object for word wrapping
+		void setDimensions(float fNewWidth, float fNewHeight);
+
 		// Sets the text to be rendered over the object
 		void setText(const std::string& text);
 

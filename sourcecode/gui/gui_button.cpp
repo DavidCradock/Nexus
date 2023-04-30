@@ -14,9 +14,10 @@ namespace Nexus
 	{
 		vDimensions.set(100, 40);
 		vPosition.set(0, 0);
+		bClickedOn = false;
+		bMouseOverAndClickedPreviousUpdate = false;
 		bMouseOver = false;
 		bMouseDown = false;
-		bClickedOn = false;
 
 		// Compute texture coordinates for each of the 9 components
 		float point3 = 0.3333333f;
@@ -138,19 +139,8 @@ namespace Nexus
 		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
 		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
 
-		// If the mouse was previously pressed and over but now moue button is up, that's a click!
-		bClickedOn = false;
-		if (!pManInputDevices->mouse.leftButDown())
-		{
-			if (bMouseDown)
-			{
-				bClickedOn = true;
-			}
-		}
+		// Is mouse currently over the button?
 		bMouseOver = false;
-		bMouseDown = false;
-		
-
 		if (vMousePosCurrent.x > vButtonPos.x)
 		{
 			if (vMousePosCurrent.x < vButtonPos.x + vButtonDims.x)
@@ -160,17 +150,37 @@ namespace Nexus
 					if (vMousePosCurrent.y < vButtonPos.y + vButtonDims.y)
 					{
 						bMouseOver = true;
-
-
-						if (pManInputDevices->mouse.leftButDown())
-						{
-							bMouseDown = true;
-						}
-						
 					}
 				}
 			}
 		}
+
+		// Is mouse over and LMB down?
+		bool bMouseOverAndLMBDown = false;
+		bMouseDown = false;
+		if (bMouseOver)
+		{
+			if (pManInputDevices->mouse.leftButDown())
+			{
+				bMouseDown = true;
+				bMouseOverAndLMBDown = true;
+			}
+		}
+
+		// If the mouse was previously pressed and over but now mouse button is up, that's a click!
+		bClickedOn = false;
+		if (!pManInputDevices->mouse.leftButDown())
+		{
+			if (bMouseOverAndClickedPreviousUpdate)
+			{
+				bClickedOn = true;
+			}
+		}
+
+		if (bMouseOverAndLMBDown)
+			bMouseOverAndClickedPreviousUpdate = true;
+		else
+			bMouseOverAndClickedPreviousUpdate = false;
 	}
 
 	void GUIButton::render(GUIWindow* pWindow)
@@ -196,6 +206,8 @@ namespace Nexus
 		}
 		vButtonOffset.x += vWindowPos.x;
 		vButtonOffset.y += vWindowPos.y;
+		vButtonOffset.x += vPosition.x;
+		vButtonOffset.y += vPosition.y;
 
 		Texture* pTextureButtonUp = pManTextures->get2DTexture(pTheme->strTexturenameButton[0], "default");
 		Vector2 vTextureButtonUpDims((float)pTextureButtonUp->getWidth(), (float)pTextureButtonUp->getHeight());
@@ -301,12 +313,10 @@ namespace Nexus
 
 		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameButton);
 		Vector2 vButtonTextPosition;
-		vButtonTextPosition.x = vPosition.x;
-		vButtonTextPosition.x += vButtonOffset.x;
+		vButtonTextPosition.x = vButtonOffset.x;
 		vButtonTextPosition.x += pTheme->vButtonTextOffset.x;
 		vButtonTextPosition.x += vDimensions.x * 0.5f;
-		vButtonTextPosition.y = vPosition.y;
-		vButtonTextPosition.y += vButtonOffset.y;
+		vButtonTextPosition.y = vButtonOffset.y;
 		vButtonTextPosition.y += pTheme->vButtonTextOffset.y;
 		vButtonTextPosition.y += vDimensions.y * 0.5f;
 		Colourf textColour = pTheme->buttonTextColour[0];

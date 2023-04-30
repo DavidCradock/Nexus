@@ -94,11 +94,34 @@ namespace Nexus
 		// Split string into words seperated by space
 		std::istringstream ss(strText);		// Copy the text into istringstream
 		std::string strWord;				// Holds each word
-		while (getline(ss, strWord, ' '))	// For each word, place into strWord
+		std::vector<std::string> strLinesToBeRendered;	// Holds each line of text to be rendered
+		std::string strLine;				// Single line of text
+		int iWidthSpace = pTextFont->getTextWidth(" ");	// Compute width of space character
+		// Get each word, one at a time and store in strWord
+		while (getline(ss, strWord, ' '))
 		{
-			// Do stuff
+			// If current line and word fits
+			if (pTextFont->getTextWidth(strWord) + pTextFont->getTextWidth(strLine) < vDimensions.x)
+			{
+				strLine.append(strWord);
+				strLine.append(" ");
+			}
+			else	// Word and current line is too long
+			{
+				strLinesToBeRendered.push_back(strLine);	// Store current line
+				strLine.clear();
+				strLine.append(strWord);	// Add word to next line
+				strLine.append(" ");
+			}
 		}
-		pTextFont->print(strText, 0, 0, pRenderTexture->getWidth(), pRenderTexture->getHeight(), pTheme->textColour);
+		
+		// Render each line of text
+		int iYpos = 0;
+		for (int i=0; i<strLinesToBeRendered.size(); ++i)
+		{
+			pTextFont->print(strLinesToBeRendered[i], 0, iYpos, pRenderTexture->getWidth(), pRenderTexture->getHeight(), pTheme->textColour);
+			iYpos += pTheme->textLinesHeight;
+		}
 
 		// Restore window framebuffer as render target
 		pRenderTexture->unbind();
@@ -116,6 +139,12 @@ namespace Nexus
 		}
 		bRenderTextureNeedsUpdating = true;
 		vDimensions = vNewDimensions;
+	}
+
+	void GUIText::setDimensions(float fNewWidth, float fNewHeight)
+	{
+		Vector2 vNewDimensions(fNewWidth, fNewHeight);
+		setDimensions(vNewDimensions);
 	}
 
 	void GUIText::setText(const std::string& text)

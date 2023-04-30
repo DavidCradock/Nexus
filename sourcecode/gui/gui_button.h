@@ -30,6 +30,10 @@ namespace Nexus
 		// Sets position within it's parent window
 		void setPosition(const Vector2& vNewPosition) { vPosition = vNewPosition; }
 
+		// Sets position within it's parent window
+		void setPosition(int iPosX, int iPosY) { vPosition.set(iPosX, iPosY); }
+
+
 		// Sets the text to be rendered over the object
 		void setText(const std::string& text) {strText = text;}
 
@@ -43,6 +47,7 @@ namespace Nexus
 		std::string strText;	// Text rendered on top of the object.
 		bool bMouseOver;		// Whether the mouse cursor is over or not
 		bool bMouseDown;		// Whether the mouse cursor is over and clicked on
+		bool bMouseOverAndClickedPreviousUpdate;
 		bool bClickedOn;		// If the mouse was over and clicked upon, call functions and stuff!
 		TexCoords vTexCoordsC;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsTL;	// Texture coordinates computed in constructor

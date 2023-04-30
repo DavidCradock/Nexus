@@ -39,8 +39,11 @@ namespace Nexus
 		// Returns whether window is in fullscreen or not
 		bool getWindowFullscreen(void);
 
-		// Set Vsync on or off
+		// Set Vsync on or off also saves to settings.cfg
 		void setVsync(bool bVSyncOn);
+
+		// Returns the current state of vsync
+		bool getVsync(void);
 	private:
 		GLFWwindow* pWindow;
 		Settings settings;	// Has default values

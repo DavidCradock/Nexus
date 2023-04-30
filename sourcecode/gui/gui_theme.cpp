@@ -23,5 +23,6 @@ namespace Nexus
 
 		strFontnameText = "gui/publicsans_20";
 		textColour.set(0.8f, 0.8f, 0.8f, 1.0f);
+		textLinesHeight = 24;
 	}
 }

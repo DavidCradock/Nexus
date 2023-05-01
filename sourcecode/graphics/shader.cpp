@@ -105,6 +105,11 @@ namespace Nexus
         glUseProgram(ID);
     }
 
+    void Shader::unbind(void)
+    {
+        glUseProgram(0);
+    }
+
     void Shader::setBool(const std::string& name, bool value)
     {
         glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);

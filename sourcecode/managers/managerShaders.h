@@ -74,9 +74,11 @@ namespace Nexus
 		bool getExistsShader(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Removes the named resource from the named group
-			// If either the resource or the group that it's in doesn't exist, an exception occurs
+		// If either the resource or the group that it's in doesn't exist, an exception occurs
 		void removeShader(const std::string& strResourceName, const std::string& strGroupName);
 
+		// Unbind shaders
+		void unbind(void);
 	private:
 		std::map<std::string, ShaderGroup*> group;	// Hash map holding named resource groups
 	};

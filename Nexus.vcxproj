@@ -114,6 +114,7 @@
     <ClCompile Include="sourcecode\graphics\texture.cpp" />
     <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp" />
     <ClCompile Include="sourcecode\gui\gui_button.cpp" />
+    <ClCompile Include="sourcecode\gui\gui_linegraph.cpp" />
     <ClCompile Include="sourcecode\gui\gui_text.cpp" />
     <ClCompile Include="sourcecode\gui\gui_theme.cpp" />
     <ClCompile Include="sourcecode\gui\gui_window.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="sourcecode\graphics\texture.h" />
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h" />
     <ClInclude Include="sourcecode\gui\gui_button.h" />
+    <ClInclude Include="sourcecode\gui\gui_linegraph.h" />
     <ClInclude Include="sourcecode\gui\gui_text.h" />
     <ClInclude Include="sourcecode\gui\gui_theme.h" />
     <ClInclude Include="sourcecode\gui\gui_window.h" />
@@ -217,14 +219,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="shaders\gui.fs" />
-    <None Include="shaders\gui.vs" />
-    <None Include="shaders\sprites.fs" />
-    <None Include="shaders\sprites.vs" />
-    <None Include="shaders\simple.fs" />
-    <None Include="shaders\simple.vs" />
-    <None Include="shaders\textFont.fs" />
-    <None Include="shaders\textFont.vs" />
+    <None Include="shaders\default.fs" />
+    <None Include="shaders\default.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

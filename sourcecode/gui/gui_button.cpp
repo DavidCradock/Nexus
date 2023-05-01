@@ -216,7 +216,7 @@ namespace Nexus
 
 		VertexBuffer vertexBuffer;
 		vertexBuffer.reset();
-		Shader* pShader = pManShaders->getShader("gui");
+		Shader* pShader = pManShaders->getShader("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 

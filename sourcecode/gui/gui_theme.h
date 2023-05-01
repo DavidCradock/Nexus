@@ -16,6 +16,7 @@ namespace Nexus
 		friend class GUIWindow;
 		friend class GUIButton;
 		friend class GUIText;
+		friend class GUILineGraph;
 	public:
 		// Sets default settings for the theme using default texture names etc.
 		GUITheme();
@@ -42,6 +43,12 @@ namespace Nexus
 		TextFont textFontText;						// TextFont object used to render text
 		Colourf textColour;							// Colour to render the text with
 		int textLinesHeight;						// Amount of pixels to move down when rendering multiple lines of text
+
+		// Line graph related
+		std::string strFontnameLinegraph;			// Name of the font used to render the text.
+		TextFont textFontLinegraph;					// TextFont object used to render the text.
+		Colourf linegraphTextColour;				// Colour of the text
+		Colourf linegraphBackgroundColour;			// Background colour of the linegraph
 	};
 
 }

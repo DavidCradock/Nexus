@@ -228,7 +228,7 @@ namespace Nexus
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
-		Shader* pShader = pManShaders->getShader("gui");
+		Shader* pShader = pManShaders->getShader("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 
@@ -341,6 +341,14 @@ namespace Nexus
 		{
 			itt->second->render(this);
 			itt++;
+		}
+
+		// Render each linegraph object
+		std::map<std::string, GUILineGraph*>::iterator itlg = mapGUILineGraph.begin();
+		while (itlg != mapGUILineGraph.end())
+		{
+			itlg->second->render(this);
+			itlg++;
 		}
 	}
 
@@ -487,5 +495,67 @@ namespace Nexus
 		// Destroy the resource
 		delete itr->second;
 		mapGUIText.erase(itr);
+	}
+
+	GUILineGraph* GUIWindow::addLineGraph(const std::string& name)
+	{
+		// Resource already exists?
+		std::map<std::string, GUILineGraph*>::iterator itr = mapGUILineGraph.find(name);
+		if (mapGUILineGraph.end() != itr)
+		{
+			std::string err("GUIWindow::addLineGraph(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object already exists.");
+			Log::getPointer()->exception(err);
+		}
+
+		// If we get here, we have got to create, then add the resource
+		GUILineGraph* pNewRes = new GUILineGraph();
+		mapGUILineGraph[name] = pNewRes;
+
+		// Find the object to return a pointer to it
+		itr = mapGUILineGraph.find(name);
+		return (GUILineGraph*)itr->second;
+	}
+
+	GUILineGraph* GUIWindow::getLineGraph(const std::string& name)
+	{
+		// Resource doesn't exist?
+		std::map<std::string, GUILineGraph*>::iterator itr = mapGUILineGraph.find(name);
+		if (mapGUILineGraph.end() == itr)
+		{
+			std::string err("GUIWindow::getLineGraph(\"");
+			err.append(name);
+			err.append("\"");
+			err.append(" failed. As the named object doesn't exist.");
+			Log::getPointer()->exception(err);
+		}
+		return (GUILineGraph*)itr->second;
+	}
+
+	bool GUIWindow::getExistsLineGraph(const std::string& name)
+	{
+		std::map<std::string, GUILineGraph*>::iterator itr = mapGUILineGraph.find(name);
+		if (itr == mapGUILineGraph.end())
+			return false;
+		return true;
+	}
+
+	void GUIWindow::removeLineGraph(const std::string& name)
+	{
+		// Resource doesn't exist in the group?
+		std::map<std::string, GUILineGraph*>::iterator itr = mapGUILineGraph.find(name);
+		if (mapGUILineGraph.end() == itr)
+		{
+			std::string err("GUIWindow::removeLineGraph(\"");
+			err.append(name);
+			err.append("\") failed because the named object couldn't be found.");
+			Log::getPointer()->exception(err);
+		}
+
+		// Destroy the resource
+		delete itr->second;
+		mapGUILineGraph.erase(itr);
 	}
 }

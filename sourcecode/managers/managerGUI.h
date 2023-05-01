@@ -80,6 +80,7 @@ namespace Nexus
 		std::vector<std::string> vecStringWindowZorder;		// Holds names of windows in Z order
 		Timing timing;										// Used by the Frame Statistics window
 		bool bWindowBeingMoved;								// Prevents multiple windows from being moved if their titlebars are roughly in same location when clicked upon.
+		float fTimeToAddValueToFPSLineGraph;				// Used by the Frame Statistics window
 
 		
 

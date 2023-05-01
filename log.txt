@@ -1,2 +1,25 @@
 ManagerSprites::getLayer("layer0") failed. Layer name doesn't exist!
 Log::exception() called. ManagerSprites::getLayer("layer0") failed. Layer name doesn't exist!
+Shader::compile() failed. ERROR: 0:9: 'assign' :  cannot convert from ' const float' to ' temp 3-component vector of float'
+ERROR: 0:9: '' : compilation terminated 
+ERROR: 2 compilation errors.  No code generated.
+
+
+Log::exception() called. Shader::compile() failed. ERROR: 0:9: 'assign' :  cannot convert from ' const float' to ' temp 3-component vector of float'
+ERROR: 0:9: '' : compilation terminated 
+ERROR: 2 compilation errors.  No code generated.
+
+
+Shader::compile() failed to read in program code.
+Log::exception() called. Shader::compile() failed to read in program code.
+ManagerShaders::getShader("gui_line", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+Log::exception() called. ManagerShaders::getShader("gui_line", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+Log::exception() called. ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+Log::exception() called. ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("textFont", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+Log::exception() called. ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!

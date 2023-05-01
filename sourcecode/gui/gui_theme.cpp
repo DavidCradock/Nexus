@@ -9,7 +9,7 @@ namespace Nexus
 		bLoaded = false;
 		strTexturenameWindow = "gui/gui_window.png";
 		strFontnameWindowTitlebar = "gui/publicsans_20";
-		vWindowTitlebarTextOffset.set(-40, 15);
+		vWindowTitlebarTextOffset.set(-10, 15);
 		windowTitlebarTextColour.set(1, 1, 1, 1);
 
 		strTexturenameButton[0] = "gui/gui_button_up.png";
@@ -24,5 +24,9 @@ namespace Nexus
 		strFontnameText = "gui/publicsans_20";
 		textColour.set(0.8f, 0.8f, 0.8f, 1.0f);
 		textLinesHeight = 24;
+
+		strFontnameLinegraph = "gui/publicsans_20";
+		linegraphTextColour.set(0.9f, 0.9f, 0.9f, 1.0f);
+		linegraphBackgroundColour.set(0.2f, 0.2f, 0.2f, 1.0f);
 	}
 }

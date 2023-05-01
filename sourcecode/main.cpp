@@ -22,15 +22,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             // Shaders
             Nexus::ManagerShaders* pManShaders = Nexus::ManagerShaders::getPointer();
             pManShaders->addNewGroup("default");
-            pManShaders->addShader("sprites", "shaders/simple.vs", "shaders/simple.fs", "default");
-            pManShaders->addShader("sprites", "shaders/sprites.vs", "shaders/sprites.fs", "default");
-            pManShaders->addShader("textFont", "shaders/textFont.vs", "shaders/textFont.fs", "default");
-            pManShaders->addShader("gui", "shaders/gui.vs", "shaders/gui.fs", "default");
+            pManShaders->addShader("default", "shaders/default.vs", "shaders/default.fs", "default");
             pManShaders->loadGroup("default");
 
             // Texture manager groups
             Nexus::ManagerTextures* pManTextures = Nexus::ManagerTextures::getPointer();
             pManTextures->addNewGroup("default");
+            pManTextures->add2DTexture("white_32x32", "textures/white_32x32.png", "default");
 
             // GUI
             Nexus::ManagerGUI* pManGUI = Nexus::ManagerGUI::getPointer();

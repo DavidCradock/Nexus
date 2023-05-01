@@ -55,7 +55,7 @@ namespace Nexus
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
-		Shader* pShader = ManagerShaders::getPointer()->getShader("gui");
+		Shader* pShader = ManagerShaders::getPointer()->getShader("default");
 		pShader->use();
 		pShader->setInt("texture1", pRenderTexture->getTextureID());
 		pRenderTexture->bindTexture();
@@ -96,7 +96,7 @@ namespace Nexus
 		std::string strWord;				// Holds each word
 		std::vector<std::string> strLinesToBeRendered;	// Holds each line of text to be rendered
 		std::string strLine;				// Single line of text
-		int iWidthSpace = pTextFont->getTextWidth(" ");	// Compute width of space character
+		int iWidthSpace = (int)pTextFont->getTextWidth(" ");	// Compute width of space character
 		// Get each word, one at a time and store in strWord
 		while (getline(ss, strWord, ' '))
 		{
@@ -114,7 +114,13 @@ namespace Nexus
 				strLine.append(" ");
 			}
 		}
-		
+		// Check to see if everything fit on a single line
+		if (0==strLinesToBeRendered.size())
+		{
+			if (strLine.length())
+				strLinesToBeRendered.push_back(strLine);	// Store current line
+		}
+
 		// Render each line of text
 		int iYpos = 0;
 		for (int i=0; i<strLinesToBeRendered.size(); ++i)

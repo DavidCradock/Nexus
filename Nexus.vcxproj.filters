@@ -243,6 +243,9 @@
     <ClCompile Include="sourcecode\gui\gui_text.cpp">
       <Filter>sourcecode\gui</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\gui\gui_linegraph.cpp">
+      <Filter>sourcecode\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -452,6 +455,9 @@
     <ClInclude Include="sourcecode\gui\gui_text.h">
       <Filter>sourcecode\gui</Filter>
     </ClInclude>
+    <ClInclude Include="sourcecode\gui\gui_linegraph.h">
+      <Filter>sourcecode\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="dependencies\ZLib\readme.txt">
@@ -459,28 +465,10 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\simple.vs">
+    <None Include="shaders\default.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\simple.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\sprites.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\sprites.vs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\textFont.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\textFont.vs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\gui.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\gui.vs">
+    <None Include="shaders\default.vs">
       <Filter>shaders</Filter>
     </None>
     <None Include="README.md" />

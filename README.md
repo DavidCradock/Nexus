@@ -17,7 +17,7 @@
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?
 - Unify each manager so they each have reference counts and maybe groups?
 - Check all the /graphics/sprites/ code and test the hell out of it.
-- Add more GUI objects. Generic buttons, image buttons, sliders, progress bars, text, listbox, scroll bars, render texture, tabs, graphs for statistics, static and animated images(sprites), text edit boxes, generic file requestor load/save pre-built windows and statistics (Framerate, CPU, RAMM etc) pre-built window.
+- Add more GUI objects. Image buttons, sliders, progress bars, listbox, scroll bars, render texture, tabs, graphs for statistics, static and animated images(sprites), text edit boxes, generic file requestor load/save pre-built windows and statistics (Framerate, CPU, RAMM etc) pre-built window.
 - Implement archiveManager to all classes which load from files
 - Add line rendering.
 - Add a loading screen mechanism of some kind.

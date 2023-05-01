@@ -4,6 +4,7 @@
 #include "gui_button.h"
 #include "gui_text.h"
 #include "gui_theme.h"
+#include "gui_linegraph.h"
 
 namespace Nexus
 {
@@ -76,6 +77,20 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeText(const std::string& name);
 
+		// Adds new linegraph, ready for customization
+		GUILineGraph* addLineGraph(const std::string& name);
+
+		// Returns a pointer to the named object.
+		// Throws an exception if the object couldn't be found
+		GUILineGraph* getLineGraph(const std::string& name);
+
+		// Returns true if the named object exists, else false.
+		bool getExistsLineGraph(const std::string& name);
+
+		// Removes a linegrraph object.
+		// Throws an exception if the named object doesn't exist.
+		void removeLineGraph(const std::string& name);
+
 	private:
 		bool bEnabled;					// Whether this window is enabled or not
 		bool bWindowIsJustAContainer;	// Is false, then the window background, edges, corners and text is rendered, else the window acts as just a container for it's other GUI objects.
@@ -95,8 +110,9 @@ namespace Nexus
 		TexCoords vTexCoordsL;	// Texture coordinates computed in constructor
 		TexCoords vTexCoordsR;	// Texture coordinates computed in constructor
 
-		std::map<std::string, GUIButton*>	mapGUIButtons;	// Each named button.
-		std::map<std::string, GUIText*>		mapGUIText;		// Each named text object.
+		std::map<std::string, GUIButton*>		mapGUIButtons;	// Each named button.
+		std::map<std::string, GUIText*>			mapGUIText;		// Each named text object.
+		std::map<std::string, GUILineGraph*>	mapGUILineGraph;// Each named linegraph object
 	};
 
 }

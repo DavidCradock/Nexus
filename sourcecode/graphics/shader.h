@@ -30,6 +30,9 @@ namespace Nexus
 		// Bind the shader
 		void use(void);
 
+		// Unbind the shader
+		void unbind(void);
+
 		// Set uniform
 		void setBool(const std::string& name, bool value);
 		

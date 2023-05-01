@@ -31,7 +31,7 @@ namespace Nexus
 		void setPosition(const Vector2& vNewPosition) { vPosition = vNewPosition; }
 
 		// Sets position within it's parent window
-		void setPosition(int iPosX, int iPosY) { vPosition.set(iPosX, iPosY); }
+		void setPosition(int iPosX, int iPosY) { vPosition.set((float)iPosX, (float)iPosY); }
 
 
 		// Sets the text to be rendered over the object

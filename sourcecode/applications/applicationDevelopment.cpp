@@ -26,11 +26,11 @@ namespace Nexus
 
 		GUIButton *pButton = pWindow->addButton("Exit button");
 		pButton->setText("Exit");
-		pButton->setPosition(0, 0);
+		pButton->setPosition(0, 10);
 
 		pButton = pWindow->addButton("VSync");
 		pButton->setText("VSync");
-		pButton->setPosition(0, 40);
+		pButton->setPosition(0, 60);
 
 		GUIText *pText = pWindow->addText("Text1");
 		pText->setText("Hello world! This is lots of text to test the word wrapping code of TextFont with a call to some method or something lol. Umm, let's type some more texxt so that the text is rendered onto a few lines along the horizontal, no wait, I meant vertical.");

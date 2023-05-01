@@ -11,16 +11,25 @@ namespace Nexus
 		bMouseIsOverGUI = false;
 		bWindowBeingMoved = false;
 
-		// Create framerate window
+		// Create frame statistics window
 		GUIWindow *pWindow = addWindow("Frame Statistics");
 		pWindow->setWindowPosition(Vector2(0, 0));
 		pWindow->setWindowDimensions(640, 480);
+
 		GUIText *pText = pWindow->addText("FPSCurrent");
 		pText->setPosition(Vector2(0, 0));
 		pText->setDimensions(640, 480);
+		
 		pText = pWindow->addText("FPSSmoothed");
 		pText->setPosition(Vector2(0, 20));
 		pText->setDimensions(640, 480);
+
+		GUILineGraph* pLineGraph = pWindow->addLineGraph("FPS");
+		pLineGraph->setPosition(0, 60);
+		pLineGraph->setDimenions(640, 380);
+		pLineGraph->setTextX("Time");
+		pLineGraph->setTextY("FPS");
+		fTimeToAddValueToFPSLineGraph = 0.0f;
 	}
 
 	void ManagerGUI::update(void)
@@ -47,6 +56,14 @@ namespace Nexus
 		strTextFPS = "Framerate Smoothed: ";
 		strTextFPS.append(std::to_string((int)timing.getStatFPSS()));
 		pText->setText(strTextFPS);
+		// Update line graph FPS
+		fTimeToAddValueToFPSLineGraph += (float)timing.getSecPast();
+		if (fTimeToAddValueToFPSLineGraph >= 1.0f)
+		{
+			fTimeToAddValueToFPSLineGraph -= 1.0f;
+			GUILineGraph* pLineGraph = pWindow->getLineGraph("FPS");
+			pLineGraph->addValue((float)timing.getStatFPS());
+		}
 
 		// For each window
 		std::map<std::string, GUIWindow*>::iterator itw = mapGUIWindows.begin();
@@ -271,6 +288,7 @@ namespace Nexus
 				pManTextFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
 				pManTextFonts->addTextFont(itr->second->strFontnameButton);
 				pManTextFonts->addTextFont(itr->second->strFontnameText);
+				pManTextFonts->addTextFont(itr->second->strFontnameLinegraph);
 			}
 			itr++;
 		}

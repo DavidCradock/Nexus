@@ -313,4 +313,9 @@ namespace Nexus
 			itg->second->_mmapResource.erase(itr);
 		}
 	}
+
+	void ManagerShaders::unbind(void)
+	{
+		glUseProgram(0);
+	}
 }

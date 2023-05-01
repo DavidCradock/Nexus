@@ -19,7 +19,7 @@
 - Check all the /graphics/sprites/ code and test the hell out of it.
 - Add more GUI objects. Image buttons, sliders, progress bars, listbox, scroll bars, render texture, tabs, graphs for statistics, static and animated images(sprites), text edit boxes, generic file requestor load/save pre-built windows and statistics (Framerate, CPU, RAMM etc) pre-built window.
 - Implement archiveManager to all classes which load from files
-- Add line rendering.
+
 - Add a loading screen mechanism of some kind.
 - Add logging all over the place
 - Add 2D particle systems with emitters, forces, physics etc, ala Blender.
@@ -33,6 +33,7 @@
 - Add Network helper code. Maybe use Raknet or whatever is out there these days?
 
 **Done**
+- Add line rendering via GUILineGraph
 - Fix rendering of windows so that their main centre area is acutally their set dimensions.
 - Check RenderTexture code and fix TextFont print methods to accept render target dimensions
 - Fix multiple windows being moved at the same time if their title bars are roughly in the same position.

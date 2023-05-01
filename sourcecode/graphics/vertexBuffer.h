@@ -37,6 +37,9 @@ namespace Nexus
 		// Adds a bunch of vertices and indices which represent a 2D quad
 		void addQuad(const Vector2& vPosition, const Vector2& vDimensions, const Vector4& colour = Vector4(1.0f, 1.0f, 1.0f, 1.0f), const Vector2& tcBottomLeft = Vector2(0, 0), const Vector2& tcBottomRight = Vector2(1, 0), const Vector2& tcTopRight = Vector2(1, 1), const Vector2& tcTopLeft = Vector2(0, 1));
 
+		// Adds a line and renders the line as a quad
+		void addLine(const Vector2& vLinePoint1, const Vector2& vLinePoint2, float fLineWidth = 1.0f, const Vector4 colour = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
 		// Once all vertices have been added or loaded, prepares vertex buffer, ready for use.
 		void upload(void);
 

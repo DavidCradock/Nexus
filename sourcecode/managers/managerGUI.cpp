@@ -58,9 +58,9 @@ namespace Nexus
 		pText->setText(strTextFPS);
 		// Update line graph FPS
 		fTimeToAddValueToFPSLineGraph += (float)timing.getSecPast();
-		if (fTimeToAddValueToFPSLineGraph >= 1.0f)
+		if (fTimeToAddValueToFPSLineGraph >= 0.1f)
 		{
-			fTimeToAddValueToFPSLineGraph -= 1.0f;
+			fTimeToAddValueToFPSLineGraph -= 0.1f;
 			GUILineGraph* pLineGraph = pWindow->getLineGraph("FPS");
 			pLineGraph->addValue((float)timing.getStatFPS());
 		}

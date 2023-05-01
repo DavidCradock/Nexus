@@ -25,6 +25,7 @@
 #include "graphics/texture.h"
 #include "graphics/vertexBuffer.h"
 #include "gui/gui_button.h"
+#include "gui/gui_linegraph.h"
 #include "gui/gui_theme.h"
 #include "gui/gui_window.h"
 #include "input/inputJoystick.h"

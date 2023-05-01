@@ -45,6 +45,8 @@ namespace Nexus
 		std::string strTextY;	// Text rendered for the Y axis
 		std::list<float> listValues;	// Values for Y axis
 		int iMaxNumberValues;			// Maximum number of values to keep
+		float fMaxValue;				// Holds the highest value added to listValues
+		float fMinValue;				// Holds the lowest value added to listValues
 	};
 
 }

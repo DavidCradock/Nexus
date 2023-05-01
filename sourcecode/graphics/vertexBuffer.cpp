@@ -77,6 +77,57 @@ namespace Nexus
 		addVertex(vertex);		
 	}
 
+	void VertexBuffer::addLine(const Vector2& vLinePoint1, const Vector2& vLinePoint2, float fLineWidth, const Vector4 colour)
+	{
+		// Build a simple quad
+		Vertex vertex;
+
+		// Indicies
+		unsigned int iIndex = (unsigned int)vertices.size();
+		addIndex(iIndex);		// BL
+		addIndex(iIndex + 1);	// TL
+		addIndex(iIndex + 2);	// TR
+
+		addIndex(iIndex + 2);	// TR
+		addIndex(iIndex + 3);	// BR
+		addIndex(iIndex);		// BL
+
+		// Get direction of line
+		Vector2 vDirection = vLinePoint2 - vLinePoint1;
+		vDirection.normalise();
+		
+		// Compute perpendicular vector
+		Vector2 vPerpendicular = vDirection.getPerpendicular();
+		float fHalfWidth = fLineWidth * 0.5f;
+		vPerpendicular.x *= fHalfWidth;
+		vPerpendicular.y *= fHalfWidth;
+
+		// Set colour and texture coords
+		vertex.colour = colour;
+		vertex.texCoord.setZero();
+
+		// Left of first line point
+		vertex.pos.x = vLinePoint1.x - vPerpendicular.x;
+		vertex.pos.y = vLinePoint1.y;
+		vertex.pos.z = 0.0f;
+		addVertex(vertex);
+
+		// Right of first line point
+		vertex.pos.x = vLinePoint1.x + vPerpendicular.x;
+		vertex.pos.y = vLinePoint1.y;
+		addVertex(vertex);
+
+		// Right of second line point
+		vertex.pos.x = vLinePoint2.x + vPerpendicular.x;
+		vertex.pos.y = vLinePoint2.y;
+		addVertex(vertex);
+
+		// Right of second line point
+		vertex.pos.x = vLinePoint2.x - vPerpendicular.x;
+		vertex.pos.y = vLinePoint2.y;
+		addVertex(vertex);
+	}
+
 	void VertexBuffer::upload(void)
 	{
 		if (!vertices.size())

@@ -1,8 +1,6 @@
 #include "precompiled_header.h"
 #include "Nexus.h"
 
-
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, INT iShowCmd)
 {
     try
@@ -54,7 +52,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManTextures->loadGroup("default");
             pManTextures->loadGroup("fonts");
 
- //           Nexus::TextFont *pTextFont = pManTextFonts->addTextFont("fonts/publicsans_16");
             pManTextFonts->loadAll();
 
             // Main loop
@@ -71,6 +68,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
                 pManGUI->update();
                 pManGUI->render();
  
+                
+
                 pRD->swapBuffers();
                 Sleep(0);
             }
@@ -83,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
         std::string error = e.what();
         Nexus::Log::getPointer()->add(error, true);
         MessageBox(NULL, error.c_str(), "Exception...", MB_OK);
-        
+        __debugbreak();
         return EXIT_FAILURE;
     }
 

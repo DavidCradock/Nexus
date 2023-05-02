@@ -95,6 +95,7 @@
     <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.cpp" />
     <ClCompile Include="sourcecode\applications\applicationBase.cpp" />
     <ClCompile Include="sourcecode\applications\applicationDevelopment.cpp" />
+    <ClCompile Include="sourcecode\audio\audioSample.cpp" />
     <ClCompile Include="sourcecode\core\archiveData.cpp" />
     <ClCompile Include="sourcecode\core\log.cpp" />
     <ClCompile Include="sourcecode\core\settings.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="sourcecode\main.cpp" />
     <ClCompile Include="sourcecode\managers\managerApplications.cpp" />
     <ClCompile Include="sourcecode\managers\managerArchives.cpp" />
+    <ClCompile Include="sourcecode\managers\managerAudio.cpp" />
     <ClCompile Include="sourcecode\managers\managerGUI.cpp" />
     <ClCompile Include="sourcecode\managers\managerInputDevices.cpp" />
     <ClCompile Include="sourcecode\managers\managerRenderTextures.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetworkTraining.h" />
     <ClInclude Include="sourcecode\applications\applicationBase.h" />
     <ClInclude Include="sourcecode\applications\applicationDevelopment.h" />
+    <ClInclude Include="sourcecode\audio\audioSample.h" />
     <ClInclude Include="sourcecode\core\archiveData.h" />
     <ClInclude Include="sourcecode\core\log.h" />
     <ClInclude Include="sourcecode\core\settings.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="sourcecode\input\inputMouse.h" />
     <ClInclude Include="sourcecode\managers\managerApplications.h" />
     <ClInclude Include="sourcecode\managers\managerArchives.h" />
+    <ClInclude Include="sourcecode\managers\managerAudio.h" />
     <ClInclude Include="sourcecode\managers\managerGUI.h" />
     <ClInclude Include="sourcecode\managers\managerInputDevices.h" />
     <ClInclude Include="sourcecode\managers\managerRenderTextures.h" />

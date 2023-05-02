@@ -33,6 +33,9 @@
 #include <unordered_map>
 #include <vector>
 
+// Multithreading
+#include <mutex>
+#include <thread>
 
 // OpenGL
 #include <gl/gl.h>
@@ -43,3 +46,12 @@
 // DirectX for direct input
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+
+// XAudio2
+//#include <hrtfapoapi.h>
+#include <x3daudio.h>
+//#include <xapo.h>
+#include <xapobase.h>
+#include <xapofx.h>
+#include <xaudio2.h>
+#include <xaudio2fx.h>

@@ -30,6 +30,9 @@ namespace Nexus
 		pLineGraph->setTextX("Time");
 		pLineGraph->setTextY("FPS");
 		fTimeToAddValueToFPSLineGraph = 0.0f;
+
+		// Don't show Frame statistics window by default
+		pWindow->setWindowEnabled(false);
 	}
 
 	void ManagerGUI::update(void)

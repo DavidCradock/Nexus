@@ -42,6 +42,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             // Sprite manager
             Nexus::ManagerSprites* pManSprites = Nexus::ManagerSprites::getPointer();
 
+            // Audio manager
+            Nexus::ManagerAudio* pManAudio = Nexus::ManagerAudio::getPointer();
+
             // Initialise all applications
             Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();
             std::string applicationName = "Development";
@@ -53,6 +56,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManTextures->loadGroup("fonts");
 
             pManTextFonts->loadAll();
+
+            Nexus::AudioSample audioSample;
+            std::string strSampleFilename = "audio\\38_Introductory.wav";
+            audioSample.load(strSampleFilename);
+            pManAudio->playSample(audioSample);
 
             // Main loop
             while (pRD->updateWindow())

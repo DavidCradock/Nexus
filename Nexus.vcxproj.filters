@@ -49,6 +49,9 @@
     <Filter Include="sourcecode\managers">
       <UniqueIdentifier>{81a46966-d654-4105-825c-7e0320aeeea6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sourcecode\audio">
+      <UniqueIdentifier>{61ad8dd8-50af-413a-8aa4-99eaab77109a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sourcecode\main.cpp">
@@ -245,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="sourcecode\gui\gui_linegraph.cpp">
       <Filter>sourcecode\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managerAudio.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\audio\audioSample.cpp">
+      <Filter>sourcecode\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +466,12 @@
     </ClInclude>
     <ClInclude Include="sourcecode\gui\gui_linegraph.h">
       <Filter>sourcecode\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managerAudio.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\audio\audioSample.h">
+      <Filter>sourcecode\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

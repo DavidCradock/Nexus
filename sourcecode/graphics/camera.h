@@ -31,5 +31,6 @@ namespace Nexus
 		Matrix viewMatrix;
 		Matrix projectionMatrix;
 		Matrix viewProjectionMatrix;
+		bool bViewProjectionMatrixNeedsUpdating;
 	};
 }

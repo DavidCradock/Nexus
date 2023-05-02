@@ -40,7 +40,10 @@ namespace Nexus
 	private:
 		IXAudio2* pXAudio2;
 		IXAudio2MasteringVoice* pMasterVoice;
-		std::map<std::string, AudioSample*> mapSamples;	// Holds each named sample
+		std::map<std::string, AudioSample*> mapSamples;	// Holds each named sample and it's data
+
+		// Each voice that has been created during a call to playSample
+		std::list<IXAudio2SourceVoice*> listVoices;
 	};
 
 }

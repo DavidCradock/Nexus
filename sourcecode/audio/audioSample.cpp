@@ -121,17 +121,5 @@ namespace Nexus
         buffer.AudioBytes = dwChunkSize;        // size of the audio buffer in bytes
         buffer.pAudioData = pDataBuffer;        // buffer containing audio data
         buffer.Flags = XAUDIO2_END_OF_STREAM;   // tell the source voice not to expect any data after this buffer
-
-
-        // Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
-        // The format of the voice is specified by the values set in a WAVEFORMATEX structure.
-        HRESULT hr;
-        if (FAILED(hr = ManagerAudio::getPointer()->pXAudio2->CreateSourceVoice(&pSourceVoice, (WAVEFORMATEX*)&wfx))) return;
-
-        // Submit an XAUDIO2_BUFFER to the source voice using the function SubmitSourceBuffer.
-        if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer)))
-            return;
-
-
     }
 }

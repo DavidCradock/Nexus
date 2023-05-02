@@ -69,9 +69,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManAudio->addSample("audio/38_Introductory.wav");
             pManAudio->loadAll();
             pManAudio->playSample("audio/38_Introductory.wav");
-
-            Sleep(1000);
-            pManAudio->stopSample("audio/38_Introductory.wav");
+            Sleep(200);
+            pManAudio->playSample("audio/38_Introductory.wav");
 
             // Initialise all applications
             Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();

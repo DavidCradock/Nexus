@@ -36,6 +36,6 @@ namespace Nexus
 		HRESULT readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset);
 		XAUDIO2_BUFFER buffer = { 0 };
 		WAVEFORMATEXTENSIBLE wfx = { 0 };
-		IXAudio2SourceVoice* pSourceVoice;
+		
 	};
 }

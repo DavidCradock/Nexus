@@ -96,22 +96,35 @@ namespace Nexus
 	{
 		AudioSample* audioSample = getSample(name);
 
+		IXAudio2SourceVoice* pSourceVoice;
+		// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
+		// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
+		HRESULT hr;
+		if (FAILED(hr = pXAudio2->CreateSourceVoice(&pSourceVoice, (WAVEFORMATEX*)&audioSample->wfx))) return;
+
+		// Submit an XAUDIO2_BUFFER to the source voice using the function SubmitSourceBuffer.
+		if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&audioSample->buffer)))
+			return;
+
 		// Use the Start function to start the source voice.
 		// Since all XAudio2 voices send their output to the mastering voice by default, audio
 		// from the source voice automatically makes its way to the audio device selected at initialization.
 		// In a more complicated audio graph, the source voice would have to specify the voice to which its output should be sent.
-		HRESULT hr = audioSample->pSourceVoice->Start(0);
+		hr = pSourceVoice->Start(0);
 		if (FAILED(hr))
 			Log::getPointer()->exception("ManagerAudio::playSample() failed during call to pSourceVoice->Start()");
 
+		// Add to the list
+		listVoices.push_front(pSourceVoice);
+		
 	}
 
 	void ManagerAudio::stopSample(const std::string& name)
 	{
-		AudioSample* audioSample = getSample(name);
-		HRESULT hr = audioSample->pSourceVoice->Stop();
-		if (FAILED(hr))
-			Log::getPointer()->exception("ManagerAudio::stopSample() failed during call to pSourceVoice->Stop()");
+//		AudioSample* audioSample = getSample(name);
+//		HRESULT hr = audioSample->pSourceVoice->Stop();
+//		if (FAILED(hr))
+//			Log::getPointer()->exception("ManagerAudio::stopSample() failed during call to pSourceVoice->Stop()");
 
 	}
 }

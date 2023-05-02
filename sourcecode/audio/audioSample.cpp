@@ -1,5 +1,7 @@
 #include "precompiled_header.h"
 #include "audioSample.h"
+#include "../core/log.h"
+#include "../managers/managerAudio.h"
 
 namespace Nexus
 {
@@ -10,14 +12,14 @@ namespace Nexus
 
 	AudioSample::~AudioSample()
 	{
-
+        
 	}
 
-    HRESULT AudioSample::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
+    HRESULT AudioSample::findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
     {
         HRESULT hr = S_OK;
         if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN))
-            return HRESULT_FROM_WIN32(GetLastError());
+            Log::getPointer()->exception("AudioSample::findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
 
         DWORD dwChunkType;
         DWORD dwChunkDataSize;
@@ -30,10 +32,10 @@ namespace Nexus
         {
             DWORD dwRead;
             if (0 == ReadFile(hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL))
-                hr = HRESULT_FROM_WIN32(GetLastError());
+                Log::getPointer()->exception("AudioSample::findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 
             if (0 == ReadFile(hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL))
-                hr = HRESULT_FROM_WIN32(GetLastError());
+                Log::getPointer()->exception("AudioSample::findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
 
             switch (dwChunkType)
             {
@@ -41,12 +43,12 @@ namespace Nexus
                 dwRIFFDataSize = dwChunkDataSize;
                 dwChunkDataSize = 4;
                 if (0 == ReadFile(hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL))
-                    hr = HRESULT_FROM_WIN32(GetLastError());
+                    Log::getPointer()->exception("AudioSample::findChunk() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
                 break;
 
             default:
                 if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, dwChunkDataSize, NULL, FILE_CURRENT))
-                    return HRESULT_FROM_WIN32(GetLastError());
+                    Log::getPointer()->exception("AudioSample::findChunk() failed. Invalid set file pointer."); //return HRESULT_FROM_WIN32(GetLastError());
             }
 
             dwOffset += sizeof(DWORD) * 2;
@@ -60,30 +62,25 @@ namespace Nexus
 
             dwOffset += dwChunkDataSize;
 
-            if (bytesRead >= dwRIFFDataSize) return S_FALSE;
-
+            if (bytesRead >= dwRIFFDataSize) 
+                Log::getPointer()->exception("AudioSample::findChunk() failed. bytesRead >= dwRIFFDataSize."); //return S_FALSE;
         }
-
         return S_OK;
-
     }
 
-    HRESULT AudioSample::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
+    HRESULT AudioSample::readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
     {
         HRESULT hr = S_OK;
         if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, bufferoffset, NULL, FILE_BEGIN))
-            return HRESULT_FROM_WIN32(GetLastError());
+            Log::getPointer()->exception("AudioSample::readChunkData() failed. Invalid set file pointer.");//return HRESULT_FROM_WIN32(GetLastError());
         DWORD dwRead;
         if (0 == ReadFile(hFile, buffer, buffersize, &dwRead, NULL))
-            hr = HRESULT_FROM_WIN32(GetLastError());
+            Log::getPointer()->exception("AudioSample::readChunkData() failed. Unable to read file."); //hr = HRESULT_FROM_WIN32(GetLastError());
         return hr;
     }
 
-    bool AudioSample::load(std::string& filename)
+    void AudioSample::load(std::string filename)
     {
-        
-        
-
         // Open the file
         HANDLE hFile = CreateFile(
             filename.c_str(),
@@ -95,41 +92,46 @@ namespace Nexus
             NULL);
 
         if (INVALID_HANDLE_VALUE == hFile)
-        {
-            return false;// return HRESULT_FROM_WIN32(GetLastError());
-        }
+            Log::getPointer()->exception("AudioSample::load() failed. Invalid file handle.");
 
         if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN))
-        {
-            return false;
-            //return HRESULT_FROM_WIN32(GetLastError());
-        }
+            Log::getPointer()->exception("AudioSample::load() failed. Invalid set file pointer.");
 
         // Locate the 'RIFF' chunk in the audio file, and check the file type.
         DWORD dwChunkSize;
         DWORD dwChunkPosition;
         //check the file type, should be fourccWAVE or 'XWMA'
-        FindChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
+        findChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
         DWORD filetype;
-        ReadChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
+        readChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
         if (filetype != fourccWAVE)
-            return false;
+            Log::getPointer()->exception("AudioSample::load() failed. File type is not wave.");
 
         // Locate the 'fmt ' chunk, and copy its contents into a WAVEFORMATEXTENSIBLE structure.
-        FindChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
-        ReadChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
+        findChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
+        readChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
 
         // Locate the 'data' chunk, and read its contents into a buffer.
         //fill out the audio data buffer with the contents of the fourccDATA chunk
-        FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
+        findChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
         BYTE* pDataBuffer = new BYTE[dwChunkSize];
-        ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
+        readChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
 
         // Populate an XAUDIO2_BUFFER structure.
-        buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
-        buffer.pAudioData = pDataBuffer;  //buffer containing audio data
-        buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+        buffer.AudioBytes = dwChunkSize;        // size of the audio buffer in bytes
+        buffer.pAudioData = pDataBuffer;        // buffer containing audio data
+        buffer.Flags = XAUDIO2_END_OF_STREAM;   // tell the source voice not to expect any data after this buffer
 
-        return false;
+
+        // Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
+        // The format of the voice is specified by the values set in a WAVEFORMATEX structure.
+        HRESULT hr;
+        if (FAILED(hr = ManagerAudio::getPointer()->pXAudio2->CreateSourceVoice(&pSourceVoice, (WAVEFORMATEX*)&wfx))) return;
+
+        // Submit an XAUDIO2_BUFFER to the source voice using the function SubmitSourceBuffer.
+        if (FAILED(hr = pSourceVoice->SubmitSourceBuffer(&buffer)))
+            return;
+
+
     }
 }

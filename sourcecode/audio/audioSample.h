@@ -28,11 +28,14 @@ namespace Nexus
 		AudioSample();
 		~AudioSample();
 
-		bool load(std::string& filename);
+		// Loads the sample data from the named file
+		// If an error occurs, an exception happens
+		void load(std::string filename);
 	private:
-		HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition);
-		HRESULT ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset);
+		HRESULT findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition);
+		HRESULT readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset);
 		XAUDIO2_BUFFER buffer = { 0 };
 		WAVEFORMATEXTENSIBLE wfx = { 0 };
+		IXAudio2SourceVoice* pSourceVoice;
 	};
 }

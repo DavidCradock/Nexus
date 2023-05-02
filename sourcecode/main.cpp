@@ -1,6 +1,28 @@
 #include "precompiled_header.h"
 #include "Nexus.h"
 
+/* Example threading code
+
+#include <mutex>
+#include <thread>
+
+std::mutex mtx;
+
+void print_hello() {
+  std::unique_lock<std::mutex> lock(mtx);
+  std::cout << "Hello, world!" << std::endl;
+  lock.unlock();
+}
+
+int main() {
+  std::thread t1(print_hello);
+  std::thread t2(print_hello);
+  t1.join();
+  t2.join();
+  return 0;
+}
+*/
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, INT iShowCmd)
 {
     try
@@ -44,6 +66,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
 
             // Audio manager
             Nexus::ManagerAudio* pManAudio = Nexus::ManagerAudio::getPointer();
+            pManAudio->addSample("audio/38_Introductory.wav");
+            pManAudio->loadAll();
+            pManAudio->playSample("audio/38_Introductory.wav");
+
+            Sleep(1000);
+            pManAudio->stopSample("audio/38_Introductory.wav");
 
             // Initialise all applications
             Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();
@@ -56,11 +84,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManTextures->loadGroup("fonts");
 
             pManTextFonts->loadAll();
-
-            Nexus::AudioSample audioSample;
-            std::string strSampleFilename = "audio\\38_Introductory.wav";
-            audioSample.load(strSampleFilename);
-            pManAudio->playSample(audioSample);
 
             // Main loop
             while (pRD->updateWindow())

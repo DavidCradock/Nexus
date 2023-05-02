@@ -207,6 +207,58 @@ namespace Nexus
 		matrix[14] = -(fZfar + fZnear) / (fZfar - fZnear);
 	}
 
+	void Matrix::setProjection(float fFOVdegrees, float fWidth, float fHeight, float fNear, float fFar)
+	{
+		// Compute aspect ratio
+		float fAspect = fWidth / fHeight;
+
+		// Taken from asking bard to "how to create a projection matrix for OpenGL please?"
+		// and then "Without using GLM"
+		matrix[0] = 2.0f * fNear / (fAspect * tan(fFOVdegrees * 0.5f));
+		matrix[1] = 0.0f;
+		matrix[2] = 0.0f;
+		matrix[3] = 0.0f;
+
+		matrix[4] = 0.0f;
+		matrix[5] = 2.0f * fNear / tan(fFOVdegrees * 0.5f);
+		matrix[6] = 0.0f;
+		matrix[7] = 0.0f;
+
+		matrix[8] = 0.0f;
+		matrix[9] = 0.0f;
+		matrix[10] = -(fFar + fNear) / (fFar - fNear);
+		matrix[11] = -1.0f;
+
+		matrix[12] = 0.0f;
+		matrix[13] = 0.0f;
+		matrix[14] = -2.0f * fFar * fNear / (fFar - fNear);
+		matrix[15] = 0.0f;
+	}
+
+	void Matrix::setView(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& upVector)
+	{
+		// Calculate the view matrix.
+		matrix[0] = eyePosition.x;
+		matrix[1] = eyePosition.y;
+		matrix[2] = eyePosition.z;
+		matrix[3] = 0.0f;
+
+		matrix[4] = upVector.x;
+		matrix[5] = upVector.x;
+		matrix[6] = upVector.x;
+		matrix[7] = 0.0f;
+
+		matrix[8] = -(targetPosition.x - eyePosition.x);
+		matrix[9] = -(targetPosition.y - eyePosition.y);
+		matrix[10] = -(targetPosition.z - eyePosition.z);
+		matrix[11] = 1.0f;
+
+		matrix[12] = 0.0f;
+		matrix[13] = 0.0f;
+		matrix[14] = 0.0f;
+		matrix[15] = 1.0f;
+	}
+
 	void Matrix::getGLModelview(void)
 	{
 		glGetFloatv(GL_MODELVIEW_MATRIX, matrix);

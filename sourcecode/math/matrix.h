@@ -2,9 +2,10 @@
 #include "../precompiled_header.h"
 #include "../graphics/renderDevice.h"
 
+
 namespace Nexus
 {
-//	class Vector3;
+	class Vector3;
 
 	// 4x4 OpenGL matrix class
 	//
@@ -62,6 +63,12 @@ namespace Nexus
 
 		// Set the matrix up as an orthographic project for 2D rendering
 		void setOrthographic(float fLeft = 0.0f, float fRight = (float)RenderDevice::getPointer()->getWindowWidth(), float fTop = 0.0f, float fBottom = (float)RenderDevice::getPointer()->getWindowHeight(), float fZnear = -1.0f, float fZfar = 1.0f);
+
+		// Set the matrix up as a project matrix for OpenGL
+		void setProjection(float fFOVdegrees, float fWidth, float fHeight, float fNear, float fFar);
+
+		// Set the matrix up as a view matrix for OpenGL
+		void setView(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& upVector);
 
 		// Get translation
 		Vector3 getTranslation(void) const;

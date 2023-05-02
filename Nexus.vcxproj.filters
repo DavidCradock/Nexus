@@ -255,6 +255,9 @@
     <ClCompile Include="sourcecode\audio\audioSample.cpp">
       <Filter>sourcecode\audio</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\graphics\camera.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="sourcecode\audio\audioSample.h">
       <Filter>sourcecode\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\camera.h">
+      <Filter>sourcecode\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

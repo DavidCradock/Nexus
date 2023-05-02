@@ -12,6 +12,7 @@
 ![Screenshot of Nexus running in a window which shows text rendering and a couple of windows with their titlebar text reading Test Window1 and Test Window2.](https://github.com/DavidCradock/Nexus/blob/f0b82ace07ab3732a02455422e1dff1373dcac1b/git_images/current_state.jpg)
 
 **To do*
+- Test Matrix::setProjection()
 - Work out a way to deal with the voices created when playing a sample
 - Fix the huge mess I've made with changing vertex buffer colour from RGB to RGBA
 - Remove TextFonts usage of the texture manager and instead, have the texture object in the TextFont object?

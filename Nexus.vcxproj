@@ -102,6 +102,7 @@
     <ClCompile Include="sourcecode\core\system.cpp" />
     <ClCompile Include="sourcecode\core\timing.cpp" />
     <ClCompile Include="sourcecode\core\utils.cpp" />
+    <ClCompile Include="sourcecode\graphics\camera.cpp" />
     <ClCompile Include="sourcecode\graphics\image.cpp" />
     <ClCompile Include="sourcecode\graphics\imagePacker.cpp" />
     <ClCompile Include="sourcecode\graphics\renderDevice.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="sourcecode\core\system.h" />
     <ClInclude Include="sourcecode\core\timing.h" />
     <ClInclude Include="sourcecode\core\utils.h" />
+    <ClInclude Include="sourcecode\graphics\camera.h" />
     <ClInclude Include="sourcecode\graphics\colour.h" />
     <ClInclude Include="sourcecode\graphics\image.h" />
     <ClInclude Include="sourcecode\graphics\imagePacker.h" />

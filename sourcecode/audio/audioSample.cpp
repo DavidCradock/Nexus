@@ -7,12 +7,16 @@ namespace Nexus
 {
 	AudioSample::AudioSample()
 	{
-
+        iVecVoicesIndex = 0;
 	}
 
 	AudioSample::~AudioSample()
 	{
-        
+        for (int iVoice = 0; iVoice < vecVoices.size(); iVoice++)
+        {
+            vecVoices[iVoice]->DestroyVoice();
+        }
+        delete buffer.pAudioData;
 	}
 
     HRESULT AudioSample::findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)

@@ -21,21 +21,24 @@
 
 namespace Nexus
 {
+	// An audio sample used by ManagerAudio
 	class AudioSample
 	{
 		friend class ManagerAudio;
 	public:
 		AudioSample();
 		~AudioSample();
-
+	private:
 		// Loads the sample data from the named file
 		// If an error occurs, an exception happens
 		void load(std::string filename);
-	private:
+
 		HRESULT findChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition);
 		HRESULT readChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset);
 		XAUDIO2_BUFFER buffer = { 0 };
 		WAVEFORMATEXTENSIBLE wfx = { 0 };
 		
+		std::vector<IXAudio2SourceVoice*> vecVoices;
+		int iVecVoicesIndex;
 	};
 }

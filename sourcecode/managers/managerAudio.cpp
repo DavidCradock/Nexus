@@ -21,37 +21,37 @@ namespace Nexus
 			Log::getPointer()->exception("ManagerAudio() failed to create mastering voice.");
 	}
 
-	AudioSample* ManagerAudio::addSample(const std::string& name)
+	void ManagerAudio::addSample(const std::string& name, unsigned int iMaxNumberVoices)
 	{
+		// Make sure valid params are passed
+		if (iMaxNumberVoices < 1)
+			Log::getPointer()->exception("ManagerAudio::addSample() given iMaxNumberVoices < 1.");
+
 		// Resource already exists?
 		std::map<std::string, AudioSample*>::iterator itr = mapSamples.find(name);
 		if (mapSamples.end() != itr)
 		{
-			return (AudioSample*)itr->second;
+			return;
 		}
 
 		// If we get here, we have got to create, then add the resource
 		AudioSample* pNewRes = new AudioSample();
 		mapSamples[name] = pNewRes;
 
-		// Find the object to return a pointer to it
-		itr = mapSamples.find(name);
-		return (AudioSample*)itr->second;
-	}
+		// Load in the sample data
+		pNewRes->load(name);
 
-	AudioSample* ManagerAudio::getSample(const std::string& name)
-	{
-		// Resource doesn't exist?
-		std::map<std::string, AudioSample*>::iterator itr = mapSamples.find(name);
-		if (mapSamples.end() == itr)
+		// Create voices for the sample
+		HRESULT hr;
+		for (int iSample = 0; iSample < (int)iMaxNumberVoices; iSample++)
 		{
-			std::string err("ManagerAudio::get(\"");
-			err.append(name);
-			err.append("\"");
-			err.append(" failed. As the named object doesn't exist.");
-			Log::getPointer()->exception(err);
+			IXAudio2SourceVoice* pVoice;
+			// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
+			// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
+			if (FAILED(hr = pXAudio2->CreateSourceVoice(&pVoice, (WAVEFORMATEX*)&pNewRes->wfx)))
+				Log::getPointer()->exception("ManagerAudio::addSample() failed to create source voice.");
+			pNewRes->vecVoices.push_back(pVoice);
 		}
-		return (AudioSample*)itr->second;
 	}
 
 	bool ManagerAudio::getSampleExists(const std::string& name)
@@ -74,29 +74,45 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 
+		// Stop playback of all voices
+		stopSample(name);
+
+		
 		// Destroy the resource
 		delete itr->second;
 		mapSamples.erase(itr);
 	}
 
-	void ManagerAudio::loadAll(void)
+	void ManagerAudio::playSample(const std::string& name, float fVolume, float fPlaybackSpeed)
 	{
-		std::map<std::string, AudioSample*>::iterator itr = mapSamples.begin();
-		// If nothing to load
+		std::map<std::string, AudioSample*>::iterator itr = mapSamples.find(name);
 		if (itr == mapSamples.end())
-			return;
-		while (itr != mapSamples.end())
-		{
-			itr->second->load(itr->first);
-			itr++;
-		}
-	}
+			Log::getPointer()->exception("ManagerAudio::playSample() failed to play sample as it doesn't exist.");
 
-	void ManagerAudio::playSample(const std::string& name)
-	{
-		AudioSample* audioSample = getSample(name);
+		HRESULT hr;
+		AudioSample* audioSample = itr->second;
+		IXAudio2SourceVoice* pSourceVoice = audioSample->vecVoices[audioSample->iVecVoicesIndex];
+		pSourceVoice->Stop();
+		pSourceVoice->FlushSourceBuffers();
+		hr = pSourceVoice->SubmitSourceBuffer(&audioSample->buffer);
+		if (FAILED(hr))
+			Log::getPointer()->exception("ManagerAudio::playSample() failed. Error submitting source buffer.");
 
-		IXAudio2SourceVoice* pSourceVoice;
+		// Set voice volume, pan and frequency
+		pSourceVoice->SetVolume(fVolume);
+		pSourceVoice->SetFrequencyRatio(fPlaybackSpeed);
+
+		hr = pSourceVoice->Start(0);
+		if (FAILED(hr))
+			Log::getPointer()->exception("ManagerAudio::playSample() failed during call to pSourceVoice->Start()");
+		
+		// Deal with voice index
+		audioSample->iVecVoicesIndex++;
+		if (audioSample->iVecVoicesIndex >= audioSample->vecVoices.size())
+			audioSample->iVecVoicesIndex = 0;
+
+
+		/*
 		// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
 		// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
 		HRESULT hr;
@@ -113,19 +129,38 @@ namespace Nexus
 		hr = pSourceVoice->Start(0);
 		if (FAILED(hr))
 			Log::getPointer()->exception("ManagerAudio::playSample() failed during call to pSourceVoice->Start()");
-
-		// Add to the list
-		listVoices.push_front(pSourceVoice);
+		*/
+		
 		
 	}
 
 	void ManagerAudio::stopSample(const std::string& name)
 	{
-//		AudioSample* audioSample = getSample(name);
-//		HRESULT hr = audioSample->pSourceVoice->Stop();
-//		if (FAILED(hr))
-//			Log::getPointer()->exception("ManagerAudio::stopSample() failed during call to pSourceVoice->Stop()");
+		std::map<std::string, AudioSample*>::iterator itr = mapSamples.find(name);
+		if (itr == mapSamples.end())
+			Log::getPointer()->exception("ManagerAudio::stopSample() failed to play sample as it doesn't exist.");
 
+		HRESULT hr;
+		AudioSample* audioSample = itr->second;
+		for (int i = 0; i < audioSample->vecVoices.size(); i++)
+		{
+			IXAudio2SourceVoice* pSourceVoice = audioSample->vecVoices[i];
+			hr = pSourceVoice->Stop();
+			if (FAILED(hr))
+				Log::getPointer()->exception("ManagerAudio::stopSample() failed. Error calling pSourceVoice->Stop().");
+			hr = pSourceVoice->FlushSourceBuffers();
+			if (FAILED(hr))
+				Log::getPointer()->exception("ManagerAudio::stopSample() failed. Error calling pSourceVoice->FlushSourceBuffers().");
+		}
+		audioSample->iVecVoicesIndex = 0;
+
+	}
+
+	unsigned int ManagerAudio::getMemoryUsage(void)
+	{
+		XAUDIO2_PERFORMANCE_DATA pPerformanceData;// = 0;
+		pXAudio2->GetPerformanceData(&pPerformanceData);
+		return pPerformanceData.MemoryUsageInBytes;
 	}
 }
 

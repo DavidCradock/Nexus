@@ -67,10 +67,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             // Audio manager
             Nexus::ManagerAudio* pManAudio = Nexus::ManagerAudio::getPointer();
             pManAudio->addSample("audio/38_Introductory.wav");
-            pManAudio->loadAll();
-            pManAudio->playSample("audio/38_Introductory.wav");
-            Sleep(200);
-            pManAudio->playSample("audio/38_Introductory.wav");
+            float fVol = 0.25f;
+            for (int i = 0; i < 4; i++)
+            {
+                pManAudio->playSample("audio/38_Introductory.wav", fVol, fVol);
+                fVol += 0.25f;
+                Sleep(1000);
+            }
+            unsigned int iMemBytes = pManAudio->getMemoryUsage();
+  //          pManAudio->stopSample("audio/38_Introductory.wav");
+            iMemBytes = pManAudio->getMemoryUsage();
 
             // Initialise all applications
             Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();

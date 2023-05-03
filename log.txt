@@ -23,3 +23,6 @@ ManagerShaders::getShader("textFont", "default") failed. Although the given name
 ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
 Log::exception() called. ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
 ManagerShaders::getShader("gui", "default") failed. Although the given named group of "default" exists, the named resource couldn't be found!
+ManagerAudio::addSample() failed to create source voice.
+ManagerAudio::addSample() failed to create source voice.
+ManagerAudio::stopSample() failed to play sample as it doesn't exist.

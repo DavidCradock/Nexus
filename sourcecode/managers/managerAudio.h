@@ -14,13 +14,9 @@ namespace Nexus
 		friend class AudioSample;
 		ManagerAudio();
 
-		// Creates a new object
-		// You'll need to call loadAll() afterwards
-		AudioSample* addSample(const std::string& name);
-
-		// Returns a pointer to the named object.
-		// Throws an exception if the object couldn't be found
-		AudioSample* getSample(const std::string& name);
+		// Creates a new object and loads it's data in
+		// iMaxNumberVoices is the total number of times this sample can be played back simultaneously
+		void addSample(const std::string& name, unsigned int iMaxNumberVoices = 8);
 
 		// Returns true if the named object exists, else false.
 		bool getSampleExists(const std::string& name);
@@ -29,21 +25,20 @@ namespace Nexus
 		// Throws an exception if the named object doesn't exist.
 		void removeSample(const std::string& name);
 
-		// Loads all added samples
-		void loadAll(void);
-
 		// Plays the named sample
-		void playSample(const std::string& name);
+		// Multiple instances of this sample can be played back to iMaxNumberVoices parsed to addSample()
+		void playSample(const std::string& name, float fVolume = 1.0f, float fPlaybackSpeed = 1.0f);
 
-		// Stops the names sample
+		// Stops playback of all instances of the named sample.
 		void stopSample(const std::string& name);
+
+		// Returns memory usage in bytes
+		unsigned int getMemoryUsage(void);
 	private:
 		IXAudio2* pXAudio2;
 		IXAudio2MasteringVoice* pMasterVoice;
 		std::map<std::string, AudioSample*> mapSamples;	// Holds each named sample and it's data
 
-		// Each voice that has been created during a call to playSample
-		std::list<IXAudio2SourceVoice*> listVoices;
 	};
 
 }

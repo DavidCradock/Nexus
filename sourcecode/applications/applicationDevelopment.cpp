@@ -79,7 +79,6 @@ namespace Nexus
 			RenderDevice* pRD = RenderDevice::getPointer();
 			pRD->setVsync(!pRD->getVsync());
 		}
-
 		return true;
 	}
 

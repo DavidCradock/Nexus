@@ -111,7 +111,7 @@ namespace Nexus
 		if (audioSample->iVecVoicesIndex >= audioSample->vecVoices.size())
 			audioSample->iVecVoicesIndex = 0;
 
-
+		
 		/*
 		// Create a source voice by calling the IXAudio2::CreateSourceVoice method on an instance of the XAudio2 engine.
 		// The format of the voice is specified by the values set in a WAVEFORMATEX structure.
@@ -154,6 +154,24 @@ namespace Nexus
 		}
 		audioSample->iVecVoicesIndex = 0;
 
+	}
+
+	int ManagerAudio::getNumberVoicesPlaying(const std::string& name)
+	{
+		std::map<std::string, AudioSample*>::iterator itr = mapSamples.find(name);
+		if (itr == mapSamples.end())
+			Log::getPointer()->exception("ManagerAudio::getNumberVoicesPlaying() failed to play sample as it doesn't exist.");
+
+		int iNumberVoicesPlaying = 0;
+		XAUDIO2_VOICE_STATE state;
+		AudioSample* audioSample = itr->second;
+		for (int i = 0; i < audioSample->vecVoices.size(); i++)
+		{
+			audioSample->vecVoices[i]->GetState(&state);
+			if (state.BuffersQueued > 0)
+				iNumberVoicesPlaying++;
+		}
+		return iNumberVoicesPlaying;
 	}
 
 	unsigned int ManagerAudio::getMemoryUsage(void)

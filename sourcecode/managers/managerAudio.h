@@ -32,6 +32,10 @@ namespace Nexus
 		// Stops playback of all instances of the named sample.
 		void stopSample(const std::string& name);
 
+		// Returns the number of voices that a sample has which is currently playing
+		// Usefull if you're playing music and wish to know if it's finished playing or not, amongst other things.
+		int getNumberVoicesPlaying(const std::string& name);
+
 		// Returns memory usage in bytes
 		unsigned int getMemoryUsage(void);
 	private:

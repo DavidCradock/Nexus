@@ -49,9 +49,9 @@
 
 // XAudio2
 //#include <hrtfapoapi.h>
-#include <x3daudio.h>
+//#include <x3daudio.h>
 //#include <xapo.h>
-#include <xapobase.h>
-#include <xapofx.h>
+//#include <xapobase.h>
+//#include <xapofx.h>
 #include <xaudio2.h>
-#include <xaudio2fx.h>
+//#include <xaudio2fx.h>

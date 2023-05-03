@@ -38,7 +38,7 @@ namespace Nexus
 		XAUDIO2_BUFFER buffer = { 0 };
 		WAVEFORMATEXTENSIBLE wfx = { 0 };
 		
-		std::vector<IXAudio2SourceVoice*> vecVoices;
+		std::vector<IXAudio2SourceVoice*> vecVoices;	// Multiple instances playback
 		int iVecVoicesIndex;
 	};
 }

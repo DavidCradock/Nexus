@@ -5,7 +5,7 @@
 
 namespace Nexus
 {
-
+	// 3D camera
 	class Camera
 	{
 	public:
@@ -30,7 +30,7 @@ namespace Nexus
 	private:
 		Matrix viewMatrix;
 		Matrix projectionMatrix;
-		Matrix viewProjectionMatrix;
+		Matrix viewProjectionMatrix;	// Both view and projection combined
 		bool bViewProjectionMatrixNeedsUpdating;
 	};
 }

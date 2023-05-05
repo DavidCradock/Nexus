@@ -19,6 +19,15 @@ namespace Nexus
 		pMasterVoice = nullptr;
 		if (FAILED(hr = pXAudio2->CreateMasteringVoice(&pMasterVoice)))
 			Log::getPointer()->exception("ManagerAudio() failed to create mastering voice.");
+
+		// Create a volume meter effect.
+//		IXAudio2Effect* volumeMeter = nullptr;
+//		HRESULT hr = pXAudio2->CreateEffect(CLSID_XAudio2_VolumeMeter, nullptr, &volumeMeter);
+//		if (FAILED(hr)) {
+			// Handle error.
+//		}
+		IUnknown* pXAPO;
+		hr = XAudio2CreateVolumeMeter(&pXAPO);
 	}
 
 	void ManagerAudio::addSample(const std::string& name, unsigned int iMaxNumberVoices)
@@ -180,5 +189,11 @@ namespace Nexus
 		pXAudio2->GetPerformanceData(&pPerformanceData);
 		return pPerformanceData.MemoryUsageInBytes;
 	}
+
+	float ManagerAudio::getVolumeLevel(void)
+	{
+		return 0;
+	}
+
 }
 

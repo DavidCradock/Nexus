@@ -37,7 +37,7 @@ namespace Nexus
 		pText->setPosition(Vector2(0, 100));
 		pText->setDimensions(Vector2(640, 100));
 
-		
+
 	}
 
 	void ApplicationDevelopment::onStart(void)

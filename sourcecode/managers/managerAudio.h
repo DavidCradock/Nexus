@@ -38,6 +38,9 @@ namespace Nexus
 
 		// Returns memory usage in bytes
 		unsigned int getMemoryUsage(void);
+
+		// Returns volume level
+		float getVolumeLevel(void);
 	private:
 		IXAudio2* pXAudio2;
 		IXAudio2MasteringVoice* pMasterVoice;

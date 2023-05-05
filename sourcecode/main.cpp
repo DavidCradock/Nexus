@@ -1,27 +1,7 @@
 #include "precompiled_header.h"
 #include "Nexus.h"
 
-/* Example threading code
 
-#include <mutex>
-#include <thread>
-
-std::mutex mtx;
-
-void print_hello() {
-  std::unique_lock<std::mutex> lock(mtx);
-  std::cout << "Hello, world!" << std::endl;
-  lock.unlock();
-}
-
-int main() {
-  std::thread t1(print_hello);
-  std::thread t2(print_hello);
-  t1.join();
-  t2.join();
-  return 0;
-}
-*/
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, INT iShowCmd)
 {

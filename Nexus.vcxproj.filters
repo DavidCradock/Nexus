@@ -258,6 +258,9 @@
     <ClCompile Include="sourcecode\graphics\camera.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\managers\managers.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -478,6 +481,12 @@
     </ClInclude>
     <ClInclude Include="sourcecode\graphics\camera.h">
       <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\tiny_obj_loader.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managers.h">
+      <Filter>sourcecode\managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

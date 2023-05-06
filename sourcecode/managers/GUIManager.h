@@ -9,11 +9,11 @@ namespace Nexus
 {
 	// Use this to deal with everything related to the graphical user interface.
 	// Create text, buttons, windows and all sorts of fun interactive things.
-	class ManagerGUI : public Singleton<ManagerGUI>
+	class GUIManager : public Singleton<GUIManager>
 	{
 	public:
 		// Sets defaults and creates the default theme
-		ManagerGUI();
+		GUIManager();
 
 		// Updates the GUI.
 		void update(void);
@@ -81,9 +81,6 @@ namespace Nexus
 		Timing timing;										// Used by the Frame Statistics window
 		bool bWindowBeingMoved;								// Prevents multiple windows from being moved if their titlebars are roughly in same location when clicked upon.
 		float fTimeToAddValueToFPSLineGraph;				// Used by the Frame Statistics window
-
-		
-
 	};
 
 }

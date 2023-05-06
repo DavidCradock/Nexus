@@ -21,10 +21,10 @@
 
 namespace Nexus
 {
-	// An audio sample used by ManagerAudio
+	// An audio sample used by AudioManager
 	class AudioSample
 	{
-		friend class ManagerAudio;
+		friend class AudioManager;
 	public:
 		AudioSample();
 		~AudioSample();

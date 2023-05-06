@@ -7,11 +7,11 @@ namespace Nexus
 {
 	// App manager class to handle all apps which are derived from ApplicationBase found in "applicationBase.h"
 	// By default, the current application to be run each loop is the AppDevelopment application
-	// This can be changed by called ManagerApplications::getPointer()->switchToApp("YourApplicationName");
-	class ManagerApplications : public Singleton<ManagerApplications>
+	// This can be changed by called ApplicationManager::getPointer()->switchToApp("YourApplicationName");
+	class ApplicationManager : public Singleton<ApplicationManager>
 	{
 	public:
-		ManagerApplications();
+		ApplicationManager();
 
 		// Return the number of applications added to this manager
 		size_t getNumApps(void) { return applications.size(); }

@@ -1,10 +1,6 @@
 #include "precompiled_header.h"
 #include "gui_text.h"
-#include "../managers/managerGUI.h"
-#include "../managers/managerInputDevices.h"
-#include "../managers/managerShaders.h"
-#include "../managers/managerTextFonts.h"
-#include "../managers/managerTextures.h"
+#include "../managers/managers.h"
 #include "../graphics/vertexBuffer.h"
 #include "../core/log.h"
 
@@ -20,11 +16,9 @@ namespace Nexus
 
 	void GUIText::render(GUIWindow* pWindow)
 	{
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow);
+		Managers* pMan = Managers::getPointer();
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -55,7 +49,7 @@ namespace Nexus
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
-		Shader* pShader = ManagerShaders::getPointer()->getShader("default");
+		Shader* pShader = pMan->shaders->getShader("default");
 		pShader->use();
 		pShader->setInt("texture1", pRenderTexture->getTextureID());
 		pRenderTexture->bindTexture();
@@ -66,7 +60,6 @@ namespace Nexus
 		pShader->setMat4("transform", matrixOrtho * matrixTransform);
 		vertexBuffer.draw();
 		glDisable(GL_BLEND);
-
 	}
 
 	void GUIText::renderToTexture(void)
@@ -83,19 +76,18 @@ namespace Nexus
 //			return;
 
 		// If we get here, we need to render the text to the render texture
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameText);
+		Managers* pMan = Managers::getPointer();
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameText);
 		
 		// Bind the render texture as render target
 		pRenderTexture->bindFramebuffer(true, Vector4(0.0f, 0.0f, 0.0f, 0.0f));
 
 		// Split string into words seperated by space
-		std::istringstream ss(strText);		// Copy the text into istringstream
-		std::string strWord;				// Holds each word
-		std::vector<std::string> strLinesToBeRendered;	// Holds each line of text to be rendered
-		std::string strLine;				// Single line of text
+		std::istringstream ss(strText);							// Copy the text into istringstream
+		std::string strWord;									// Holds each word
+		std::vector<std::string> strLinesToBeRendered;			// Holds each line of text to be rendered
+		std::string strLine;									// Single line of text
 		int iWidthSpace = (int)pTextFont->getTextWidth(" ");	// Compute width of space character
 		// Get each word, one at a time and store in strWord
 		while (getline(ss, strWord, ' '))

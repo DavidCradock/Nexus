@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "image.h"
 #include "../core/log.h"
-#include "../managers/managerArchives.h"
+#include "../managers/ArchiveManager.h"
 #include "../core/utils.h"
 #include "../math/vector3.h"
 
@@ -522,7 +522,6 @@ namespace Nexus
 				destImage.setPixel(idx, idy, colTmp[0], colTmp[1], colTmp[2], colTmp[3]);
 			}
 		}
-
 	}
 
 	void Image::rotateClockwise(void)

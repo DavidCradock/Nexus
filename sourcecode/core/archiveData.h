@@ -6,7 +6,7 @@ namespace Nexus
 	// Access and modify file data from archives or files.
 	class ArchiveData
 	{
-		friend class ManagerArchives;
+		friend class ArchiveManager;
 	public:
 		ArchiveData();
 		~ArchiveData();

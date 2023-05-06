@@ -8,11 +8,11 @@ namespace Nexus
 
 	// Is responsible for audio.
 	// Used XAudio2?
-	class ManagerAudio : public Singleton<ManagerAudio>
+	class AudioManager : public Singleton<AudioManager>
 	{
 	public:
 		friend class AudioSample;
-		ManagerAudio();
+		AudioManager();
 
 		// Creates a new object and loads it's data in
 		// iMaxNumberVoices is the total number of times this sample can be played back simultaneously
@@ -45,7 +45,6 @@ namespace Nexus
 		IXAudio2* pXAudio2;
 		IXAudio2MasteringVoice* pMasterVoice;
 		std::map<std::string, AudioSample*> mapSamples;	// Holds each named sample and it's data
-
 	};
 
 }

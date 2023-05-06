@@ -1,8 +1,6 @@
 #include "precompiled_header.h"
 #include "textFont.h"
-#include "../managers/managerArchives.h"
-#include "../managers/managerShaders.h"
-#include "../managers/managerTextures.h"
+#include "../managers/managers.h"
 #include "../core/log.h"
 #include "renderDevice.h"
 #include "image.h"
@@ -34,8 +32,8 @@ namespace Nexus
 		fontTypes.strTextureName = strFontTGAFilename;
 
 		// Add textures to texture manager
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		pManTextures->add2DTexture(fontTypes.strTextureName, fontTypes.strTextureName, "fonts", false, TextureFiltering::nearest);
+		Managers* pMan = Managers::getPointer();
+		pMan->textures->add2DTexture(fontTypes.strTextureName, fontTypes.strTextureName, "fonts", false, TextureFiltering::nearest);
 
 		// Load in font data
 		ArchiveData archiveData;
@@ -64,8 +62,8 @@ namespace Nexus
 		if (!bLoaded)
 			return;
 
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		pManTextures->remove2DTexture(fontTypes.strTextureName, "fonts");
+		Managers* pMan = Managers::getPointer();
+		pMan->textures->remove2DTexture(fontTypes.strTextureName, "fonts");
 		bLoaded = false;
 	}
 
@@ -75,10 +73,10 @@ namespace Nexus
 			return;
 
 		RenderDevice* pRD = RenderDevice::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		Texture* pTexture = pManTextures->get2DTexture(fontTypes.strTextureName, "fonts");
+		Managers* pMan = Managers::getPointer();
+		Texture* pTexture = pMan->textures->get2DTexture(fontTypes.strTextureName, "fonts");
 		pTexture->bind();
-		Shader* pShader = ManagerShaders::getPointer()->getShader("default");
+		Shader* pShader = pMan->shaders->getShader("default");
 		pShader->use();
 		pShader->setInt("texture1", pTexture->getID());
 		//glDisable(GL_BLEND);
@@ -181,5 +179,4 @@ namespace Nexus
 		}
 		return fWidth;
 	}
-
 }

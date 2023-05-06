@@ -1,7 +1,6 @@
 #include "precompiled_header.h"
-#include "managerTextFonts.h"
-#include "managerArchives.h"
-#include "managerTextures.h"
+#include "textFontManager.h"
+#include "managers.h"
 #include "../core/log.h"
 #include "../graphics/renderDevice.h"
 #include "../graphics/image.h"
@@ -10,7 +9,7 @@
 
 namespace Nexus
 {
-	TextFont* ManagerTextFonts::addTextFont(const std::string& name)
+	TextFont* TextFontManager::addTextFont(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -29,13 +28,13 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	TextFont* ManagerTextFonts::getTextFont(const std::string& name)
+	TextFont* TextFontManager::getTextFont(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (mapTextFonts.end() == itr)
 		{
-			std::string err("ManagerTextFonts::get(\"");
+			std::string err("TextFontManager::get(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
@@ -44,7 +43,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	bool ManagerTextFonts::getTextFontExists(const std::string& name)
+	bool TextFontManager::getTextFontExists(const std::string& name)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (itr == mapTextFonts.end())
@@ -52,13 +51,13 @@ namespace Nexus
 		return true;
 	}
 
-	void ManagerTextFonts::removeTextFont(const std::string& name)
+	void TextFontManager::removeTextFont(const std::string& name)
 	{
 		// Resource doesn't exist in the group?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (mapTextFonts.end() == itr)
 		{
-			std::string err("ManagerTextFonts::remove(\"");
+			std::string err("TextFontManager::remove(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
 			Log::getPointer()->exception(err);
@@ -74,7 +73,7 @@ namespace Nexus
 		}
 	}
 
-	void ManagerTextFonts::loadAll(void)
+	void TextFontManager::loadAll(void)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.begin();
 		// If nothing to load
@@ -87,7 +86,7 @@ namespace Nexus
 		}
 	}
 
-	void ManagerTextFonts::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
+	void TextFontManager::buildFontFiles(const std::string& strOutputBaseName, const std::string& strFontName, unsigned int iFontHeight, bool bAntialiased, bool bBold, bool bItalic, bool bUnderlined, bool bStrikeout)
 	{
 		// We need to use Windows GDI text rendering to obtain character spacing and dimension information.
 		// We then take that, create textures holding each type of font (Normal, Bold, Italic, Underlined and Strikeout) and save them to disk.
@@ -145,10 +144,7 @@ namespace Nexus
 		SelectObject(hDC, font);
 		GetTextMetrics(hDC, &tm);
 		float fMaxHeight = (float)tm.tmHeight;
-
 		TextFont::CharDesc charDesc[256];
-
-
 		ABCFLOAT abcf;
 		// Get information for the font
 		SelectObject(hDC, font);
@@ -258,8 +254,6 @@ namespace Nexus
 
 		// Create Image object from DIBsection ready to save to disk
 		Image imgOut;
-
-
 		imgOut.createBlank((unsigned int)vFinalTextureDims.x, (unsigned int)vFinalTextureDims.y, 4);
 
 		// Compute filenames for each of the textures

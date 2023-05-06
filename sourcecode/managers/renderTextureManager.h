@@ -5,18 +5,11 @@
 
 namespace Nexus
 {
-	// A resource group holding resources
-	class RenderTextureGroup
-	{
-	public:
-		std::map<std::string, RenderTexture*>	_mmapResource;		// Hash map holding named textures
-	};
-
 	// Is responsible for render textures.
-	class ManagerRenderTextures : public Singleton<ManagerRenderTextures>
+	class RenderTextureManager : public Singleton<RenderTextureManager>
 	{
 	public:
-		ManagerRenderTextures();
+		RenderTextureManager();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);
@@ -56,7 +49,13 @@ namespace Nexus
 		// Disables texturing
 		void disableTexturing(void);
 	private:
-		std::map<std::string, RenderTextureGroup*> group;	// Hash map holding named resource groups
+		// A resource group holding resources
+		class Group
+		{
+		public:
+			std::map<std::string, RenderTexture*>	_mmapResource;		// Hash map holding named textures
+		};
+		std::map<std::string, Group*> group;	// Hash map holding named resource groups
 	};
 
 }

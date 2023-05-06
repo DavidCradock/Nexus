@@ -16,14 +16,14 @@ namespace Nexus
 	// To gain access to either of the input devices, simply access it's representing member.
 	// For more information on how to use them, see their respective classes.
 	// A brief example to determine if the excape key is pressed...
-	// if (InputManager::getPointer()->key.pressed(KC_ESCAPE))
+	// if (InputDeviceManager::getPointer()->key.pressed(KC_ESCAPE))
 	// { 
 	//    // Do something, like exit
 	// }
-	class ManagerInputDevices : public Singleton<ManagerInputDevices>
+	class InputDeviceManager : public Singleton<InputDeviceManager>
 	{
 	public:
-		ManagerInputDevices();
+		InputDeviceManager();
 
 		// Initialise all input devices
 		void init(HWND hApplicationWindow);

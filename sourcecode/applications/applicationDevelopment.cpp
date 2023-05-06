@@ -1,12 +1,6 @@
 #include "precompiled_header.h"
 #include "applicationDevelopment.h"
-#include "../managers/managerInputDevices.h"
-#include "../graphics/shader.h"
-#include "../graphics/texture.h"
-#include "../graphics/renderDevice.h"
-#include "../managers/managerGUI.h"
-#include "../managers/managerSprites.h"
-#include "../graphics/textFont.h"
+#include "../managers/managers.h"
 #include "../Nexus.h"
 
 namespace Nexus
@@ -19,8 +13,8 @@ namespace Nexus
 	void ApplicationDevelopment::initOnce(void)
 	{
 		// GUI
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		GUIWindow *pWindow = pManGUI->addWindow("Test Window2");
+		Managers* pMan = Managers::getPointer();
+		GUIWindow *pWindow = pMan->gui->addWindow("Test Window2");
 		pWindow->setWindowPosition(Vector2(640 + 110, 0));
 		pWindow->setWindowDimensions(640, 480);
 
@@ -54,12 +48,14 @@ namespace Nexus
 	{
 		RenderDevice* pRD = RenderDevice::getPointer();
 
+		Managers* pMan = Managers::getPointer();
+
 		// Shutdown if escape key pressed
-		if (ManagerInputDevices::getPointer()->key.pressed(KC_ESCAPE))
+		if (pMan->input->key.pressed(KC_ESCAPE))
 			return false;
 
 		static bool vsync = true;
-		if (ManagerInputDevices::getPointer()->key.once(KC_F1))
+		if (pMan->input->key.once(KC_F1))
 		{
 			vsync = !vsync;
 			RenderDevice::getPointer()->setVsync(vsync);
@@ -70,11 +66,11 @@ namespace Nexus
 		timing.update();
 
 		// Exit application if exit button clicked on
-		if (true == ManagerGUI::getPointer()->getWindow("Test Window2")->getButton("Exit button")->getClicked())
+		if (true == pMan->gui->getWindow("Test Window2")->getButton("Exit button")->getClicked())
 			return false;
 
 		// Toggle vsync
-		if (true == ManagerGUI::getPointer()->getWindow("Test Window2")->getButton("VSync")->getClicked())
+		if (true == pMan->gui->getWindow("Test Window2")->getButton("VSync")->getClicked())
 		{
 			RenderDevice* pRD = RenderDevice::getPointer();
 			pRD->setVsync(!pRD->getVsync());

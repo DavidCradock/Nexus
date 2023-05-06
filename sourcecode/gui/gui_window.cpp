@@ -1,11 +1,7 @@
 #include "precompiled_header.h"
 #include "gui_window.h"
 #include "../core/log.h"
-#include "../managers/managerGUI.h"
-#include "../managers/managerInputDevices.h"
-#include "../managers/managerShaders.h"
-#include "../managers/managerTextFonts.h"
-#include "../managers/managerTextures.h"
+#include "../managers/managers.h"
 #include "../graphics/shader.h"
 #include "../graphics/renderDevice.h"
 
@@ -118,18 +114,16 @@ namespace Nexus
 	bool GUIWindow::update(const std::string& strWindowName)
 	{
 		RenderDevice* pRenderDevice = RenderDevice::getPointer();
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		Managers* pMan = Managers::getPointer();
 		
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		Texture* pTexture = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		Texture* pTexture = pMan->textures->get2DTexture(pTheme->strTexturenameWindow, "default");
 		Vector2 vWindowTextureDims((float)pTexture->getWidth(), (float)pTexture->getHeight());
 		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
 		vWndTexDimsDiv3.multiply(0.3333333f);
 		// Mouse info
-		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
-		Vector2 vMousePosDelta = pManInputDevices->mouse.getMouseDeltaGUI();
-		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
+		Vector2 vMousePosDelta = pMan->input->mouse.getMouseDeltaGUI();
+		Vector2 vMousePosCurrent = pMan->input->mouse.getCursorPos();
 		// Application window information
 		Vector2 vApplicationWindowDims((float)pRenderDevice->getWindowWidth(), (float)pRenderDevice->getWindowHeight());
 
@@ -158,13 +152,13 @@ namespace Nexus
 						// Is mouse over titlebar?
 						if (vMousePosCurrent.y < vWindowPos.y + vWndTexDimsDiv3.y)
 						{
-							if (pManInputDevices->mouse.leftButtonOnce())
+							if (pMan->input->mouse.leftButtonOnce())
 							{
-								if (!pManGUI->getWindowBeingMoved())
+								if (!pMan->gui->getWindowBeingMoved())
 								{
-									pManGUI->setWindowBeingMoved(true);
+									pMan->gui->setWindowBeingMoved(true);
 									bBeingMoved = true;
-									pManGUI->moveWindowToFront(strWindowName);
+									pMan->gui->moveWindowToFront(strWindowName);
 								}
 							}
 						}
@@ -174,7 +168,7 @@ namespace Nexus
 		}
 
 		// Stop moving window if mouse not down
-		if (!pManInputDevices->mouse.leftButDown())
+		if (!pMan->input->mouse.leftButDown())
 		{
 			bBeingMoved = false;
 		}
@@ -182,8 +176,8 @@ namespace Nexus
 		// Move window
 		if (bBeingMoved)
 		{
-			vPosition.x += pManInputDevices->mouse.getMouseDeltaGUI().x;
-			vPosition.y += pManInputDevices->mouse.getMouseDeltaGUI().y;
+			vPosition.x += pMan->input->mouse.getMouseDeltaGUI().x;
+			vPosition.y += pMan->input->mouse.getMouseDeltaGUI().y;
 
 			// Limit to screen
 			if (vPosition.x < 0)
@@ -206,8 +200,6 @@ namespace Nexus
 				itb++;
 			}
 		}
-
-
 		return bMouseIsOverWindow;
 	}
 
@@ -216,19 +208,15 @@ namespace Nexus
 		// If window is disabled
 		if (false == bEnabled)
 			return;
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
-		ManagerInputDevices* pManInput = ManagerInputDevices::getPointer();
-		ManagerShaders* pManShaders = ManagerShaders::getPointer();
+		Managers* pMan = Managers::getPointer();
 		RenderDevice* pRenderDevice = RenderDevice::getPointer();
 
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow, "default");
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
-		Shader* pShader = pManShaders->getShader("default");
+		Shader* pShader = pMan->shaders->getShader("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 
@@ -319,7 +307,7 @@ namespace Nexus
 		// Now render the text for the titlebar
 		if (strTitlebarText.length())
 		{
-			TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
+			TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
 			pTextFont->print(strTitlebarText,
 				(int)vPosition.x + (int)vTextureWindowDimsDiv3.x + (int)pTheme->vWindowTitlebarTextOffset.x,
 				(int)vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y,

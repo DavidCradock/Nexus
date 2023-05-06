@@ -171,9 +171,6 @@
     <ClCompile Include="sourcecode\graphics\textFont.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\graphics\texture.cpp">
-      <Filter>sourcecode\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
@@ -216,31 +213,31 @@
     <ClCompile Include="sourcecode\core\utils.cpp">
       <Filter>sourcecode\core</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerApplications.cpp">
+    <ClCompile Include="sourcecode\managers\applicationManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerArchives.cpp">
+    <ClCompile Include="sourcecode\managers\archivesManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerSprites.cpp">
+    <ClCompile Include="sourcecode\managers\spriteManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerInputDevices.cpp">
+    <ClCompile Include="sourcecode\managers\inputDeviceManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerGUI.cpp">
+    <ClCompile Include="sourcecode\managers\GUIManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerTextures.cpp">
+    <ClCompile Include="sourcecode\managers\textureManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerTextFonts.cpp">
+    <ClCompile Include="sourcecode\managers\textFontManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerShaders.cpp">
+    <ClCompile Include="sourcecode\managers\shaderManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerRenderTextures.cpp">
+    <ClCompile Include="sourcecode\managers\renderTextureManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\gui\gui_text.cpp">
@@ -249,7 +246,7 @@
     <ClCompile Include="sourcecode\gui\gui_linegraph.cpp">
       <Filter>sourcecode\gui</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\managers\managerAudio.cpp">
+    <ClCompile Include="sourcecode\managers\audioManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\audio\audioSample.cpp">
@@ -260,6 +257,9 @@
     </ClCompile>
     <ClCompile Include="sourcecode\managers\managers.cpp">
       <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\texture.cpp">
+      <Filter>sourcecode\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,9 +389,6 @@
     <ClInclude Include="sourcecode\graphics\textFont.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\texture.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
@@ -440,31 +437,31 @@
     <ClInclude Include="sourcecode\Nexus.h">
       <Filter>sourcecode</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerApplications.h">
+    <ClInclude Include="sourcecode\managers\applicationManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerArchives.h">
+    <ClInclude Include="sourcecode\managers\archiveManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerSprites.h">
+    <ClInclude Include="sourcecode\managers\spriteManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerInputDevices.h">
+    <ClInclude Include="sourcecode\managers\inputDeviceManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerGUI.h">
+    <ClInclude Include="sourcecode\managers\GUIManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerTextures.h">
+    <ClInclude Include="sourcecode\managers\textureManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerTextFonts.h">
+    <ClInclude Include="sourcecode\managers\textFontManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerShaders.h">
+    <ClInclude Include="sourcecode\managers\shaderManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerRenderTextures.h">
+    <ClInclude Include="sourcecode\managers\renderTextureManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\gui\gui_text.h">
@@ -473,7 +470,7 @@
     <ClInclude Include="sourcecode\gui\gui_linegraph.h">
       <Filter>sourcecode\gui</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\managers\managerAudio.h">
+    <ClInclude Include="sourcecode\managers\audioManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\audio\audioSample.h">
@@ -487,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="sourcecode\managers\managers.h">
       <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\texture.h">
+      <Filter>sourcecode\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

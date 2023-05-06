@@ -1,8 +1,7 @@
 #include "precompiled_header.h"
 #include "spriteEntity.h"
 #include "../../core/log.h"
-#include "../../managers/managerSprites.h"
-#include "../../managers/managerTextures.h"
+#include "../../managers/managers.h"
 
 namespace Nexus
 {
@@ -22,9 +21,9 @@ namespace Nexus
 	Vector2 SpriteEntity::getRenderDims(void)
 	{
 		// Get dims of the texture this sprite is using
-		ManagerSprites* pManSprites = ManagerSprites::getPointer();
+		Managers* pMan = Managers::getPointer();
 
-		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = pMan->textures->get2DTexture(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getRenderDims() failed to acquire texture from resource manager: ");
@@ -41,9 +40,9 @@ namespace Nexus
 
 	Vector2 SpriteEntity::getSpriteDescDims(void)
 	{
-		ManagerSprites* pManSprites = ManagerSprites::getPointer();
+		Managers* pMan = Managers::getPointer();
 
-		Texture* pResTex = ManagerTextures::getPointer()->get2DTexture(pManSprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = pMan->textures->get2DTexture(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getSpriteDescDims() failed to acquire texture from resource manager: ");

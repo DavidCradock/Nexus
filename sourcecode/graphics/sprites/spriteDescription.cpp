@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "spriteDescription.h"
 #include "../../core/log.h"
-#include "../../managers/managerTextures.h"
+#include "../../managers/managers.h"
 
 namespace Nexus
 {
@@ -13,29 +13,28 @@ namespace Nexus
 
 	void SpriteDescription::addFrame(const std::string& strTextureFilename, float fTimeToShowThisFrameMS)
 	{
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		Managers* pMan = Managers::getPointer();
 
 		vstrFrameTextures.push_back(strTextureFilename);
 		if (fTimeToShowThisFrameMS < 1.0f)
 			fTimeToShowThisFrameMS = 1.0f;
 		vfFrameDelay.push_back(fTimeToShowThisFrameMS);
-		pManTextures->add2DTexture(strTextureFilename, strTextureFilename, "sprites", true);
+		pMan->textures->add2DTexture(strTextureFilename, strTextureFilename, "sprites", true);
 		nonScaledDims.setZero();	// So it's re-calculated (In case the diffuse texture has changed
 	}
 
 	void SpriteDescription::removeAllFrames(void)
 	{
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
+		Managers* pMan = Managers::getPointer();
 		for (int i = 0; i < (int)vstrFrameTextures.size(); ++i)
 		{
-			pManTextures->remove2DTexture(vstrFrameTextures[i], "sprites");
+			pMan->textures->remove2DTexture(vstrFrameTextures[i], "sprites");
 		}
 		for (int i = 0; i < (int)vstrFrameTextures.size(); ++i)
 		{
 			vfFrameDelay.pop_back();
 			vstrFrameTextures.pop_back();
 		}
-
 	}
 
 	const std::string& SpriteDescription::getFrameTextureName(unsigned int iFrameNumber)

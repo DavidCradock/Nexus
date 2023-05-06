@@ -1,73 +1,69 @@
 #include "precompiled_header.h"
-#include "managerTextures.h"
+#include "textureManager.h"
 #include "../core/log.h"
 #include "../graphics/image.h"
 
 namespace Nexus
 {
-	ManagerTextures::ManagerTextures()
+	TextureManager::TextureManager()
 	{
 		addNewGroup("default");
 		addNewGroup("fonts");
 		addNewGroup("gui");
 	}
 
-
-	unsigned int ManagerTextures::getNumGroups(void)
+	unsigned int TextureManager::getNumGroups(void)
 	{
 		return (unsigned int)group.size();
 	}
 
-	unsigned int ManagerTextures::getNumResInGroup(const std::string& strGroupName)
+	unsigned int TextureManager::getNumResInGroup(const std::string& strGroupName)
 	{
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::getNumResInGroup(\"");
+			std::string err("TextureManager::getNumResInGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
 			Log::getPointer()->exception(err);
 		}
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
-		size_t iTotal = itg->second->_mmapResource.size();
-		//	iTotal += itg->second->_mmapResFont.size();
-		return (unsigned int)iTotal;
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
+		return (unsigned int)itg->second->_mmapResource.size();;
 	}
 
-	unsigned int ManagerTextures::getNumResInGroupLoaded(const std::string& strGroupName)
+	unsigned int TextureManager::getNumResInGroupLoaded(const std::string& strGroupName)
 	{
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::getNumResInGroupLoaded(\"");
+			std::string err("TextureManager::getNumResInGroupLoaded(\"");
 			err.append(strGroupName);
 			err.append("\") failed. The group doesn't exist!");
 			Log::getPointer()->exception(err);
 		}
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		unsigned int iResLoadedTotal = 0;
-		std::map<std::string, Texture*>::iterator it0 = itg->second->_mmapResource.begin();
-		while (it0 != itg->second->_mmapResource.end())
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.begin();
+		while (it != itg->second->_mmapResource.end())
 		{
-			if (it0->second->getLoaded())
+			if (it->second->getLoaded())
 				++iResLoadedTotal;
-			it0++;
+			it++;
 		}
-
 		return iResLoadedTotal;
 	}
 
-	const std::string& ManagerTextures::getGroupName(unsigned int iGroupIndex)
+	const std::string& TextureManager::getGroupName(unsigned int iGroupIndex)
 	{
 		if (iGroupIndex >= group.size())
 		{
-			std::string err("ManagerTextures::getGroupName(");
+			std::string err("TextureManager::getGroupName(");
 
 			err.append(std::to_string(iGroupIndex));
 			err.append(") failed. Invalid index given. Number of groups is ");
 			err.append(std::to_string(getNumGroups()));
 			Log::getPointer()->exception(err);
 		}
-		std::map<std::string, TextureGroup*>::iterator itg = group.begin();
+		std::map<std::string, Group*>::iterator itg = group.begin();
 		unsigned int i = 0;
 		while (i < iGroupIndex)
 		{
@@ -77,117 +73,112 @@ namespace Nexus
 		return itg->first;
 	}
 
-	void ManagerTextures::addNewGroup(const std::string& strNewGroupName)
+	void TextureManager::addNewGroup(const std::string& strNewGroupName)
 	{
 		if (groupExists(strNewGroupName))
 		{
 			return;
 		}
-
-		TextureGroup* pNewGroup = new TextureGroup;
+		Group* pNewGroup = new Group;
 		group[strNewGroupName] = pNewGroup;
 	}
 
-	bool ManagerTextures::groupExists(const std::string& strGroupName)
+	bool TextureManager::groupExists(const std::string& strGroupName)
 	{
-		std::map<std::string, TextureGroup*>::iterator it = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator it = group.find(strGroupName);
 		if (it == group.end())
 			return false;
 		return true;
 	}
 
-	void ManagerTextures::loadGroup(const std::string& strGroupName)
+	void TextureManager::loadGroup(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::loadGroup(\"");
+			std::string err("TextureManager::loadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
 			Log::getPointer()->exception(err);
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each 2d texture resource in this group...
-		std::map<std::string, Texture*>::iterator itTexture = itg->second->_mmapResource.begin();
-		while (itTexture != itg->second->_mmapResource.end())
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.begin();
+		while (it != itg->second->_mmapResource.end())
 		{
-			if (!itTexture->second->loaded)
+			if (!it->second->loaded)
 			{
-				itTexture->second->load();
-				itTexture->second->loaded = true;
+				it->second->load();
+				it->second->loaded = true;
 			}
-			itTexture++;
+			it++;
 		}
-
 	}
 
-	void ManagerTextures::loadGroupSingle(const std::string& strGroupName)
+	void TextureManager::loadGroupSingle(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::loadGroupSingle(\"");
+			std::string err("TextureManager::loadGroupSingle(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
 			Log::getPointer()->exception(err);
 		}
 
 		// Load any unloaded resources within the group
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
-
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each 2d texture resource in this group...
-		std::map<std::string, Texture*>::iterator itTexture = itg->second->_mmapResource.begin();
-		while (itTexture != itg->second->_mmapResource.end())
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.begin();
+		while (it != itg->second->_mmapResource.end())
 		{
-			if (!itTexture->second->loaded)
+			if (!it->second->loaded)
 			{
-				itTexture->second->load();
-				itTexture->second->loaded = true;
+				it->second->load();
+				it->second->loaded = true;
 				return;	// We've changed a resource from unloaded to loaded state, aka, we've loaded a resource, simply return.
 			}
-			itTexture++;
+			it++;
 		}
-
 	}
 
-	void ManagerTextures::unloadGroup(const std::string& strGroupName)
+	void TextureManager::unloadGroup(const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::unloadGroup(\"");
+			std::string err("TextureManager::unloadGroup(\"");
 			err.append(strGroupName);
 			err.append("\") failed. As the given named group doesn't exist");
 			Log::getPointer()->exception(err);
 		}
 
 		// Unload any loaded resources within the group
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each 2d texture resource in this group...
-		std::map<std::string, Texture*>::iterator itTexture = itg->second->_mmapResource.begin();
-		while (itTexture != itg->second->_mmapResource.end())
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.begin();
+		while (it != itg->second->_mmapResource.end())
 		{
-			if (itTexture->second->loaded)
+			if (it->second->loaded)
 			{
-				itTexture->second->unload();
-				itTexture->second->loaded = false;
+				it->second->unload();
+				it->second->loaded = false;
 			}
-			itTexture++;
+			it++;
 		}
 	}
 
-
-	void ManagerTextures::add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName, bool bImageFlipOnLoad, TextureFiltering filter)
+	void TextureManager::add2DTexture(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName, bool bImageFlipOnLoad, TextureFiltering filter)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::add2DTexture(\"");
+			std::string err("TextureManager::add2DTexture(\"");
 			err.append(strNewResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -198,11 +189,11 @@ namespace Nexus
 		}
 
 		// Resource already exists in the group?
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
-		std::map<std::string, Texture*>::iterator itr = itg->second->_mmapResource.find(strNewResourceName);	// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() != itr)
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);									// Get iterator to the group (we know it exists)
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.find(strNewResourceName);	// Try to find the named resource in the group
+		if (itg->second->_mmapResource.end() != it)
 		{
-			itr->second->refCount++;
+			it->second->refCount++;
 			return;
 		}
 
@@ -211,12 +202,12 @@ namespace Nexus
 		itg->second->_mmapResource[strNewResourceName] = pNewRes;
 	}
 
-	Texture* ManagerTextures::get2DTexture(const std::string& strResourceName, const std::string& strGroupName)
+	Texture* TextureManager::get2DTexture(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::get2DTexture(\"");
+			std::string err("TextureManager::get2DTexture(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -227,11 +218,11 @@ namespace Nexus
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
-		std::map<std::string, Texture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->_mmapResource.end() == it)
 		{
-			std::string err("ManagerTextures::get2DTexture(\"");
+			std::string err("TextureManager::get2DTexture(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -242,36 +233,33 @@ namespace Nexus
 		}
 
 		// Is the resource in an unloaded state?
-		if (!itr->second->loaded)
+		if (!it->second->loaded)
 		{
 			// Load it
-			itr->second->load();
-			itr->second->loaded = true;
+			it->second->load();
+			it->second->loaded = true;
 		}
 		// Return the resource pointer...
-		return (Texture*)itr->second;
+		return (Texture*)it->second;
 	}
 
-
-
-	bool ManagerTextures::getExists2DTexture(const std::string& strResourceName, const std::string& strGroupName)
+	bool TextureManager::getExists2DTexture(const std::string& strResourceName, const std::string& strGroupName)
 	{
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 		if (itg == group.end())
 			return false;
-		std::map<std::string, Texture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);
-		if (itr == itg->second->_mmapResource.end())
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.find(strResourceName);
+		if (it == itg->second->_mmapResource.end())
 			return false;
 		return true;
 	}
 
-
-	void ManagerTextures::remove2DTexture(const std::string& strResourceName, const std::string& strGroupName)
+	void TextureManager::remove2DTexture(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ManagerTextures::remove2DTexture(\"");
+			std::string err("TextureManager::remove2DTexture(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -282,11 +270,11 @@ namespace Nexus
 		}
 
 		// Resource doesn't exist in the group?
-		std::map<std::string, TextureGroup*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
-		std::map<std::string, Texture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);									// Get iterator to the group (we know it exists)
+		std::map<std::string, Texture*>::iterator it = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->_mmapResource.end() == it)
 		{
-			std::string err("ManagerTextures::remove2DTexture(\"");
+			std::string err("TextureManager::remove2DTexture(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -298,24 +286,24 @@ namespace Nexus
 
 		// If we get here, we've found the resource in the group
 		// Decrement it's reference count 
-		itr->second->refCount--;
+		it->second->refCount--;
 		// If the reference count is now at zero
-		if (itr->second->refCount <= 0)
+		if (it->second->refCount <= 0)
 		{
 			// If it's in a loaded state, unload it
-			if (itr->second->loaded)
+			if (it->second->loaded)
 			{
-				itr->second->unload();
-				itr->second->loaded = false;
+				it->second->unload();
+				it->second->loaded = false;
 			}
 
 			// Destroy the resource
-			delete itr->second;
-			itg->second->_mmapResource.erase(itr);
+			delete it->second;
+			itg->second->_mmapResource.erase(it);
 		}
 	}
 
-	void ManagerTextures::disableTexturing(void)
+	void TextureManager::disableTexturing(void)
 	{
 		glActiveTexture(GL_TEXTURE7);	glDisable(GL_TEXTURE_2D);	glDisable(GL_TEXTURE_CUBE_MAP);
 		glActiveTexture(GL_TEXTURE6);	glDisable(GL_TEXTURE_2D);	glDisable(GL_TEXTURE_CUBE_MAP);

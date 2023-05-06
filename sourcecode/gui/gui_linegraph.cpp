@@ -1,15 +1,11 @@
 #include "precompiled_header.h"
 #include "gui_linegraph.h"
-#include "../managers/managerGUI.h"
-#include "../managers/managerShaders.h"
-#include "../managers/managerTextures.h"
-#include "../managers/managerTextFonts.h"
+#include "../managers/managers.h"
 #include "../graphics/vertexBuffer.h"
 #include "../graphics/renderDevice.h"
 
 namespace Nexus
 {
-
 	GUILineGraph::GUILineGraph()
 	{
 		vDimensions.set(100, 100);
@@ -57,14 +53,11 @@ namespace Nexus
 	void GUILineGraph::render(GUIWindow* pWindow)
 	{
 		RenderDevice* pRD = RenderDevice::getPointer();
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
-		ManagerShaders* pManShaders = ManagerShaders::getPointer();
-		Shader* pShader = pManShaders->getShader("default");
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameLinegraph);
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow);
+		Managers* pMan = Managers::getPointer();
+		Shader* pShader = pMan->shaders->getShader("default");
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameLinegraph);
+		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -75,14 +68,14 @@ namespace Nexus
 		// Print background
 		vPos.x += vPosition.x;
 		vPos.y += vPosition.y;
-		pManTextures->disableTexturing();
+		pMan->textures->disableTexturing();
 //		pShader->setInt("texture1", 0);
 		VertexBuffer vb;
 		vb.addQuad(vPos, vDimensions, Vector4(pTheme->linegraphBackgroundColour.r, pTheme->linegraphBackgroundColour.g, pTheme->linegraphBackgroundColour.b, pTheme->linegraphBackgroundColour.a));
 		vb.upload();
 		vb.draw();
 
-		Texture* pTextureWhite = pManTextures->get2DTexture("white_32x32", "default");
+		Texture* pTextureWhite = pMan->textures->get2DTexture("white_32x32", "default");
 		pTextureWhite->bind();
 		pShader->use();
 		pShader->setInt("texture1", pTextureWhite->getID());
@@ -99,7 +92,6 @@ namespace Nexus
 		matrixTransform.setIdentity();
 		pShader->setMat4("transform", matrixOrtho * matrixTransform);
 
-		
 		vb.reset();
 		if (listValues.size() > 1)
 		{
@@ -122,15 +114,10 @@ namespace Nexus
 				vLinePointEnd.x += fXoffset;
 				it1++;
 				it2++;
-
 			}
-			
 		}
 		vb.upload();
 		vb.draw();
-
-
-
 
 		// Print horizontal text
 		pTextFont->printCentered(strTextX,
@@ -144,10 +131,5 @@ namespace Nexus
 			(int)vPosition.y + int(vDimensions.y * 0.5f) + (int)vPos.y - (int)vTextureWindowDimsDiv3.y,
 			pRD->getWindowWidth(), pRD->getWindowHeight(),
 			pTheme->linegraphTextColour);
-
-
-
-
 	}
-
 }

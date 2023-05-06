@@ -15,7 +15,7 @@ namespace Nexus
 	// pShader->use();
 	class Shader
 	{
-		friend class ManagerShaders;
+		friend class ShaderManager;
 	public:
 		// Constructor to store filenames of the vertex and fragment programs
 		Shader(const std::string& vertexShaderFilenameIn, const std::string& fragmentShaderFilenameIn);

@@ -30,12 +30,12 @@ namespace Nexus
 	// It renders 2D sprites in world space
 	// You use this to create sprite descriptions which define their appearence, then you create one or more layers. Then you
 	// add sprite entities using a layer, parsing a sprite description.
-	class ManagerSprites : public Singleton<ManagerSprites>
+	class SpriteManager : public Singleton<SpriteManager>
 	{
 	public:
 
 		// Constructor, one time init
-		ManagerSprites();
+		SpriteManager();
 
 		// Add a new named layer which will contain sprite entities
 		// When adding a new layer, it will be placed "above" all previously added layers, making it's sprite entities rendered last aka above all other layers.

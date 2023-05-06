@@ -10,7 +10,7 @@ namespace Nexus
 	// Used by the various GUI objects
 	class TextFont
 	{
-		friend class ManagerTextFonts;
+		friend class TextFontManager;
 	public:
 		// Called when added to resource manager
 		TextFont();

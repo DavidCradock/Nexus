@@ -1,16 +1,16 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "managerApplications.h"
-#include "managerArchives.h"
-#include "managerAudio.h"
-#include "managerGUI.h"
-#include "managerInputDevices.h"
-#include "managerRenderTextures.h"
-#include "managerShaders.h"
-#include "managerSprites.h"
-#include "managerTextFonts.h"
-#include "managerTextures.h"
+#include "applicationManager.h"
+#include "archiveManager.h"
+#include "audioManager.h"
+#include "guiManager.h"
+#include "inputDeviceManager.h"
+#include "renderTextureManager.h"
+#include "shaderManager.h"
+#include "spriteManager.h"
+#include "textFontManager.h"
+#include "textureManager.h"
 
 namespace Nexus
 {
@@ -21,16 +21,16 @@ namespace Nexus
 		// Obtains pointers to each of the managers
 		Managers();
 
-		ManagerApplications* applications;
-		ManagerArchives* archives;
-		ManagerAudio* audio;
-		ManagerGUI* gui;
-		ManagerInputDevices* input;
-		ManagerRenderTextures* renderTextures;
-		ManagerShaders* shaders;
-		ManagerSprites* sprites;
-		ManagerTextFonts* textFonts;
-		ManagerTextures* textures;
+		ApplicationManager* applications;
+		ArchiveManager* archives;
+		AudioManager* audio;
+		GUIManager* gui;
+		InputDeviceManager* input;
+		RenderTextureManager* renderTextures;
+		ShaderManager* shaders;
+		SpriteManager* sprites;
+		TextFontManager* textFonts;
+		TextureManager* textures;
 	};
 
 	

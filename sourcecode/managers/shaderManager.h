@@ -6,17 +6,10 @@
 
 namespace Nexus
 {
-	// A resource group holding resources
-	class ShaderGroup
+	class ShaderManager : public Singleton<ShaderManager>
 	{
 	public:
-		std::map<std::string, Shader*>	_mmapResource;		// Hash map holding named shaders
-	};
-
-	class ManagerShaders : public Singleton<ManagerShaders>
-	{
-	public:
-		ManagerShaders();
+		ShaderManager();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);
@@ -80,6 +73,12 @@ namespace Nexus
 		// Unbind shaders
 		void unbind(void);
 	private:
-		std::map<std::string, ShaderGroup*> group;	// Hash map holding named resource groups
+		// A resource group holding resources
+		class Group
+		{
+		public:
+			std::map<std::string, Shader*>	_mmapResource;		// Hash map holding named textures
+		};
+		std::map<std::string, Group*> group;	// Hash map holding named resource groups
 	};
 }

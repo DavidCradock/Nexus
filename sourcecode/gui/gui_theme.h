@@ -12,7 +12,7 @@ namespace Nexus
 	// The cells of the four edges are stretched
 	class GUITheme
 	{
-		friend class ManagerGUI;
+		friend class GUIManager;
 		friend class GUIWindow;
 		friend class GUIButton;
 		friend class GUIText;

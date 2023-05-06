@@ -7,7 +7,7 @@ namespace Nexus
 	// A single render texture
 	class RenderTexture
 	{
-		friend class ManagerRenderTextures;
+		friend class RenderTextureManager;
 
 	public:
 		RenderTexture(int iWidth, int iHeight);

@@ -44,6 +44,5 @@ namespace Nexus
 		}
 		return viewProjectionMatrix;
 	}
-
 }
 

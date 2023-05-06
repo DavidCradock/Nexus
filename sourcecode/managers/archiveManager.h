@@ -30,10 +30,10 @@ namespace Nexus
 	// 	// Decompression was successful
 	// 	// theDecompressedFileData now holds the uncompressed data of "cat.tga"
 	// }
-	class ManagerArchives : public Singleton<ManagerArchives>
+	class ArchiveManager : public Singleton<ArchiveManager>
 	{
 	public:
-		ManagerArchives();
+		ArchiveManager();
 
 		// Add a zip archive to the search list.
 		// Adds a zip file archive to the search list which, when calling openFile(), will be searched

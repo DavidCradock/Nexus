@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "texture.h"
 #include "../core/log.h"
-#include "image.h"
+#include "../graphics/image.h"
 
 namespace Nexus
 {
@@ -33,9 +33,7 @@ namespace Nexus
 		Border colour
 		float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-
-*/
+		*/
 		Image image;
 		image.load(imageFilename, bImageFlipOnLoad);
 		glGenTextures(1, &textureID);

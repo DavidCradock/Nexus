@@ -1,5 +1,5 @@
 #include "precompiled_header.h"
-#include "managerArchives.h"
+#include "archiveManager.h"
 #include "../../dependencies/ZLib/zlib.h"
 #include "../../dependencies/ZLib/unzip.h"
 #include "../core/utils.h"
@@ -8,12 +8,12 @@
 namespace Nexus
 {
 
-	ManagerArchives::ManagerArchives()
+	ArchiveManager::ArchiveManager()
 	{
 		archiveList.clear();
 	}
 
-	bool ManagerArchives::addArchive(const std::string& strFilename, const std::string& strPassword)
+	bool ArchiveManager::addArchive(const std::string& strFilename, const std::string& strPassword)
 	{
 		// Try to locate file
 		if (!fileExists(strFilename))
@@ -33,7 +33,7 @@ namespace Nexus
 		return true;
 	}
 
-	bool ManagerArchives::removeArchive(const std::string& strFilename)
+	bool ArchiveManager::removeArchive(const std::string& strFilename)
 	{
 		if (archiveList.size() <= 0)
 			return false;
@@ -50,12 +50,12 @@ namespace Nexus
 		return false;
 	}
 
-	void ManagerArchives::removeAllArchives(void)
+	void ArchiveManager::removeAllArchives(void)
 	{
 		archiveList.clear();
 	}
 
-	bool ManagerArchives::loadFile(const std::string& strFilename, ArchiveData& streamOutput)
+	bool ArchiveManager::loadFile(const std::string& strFilename, ArchiveData& streamOutput)
 	{
 		streamOutput.free();
 
@@ -80,7 +80,7 @@ namespace Nexus
 					streamOutput.pData = new unsigned char[ulSize];
 					if (!streamOutput.pData)
 					{
-						std::string err("ManagerArchives found file in archive \"");
+						std::string err("ArchiveManager found file in archive \"");
 						err.append(strFilename);
 						err.append("\" but unable to allocate memory for it.");
 						Log::getPointer()->exception(err);
@@ -94,7 +94,7 @@ namespace Nexus
 						unzCloseCurrentFile(zipFile); // Close file within archive
 						unzClose(zipFile);  // Close zip file
 						streamOutput.free();
-						std::string err("ManagerArchives found file in archive \"");
+						std::string err("ArchiveManager found file in archive \"");
 						err.append(strFilename);
 						err.append("\", also allocated memory for it, but an error occured during decompression.");
 						Log::getPointer()->exception(err);
@@ -106,5 +106,4 @@ namespace Nexus
 		// Unable to find compressed file within all registered archive files
 		return false;
 	}
-
 }

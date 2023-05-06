@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "sprites.h"
-#include "../../managers/managerShaders.h"
-#include "../../managers/managerTextures.h"
+#include "../../managers/ShaderManager.h"
+#include "../../managers/TextureManager.h"
 #include "../../core/log.h"
 
 namespace Nexus

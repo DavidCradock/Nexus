@@ -4,9 +4,7 @@
 #include "../../core/utils.h"
 #include "../colour.h"
 #include "spriteDescription.h"
-#include "../../managers/managerShaders.h"
-#include "../../managers/managerSprites.h"
-#include "../../managers/managerTextures.h"
+#include "../../managers/managers.h"
 #include "../../math/vector4.h"
 #include "../vertexBuffer.h"
 
@@ -229,9 +227,9 @@ namespace Nexus
 	void SpriteLayer::render(const Vector2& vCameraPosition, float fCameraZoom)
 	{
 		timing.update();
+		Managers* pMan = Managers::getPointer();
 
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		pManTextures->disableTexturing();
+		pMan->textures->disableTexturing();
 
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -243,14 +241,13 @@ namespace Nexus
 		Vector2 v2SpritePos;
 		Vector2 vSpriteDims;
 		float fSpriteRotRad;
-		ManagerSprites* pManSprites = ManagerSprites::getPointer();
 
 		// For each sprite description
 		std::map<std::string, SpriteDescAndEnt*>::iterator itsde = mapSpriteDescAndSprites.begin();
 		while (itsde != mapSpriteDescAndSprites.end())
 		{
 			// Get this layer's sprite description
-			SpriteDescription* pDesc = pManSprites->getDescription(itsde->first);
+			SpriteDescription* pDesc = pMan->sprites->getDescription(itsde->first);
 
 
 			if (0 == pDesc->getFrameTextureName(0).length())
@@ -258,7 +255,7 @@ namespace Nexus
 				std::string err("SpriteLayer::_renderEntities() failed!");
 				Log::getPointer()->exception(err);
 			}
-			Texture* pTex = pManTextures->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
+			Texture* pTex = pMan->textures->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
 
 			// Set description's dimensions to the size of the diffuse texture map
 			if (pDesc->nonScaledDims.x == 0 || pDesc->nonScaledDims.y == 0)
@@ -272,7 +269,7 @@ namespace Nexus
 			// Render stuff
 //			pSR->begin(vCameraPosition, fCameraZoom);
 
-			Shader* pShader = ManagerShaders::getPointer()->getShader("sprites");
+			Shader* pShader = ShaderManager::getPointer()->getShader("sprites");
 			Matrix matrixOrtho;
 			matrixOrtho.setOrthographic();
 			Matrix matrixTranslation;
@@ -301,7 +298,7 @@ namespace Nexus
 				if (itse->second->bHasParent)
 				{
 					// Get parent sprite entity
-					SpriteLayer* pParentLayer = pManSprites->getLayer(itse->second->strParentEntityLayerName);
+					SpriteLayer* pParentLayer = pMan->sprites->getLayer(itse->second->strParentEntityLayerName);
 					SpriteEntity* pParentEntity = pParentLayer->getEntity(itse->second->strParentEntityUniqueName, itse->second->strParentEntitySpriteDesc);
 
 					// Compute combined scale
@@ -337,7 +334,7 @@ namespace Nexus
 				vSpriteDims.y *= renderDims.y;
 
 				// Get texture of sprite entity
-				pTex = pManTextures->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
+				pTex = pMan->textures->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
 				pTex->bind();
 				matrixTranslation.setTranslation(v2SpritePos.x - (0.5f * renderDims.x), v2SpritePos.y - (0.5f * renderDims.y), 0.0f);
 				matrixRotation.setFromAxisAngle(Vector3(0, 0, -1), fSpriteRotRad);
@@ -351,10 +348,8 @@ namespace Nexus
 				vertexBuffer.addQuad(Vector2(-(0.5f * renderDims.x), - (0.5f * renderDims.y)), vSpriteDims);
 				vertexBuffer.upload();
 				vertexBuffer.draw(false);
-
 				itse++;
 			}
-
 			itsde++;
 		}
 	}

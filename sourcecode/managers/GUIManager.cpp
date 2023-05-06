@@ -1,12 +1,11 @@
 #include "precompiled_header.h"
-#include "managerGUI.h"
+#include "GUIManager.h"
 #include "../core/log.h"
-#include "managerTextFonts.h"
-#include "managerTextures.h"
+#include "managers.h"
 
 namespace Nexus
 {
-	ManagerGUI::ManagerGUI()
+	GUIManager::GUIManager()
 	{
 		bMouseIsOverGUI = false;
 		bWindowBeingMoved = false;
@@ -35,7 +34,7 @@ namespace Nexus
 		pWindow->setWindowEnabled(false);
 	}
 
-	void ManagerGUI::update(void)
+	void GUIManager::update(void)
 	{
 		// If there are no windows, do nothing
 		if (!mapGUIWindows.size())
@@ -43,7 +42,7 @@ namespace Nexus
 
 		// Theme not set?
 		if (!strCurrentTheme.length())
-			Log::getPointer()->exception("ManagerGUI::render() failed as currently set theme is not set.");
+			Log::getPointer()->exception("GUIManager::render() failed as currently set theme is not set.");
 
 		// Get currently set theme dims
 		GUITheme* pTheme = getTheme(strCurrentTheme);
@@ -80,14 +79,14 @@ namespace Nexus
 		}
 	}
 
-	void ManagerGUI::render(void)
+	void GUIManager::render(void)
 	{
 		// If there are no windows, do nothing
 		if (!mapGUIWindows.size())
 			return;
 
 		if (!strCurrentTheme.length())
-			Log::getPointer()->exception("ManagerGUI::render() failed as currently set theme is not set.");
+			Log::getPointer()->exception("GUIManager::render() failed as currently set theme is not set.");
 
 		// For each window, using z-ordering with rendering back most first
 		for (int iWindow = (int)vecStringWindowZorder.size() - 1; iWindow >= 0; iWindow--)
@@ -97,13 +96,13 @@ namespace Nexus
 		}
 	}
 
-	GUITheme* ManagerGUI::addTheme(const std::string& name)
+	GUITheme* GUIManager::addTheme(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(name);
 		if (mapGUIThemes.end() != itr)
 		{
-			std::string err("ManagerGUI::addTheme(\"");
+			std::string err("GUIManager::addTheme(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
@@ -125,13 +124,13 @@ namespace Nexus
 		return (GUITheme*)itr->second;
 	}
 
-	GUITheme* ManagerGUI::getTheme(const std::string& name)
+	GUITheme* GUIManager::getTheme(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(name);
 		if (mapGUIThemes.end() == itr)
 		{
-			std::string err("ManagerGUI::getTheme(\"");
+			std::string err("GUIManager::getTheme(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
@@ -140,7 +139,7 @@ namespace Nexus
 		return (GUITheme*)itr->second;
 	}
 
-	bool ManagerGUI::getExistsTheme(const std::string& name)
+	bool GUIManager::getExistsTheme(const std::string& name)
 	{
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(name);
 		if (itr == mapGUIThemes.end())
@@ -148,13 +147,13 @@ namespace Nexus
 		return true;
 	}
 
-	void ManagerGUI::removeTheme(const std::string& name)
+	void GUIManager::removeTheme(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(name);
 		if (mapGUIThemes.end() == itr)
 		{
-			std::string err("ManagerGUI::removeTheme(\"");
+			std::string err("GUIManager::removeTheme(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
 			Log::getPointer()->exception(err);
@@ -165,13 +164,13 @@ namespace Nexus
 		mapGUIThemes.erase(itr);
 	}
 
-	GUIWindow* ManagerGUI::addWindow(const std::string& name)
+	GUIWindow* GUIManager::addWindow(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(name);
 		if (mapGUIWindows.end() != itr)
 		{
-			std::string err("ManagerGUI::addWindow(\"");
+			std::string err("GUIManager::addWindow(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object already exists.");
@@ -191,13 +190,13 @@ namespace Nexus
 		return (GUIWindow*)itr->second;
 	}
 
-	GUIWindow* ManagerGUI::getWindow(const std::string& name)
+	GUIWindow* GUIManager::getWindow(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(name);
 		if (mapGUIWindows.end() == itr)
 		{
-			std::string err("ManagerGUI::getWindow(\"");
+			std::string err("GUIManager::getWindow(\"");
 			err.append(name);
 			err.append("\"");
 			err.append(" failed. As the named object doesn't exist.");
@@ -206,7 +205,7 @@ namespace Nexus
 		return (GUIWindow*)itr->second;
 	}
 
-	bool ManagerGUI::getExistsWindow(const std::string& name)
+	bool GUIManager::getExistsWindow(const std::string& name)
 	{
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(name);
 		if (itr == mapGUIWindows.end())
@@ -214,13 +213,13 @@ namespace Nexus
 		return true;
 	}
 
-	void ManagerGUI::removeWindow(const std::string& name)
+	void GUIManager::removeWindow(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, GUIWindow*>::iterator itr = mapGUIWindows.find(name);
 		if (mapGUIWindows.end() == itr)
 		{
-			std::string err("ManagerGUI::removeWindow(\"");
+			std::string err("GUIManager::removeWindow(\"");
 			err.append(name);
 			err.append("\") failed because the named object couldn't be found.");
 			Log::getPointer()->exception(err);
@@ -231,7 +230,7 @@ namespace Nexus
 		mapGUIWindows.erase(itr);
 	}
 
-	void ManagerGUI::moveWindowToFront(const std::string& name)
+	void GUIManager::moveWindowToFront(const std::string& name)
 	{
 		for (int iWindow = 0; iWindow < vecStringWindowZorder.size(); iWindow++)
 		{
@@ -253,30 +252,29 @@ namespace Nexus
 		}
 	}
 
-	void ManagerGUI::setCurrentTheme(const std::string& name)
+	void GUIManager::setCurrentTheme(const std::string& name)
 	{
 		strCurrentTheme = name;
 	}
 
-	std::string ManagerGUI::getCurrentThemeName(void)
+	std::string GUIManager::getCurrentThemeName(void)
 	{
 		return strCurrentTheme;
 	}
 
-	GUITheme* ManagerGUI::getCurrentTheme(void)
+	GUITheme* GUIManager::getCurrentTheme(void)
 	{
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.find(strCurrentTheme);
 		if (itr == mapGUIThemes.end())
 		{
-			Log::getPointer()->exception("ManagerGUI::getCurrentTheme() failed to find currently set GUITheme");
+			Log::getPointer()->exception("GUIManager::getCurrentTheme() failed to find currently set GUITheme");
 		}
 		return itr->second;
 	}
 
-	void ManagerGUI::loadAllThemes(void)
+	void GUIManager::loadAllThemes(void)
 	{
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
+		Managers* pMan = Managers::getPointer();
 
 		std::map<std::string, GUITheme*>::iterator itr = mapGUIThemes.begin();
 		while (itr != mapGUIThemes.end())
@@ -284,17 +282,17 @@ namespace Nexus
 			if (!itr->second->bLoaded)
 			{
 				itr->second->bLoaded = true;
-				pManTextures->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
-				pManTextures->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
-				pManTextures->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
-				pManTextures->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
-				pManTextFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
-				pManTextFonts->addTextFont(itr->second->strFontnameButton);
-				pManTextFonts->addTextFont(itr->second->strFontnameText);
-				pManTextFonts->addTextFont(itr->second->strFontnameLinegraph);
+				pMan->textures->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
+				pMan->textures->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
+				pMan->textures->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
+				pMan->textures->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
+				pMan->textFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
+				pMan->textFonts->addTextFont(itr->second->strFontnameButton);
+				pMan->textFonts->addTextFont(itr->second->strFontnameText);
+				pMan->textFonts->addTextFont(itr->second->strFontnameLinegraph);
 			}
 			itr++;
 		}
-		pManTextFonts->loadAll();
+		pMan->textFonts->loadAll();
 	}
 }

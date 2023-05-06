@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pRD->createWindow("Nexus");
 
             // Initialise input
-            Nexus::ManagerInputDevices* pManInputDevices = Nexus::ManagerInputDevices::getPointer();
+            Nexus::InputDeviceManager* pManInputDevices = Nexus::InputDeviceManager::getPointer();
             pManInputDevices->init(pRD->getWindowHandle());
 
             // Timing
@@ -20,35 +20,35 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             timing.setStatFPSSrate(1);
 
             // Shaders
-            Nexus::ManagerShaders* pManShaders = Nexus::ManagerShaders::getPointer();
+            Nexus::ShaderManager* pManShaders = Nexus::ShaderManager::getPointer();
             pManShaders->addNewGroup("default");
             pManShaders->addShader("default", "shaders/default.vs", "shaders/default.fs", "default");
             pManShaders->loadGroup("default");
 
             // Texture manager groups
-            Nexus::ManagerTextures* pManTextures = Nexus::ManagerTextures::getPointer();
+            Nexus::TextureManager* pManTextures = Nexus::TextureManager::getPointer();
             pManTextures->addNewGroup("default");
             pManTextures->add2DTexture("white_32x32", "textures/white_32x32.png", "default");
 
             // GUI
-            Nexus::ManagerGUI* pManGUI = Nexus::ManagerGUI::getPointer();
+            Nexus::GUIManager* pManGUI = Nexus::GUIManager::getPointer();
             // Create default theme and set as default
             Nexus::GUITheme* pTheme = pManGUI->addTheme("default");
             pManGUI->setCurrentTheme("default");
             pManGUI->loadAllThemes();
             
             // Text fonts
-            Nexus::ManagerTextFonts* pManTextFonts = Nexus::ManagerTextFonts::getPointer();
+            Nexus::TextFontManager* pManTextFonts = Nexus::TextFontManager::getPointer();
             pManTextFonts->loadAll();
             
             // Sprite manager
-            Nexus::ManagerSprites* pManSprites = Nexus::ManagerSprites::getPointer();
+            Nexus::SpriteManager* pManSprites = Nexus::SpriteManager::getPointer();
 
             // Audio manager
-            Nexus::ManagerAudio* pManAudio = Nexus::ManagerAudio::getPointer();
+            Nexus::AudioManager* pManAudio = Nexus::AudioManager::getPointer();
 
             // Initialise all applications
-            Nexus::ManagerApplications* pManApplications = Nexus::ManagerApplications::getPointer();
+            Nexus::ApplicationManager* pManApplications = Nexus::ApplicationManager::getPointer();
             std::string applicationName = "Development";
             Nexus::ApplicationDevelopment applicationDevelopment(applicationName);
             pManApplications->callAllApps_initOnce();

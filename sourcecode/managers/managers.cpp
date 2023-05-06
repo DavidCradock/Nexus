@@ -5,15 +5,15 @@ namespace Nexus
 {
 	Managers::Managers()
 	{
-		applications = ManagerApplications::getPointer();
-		archives = ManagerArchives::getPointer();
-		audio = ManagerAudio::getPointer();
-		gui = ManagerGUI::getPointer();
-		input = ManagerInputDevices::getPointer();
-		renderTextures = ManagerRenderTextures::getPointer();
-		shaders = ManagerShaders::getPointer();
-		sprites = ManagerSprites::getPointer();
-		textFonts = ManagerTextFonts::getPointer();
-		textures = ManagerTextures::getPointer();
+		applications = ApplicationManager::getPointer();
+		archives = ArchiveManager::getPointer();
+		audio = AudioManager::getPointer();
+		gui = GUIManager::getPointer();
+		input = InputDeviceManager::getPointer();
+		renderTextures = RenderTextureManager::getPointer();
+		shaders = ShaderManager::getPointer();
+		sprites = SpriteManager::getPointer();
+		textFonts = TextFontManager::getPointer();
+		textures = TextureManager::getPointer();
 	}
 }

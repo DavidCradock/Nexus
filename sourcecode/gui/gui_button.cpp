@@ -1,10 +1,6 @@
 #include "precompiled_header.h"
 #include "gui_button.h"
-#include "../managers/managerGUI.h"
-#include "../managers/managerInputDevices.h"
-#include "../managers/managerShaders.h"
-#include "../managers/managerTextFonts.h"
-#include "../managers/managerTextures.h"
+#include "../managers/managers.h"
 #include "../graphics/vertexBuffer.h"
 
 namespace Nexus
@@ -116,10 +112,9 @@ namespace Nexus
 
 	void GUIButton::update(GUIWindow* pWindow)
 	{
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow);
+		Managers* pMan = Managers::getPointer();
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -136,8 +131,7 @@ namespace Nexus
 		}
 
 		// Mouse info
-		ManagerInputDevices* pManInputDevices = ManagerInputDevices::getPointer();
-		Vector2 vMousePosCurrent = pManInputDevices->mouse.getCursorPos();
+		Vector2 vMousePosCurrent = pMan->input->mouse.getCursorPos();
 
 		// Is mouse currently over the button?
 		bMouseOver = false;
@@ -160,7 +154,7 @@ namespace Nexus
 		bMouseDown = false;
 		if (bMouseOver)
 		{
-			if (pManInputDevices->mouse.leftButDown())
+			if (pMan->input->mouse.leftButDown())
 			{
 				bMouseDown = true;
 				bMouseOverAndLMBDown = true;
@@ -169,7 +163,7 @@ namespace Nexus
 
 		// If the mouse was previously pressed and over but now mouse button is up, that's a click!
 		bClickedOn = false;
-		if (!pManInputDevices->mouse.leftButDown())
+		if (!pMan->input->mouse.leftButDown())
 		{
 			if (bMouseOverAndClickedPreviousUpdate)
 			{
@@ -185,12 +179,9 @@ namespace Nexus
 
 	void GUIButton::render(GUIWindow* pWindow)
 	{
-		ManagerGUI* pManGUI = ManagerGUI::getPointer();
-		ManagerTextures* pManTextures = ManagerTextures::getPointer();
-		ManagerTextFonts* pManTextFonts = ManagerTextFonts::getPointer();
-		ManagerShaders* pManShaders = ManagerShaders::getPointer();
-		GUITheme* pTheme = pManGUI->getCurrentTheme();
-		Texture* pTextureWindow = pManTextures->get2DTexture(pTheme->strTexturenameWindow);
+		Managers* pMan = Managers::getPointer();
+		GUITheme* pTheme = pMan->gui->getCurrentTheme();
+		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -209,14 +200,14 @@ namespace Nexus
 		vButtonOffset.x += vPosition.x;
 		vButtonOffset.y += vPosition.y;
 
-		Texture* pTextureButtonUp = pManTextures->get2DTexture(pTheme->strTexturenameButton[0], "default");
+		Texture* pTextureButtonUp = pMan->textures->get2DTexture(pTheme->strTexturenameButton[0], "default");
 		Vector2 vTextureButtonUpDims((float)pTextureButtonUp->getWidth(), (float)pTextureButtonUp->getHeight());
 		Vector2 vTextureButtonUpDimsDiv3 = vTextureButtonUpDims;
 		vTextureButtonUpDimsDiv3.multiply(0.3333333f);
 
 		VertexBuffer vertexBuffer;
 		vertexBuffer.reset();
-		Shader* pShader = pManShaders->getShader("default");
+		Shader* pShader = pMan->shaders->getShader("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 
@@ -311,7 +302,7 @@ namespace Nexus
 		vertexBuffer.draw();
 
 
-		TextFont* pTextFont = pManTextFonts->getTextFont(pTheme->strFontnameButton);
+		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameButton);
 		Vector2 vButtonTextPosition;
 		vButtonTextPosition.x = vButtonOffset.x;
 		vButtonTextPosition.x += pTheme->vButtonTextOffset.x;
@@ -326,7 +317,5 @@ namespace Nexus
 			textColour = pTheme->buttonTextColour[2];
 
 		pTextFont->printCentered(strText, (int)vButtonTextPosition.x, (int)vButtonTextPosition.y, pRD->getWindowWidth(), pRD->getWindowHeight(), textColour);
-
 	}
-
 }

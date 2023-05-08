@@ -9,7 +9,7 @@
 
 namespace Nexus
 {
-	TextFont* TextFontManager::addTextFont(const std::string& name)
+	TextFont* TextFontManager::add(const std::string& name)
 	{
 		// Resource already exists?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -28,7 +28,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	TextFont* TextFontManager::getTextFont(const std::string& name)
+	TextFont* TextFontManager::get(const std::string& name)
 	{
 		// Resource doesn't exist?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
@@ -43,7 +43,7 @@ namespace Nexus
 		return (TextFont*)itr->second;
 	}
 
-	bool TextFontManager::getTextFontExists(const std::string& name)
+	bool TextFontManager::getExists(const std::string& name)
 	{
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);
 		if (itr == mapTextFonts.end())
@@ -51,7 +51,7 @@ namespace Nexus
 		return true;
 	}
 
-	void TextFontManager::removeTextFont(const std::string& name)
+	void TextFontManager::remove(const std::string& name)
 	{
 		// Resource doesn't exist in the group?
 		std::map<std::string, TextFont*>::iterator itr = mapTextFonts.find(name);

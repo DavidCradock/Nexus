@@ -257,6 +257,7 @@ namespace Nexus
 		matrix[13] = 0.0f;
 		matrix[14] = 0.0f;
 		matrix[15] = 1.0f;
+
 	}
 
 	void Matrix::getGLModelview(void)

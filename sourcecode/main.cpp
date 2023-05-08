@@ -10,73 +10,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             // Attempt to create window
             Nexus::RenderDevice* pRD = Nexus::RenderDevice::getPointer();
             pRD->createWindow("Nexus");
-
-            // Initialise input
-            Nexus::InputDeviceManager* pManInputDevices = Nexus::InputDeviceManager::getPointer();
-            pManInputDevices->init(pRD->getWindowHandle());
-
-            // Timing
-            Nexus::Timing timing;
-            timing.setStatFPSSrate(1);
-
-            // Shaders
-            Nexus::ShaderManager* pManShaders = Nexus::ShaderManager::getPointer();
-            pManShaders->addNewGroup("default");
-            pManShaders->addShader("default", "shaders/default.vs", "shaders/default.fs", "default");
-            pManShaders->loadGroup("default");
-
-            // Texture manager groups
-            Nexus::TextureManager* pManTextures = Nexus::TextureManager::getPointer();
-            pManTextures->addNewGroup("default");
-            pManTextures->add2DTexture("white_32x32", "textures/white_32x32.png", "default");
-
-            // GUI
-            Nexus::GUIManager* pManGUI = Nexus::GUIManager::getPointer();
-            // Create default theme and set as default
-            Nexus::GUITheme* pTheme = pManGUI->addTheme("default");
-            pManGUI->setCurrentTheme("default");
-            pManGUI->loadAllThemes();
             
-            // Text fonts
-            Nexus::TextFontManager* pManTextFonts = Nexus::TextFontManager::getPointer();
-            pManTextFonts->loadAll();
-            
-            // Sprite manager
-            Nexus::SpriteManager* pManSprites = Nexus::SpriteManager::getPointer();
+            Nexus::Managers* pManagers = Nexus::Managers::getPointer();
 
-            // Audio manager
-            Nexus::AudioManager* pManAudio = Nexus::AudioManager::getPointer();
+            pManagers->gui->loadAllThemes();
+            pManagers->textFonts->loadAll();
 
             // Initialise all applications
-            Nexus::ApplicationManager* pManApplications = Nexus::ApplicationManager::getPointer();
             std::string applicationName = "Development";
             Nexus::ApplicationDevelopment applicationDevelopment(applicationName);
-            pManApplications->callAllApps_initOnce();
+            pManagers->applications->callAllApps_initOnce();
 
             // Load all textures
-            pManTextures->loadGroup("default");
-            pManTextures->loadGroup("fonts");
-
-            pManTextFonts->loadAll();
+            pManagers->textures->loadGroup("default");
+            pManagers->textures->loadGroup("fonts");
+            pManagers->textFonts->loadAll();
 
             // Main loop
             while (pRD->updateWindow())
             {
-                timing.update();
-
-                pManInputDevices->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
-                if (!pManApplications->callCurrentApp_onUpdate())
+                pManagers->input->update(pRD->getWindowFullscreen(), pRD->getWindowWidth(), pRD->getWindowHeight());
+                if (!pManagers->applications->callCurrentApp_onUpdate())
                     break;
 
-                pManSprites->update();
-                pManSprites->render();
-                pManGUI->update();
-                pManGUI->render();
+                pManagers->sprites->update();
+                pManagers->sprites->render();
+                pManagers->gui->update();
+                pManagers->gui->render();
  
                 pRD->swapBuffers();
                 Sleep(0);
             }
-            pManInputDevices->shutdown();
+            pManagers->input->shutdown();
             pRD->closeWindow();
     }
     catch (const std::exception& e)

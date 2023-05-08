@@ -282,14 +282,14 @@ namespace Nexus
 			if (!itr->second->bLoaded)
 			{
 				itr->second->bLoaded = true;
-				pMan->textures->add2DTexture(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
-				pMan->textures->add2DTexture(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
-				pMan->textures->add2DTexture(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
-				pMan->textures->add2DTexture(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
-				pMan->textFonts->addTextFont(itr->second->strFontnameWindowTitlebar);
-				pMan->textFonts->addTextFont(itr->second->strFontnameButton);
-				pMan->textFonts->addTextFont(itr->second->strFontnameText);
-				pMan->textFonts->addTextFont(itr->second->strFontnameLinegraph);
+				pMan->textures->add(itr->second->strTexturenameWindow, itr->second->strTexturenameWindow, "default", true, TextureFiltering::linear);
+				pMan->textures->add(itr->second->strTexturenameButton[0], itr->second->strTexturenameButton[0], "default", true, TextureFiltering::linear);
+				pMan->textures->add(itr->second->strTexturenameButton[1], itr->second->strTexturenameButton[1], "default", true, TextureFiltering::linear);
+				pMan->textures->add(itr->second->strTexturenameButton[2], itr->second->strTexturenameButton[2], "default", true, TextureFiltering::linear);
+				pMan->textFonts->add(itr->second->strFontnameWindowTitlebar);
+				pMan->textFonts->add(itr->second->strFontnameButton);
+				pMan->textFonts->add(itr->second->strFontnameText);
+				pMan->textFonts->add(itr->second->strFontnameLinegraph);
 			}
 			itr++;
 		}

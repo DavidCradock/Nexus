@@ -114,7 +114,7 @@ namespace Nexus
 	{
 		Managers* pMan = Managers::getPointer();
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
+		Texture* pTextureWindow = pMan->textures->get(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -181,7 +181,7 @@ namespace Nexus
 	{
 		Managers* pMan = Managers::getPointer();
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
+		Texture* pTextureWindow = pMan->textures->get(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -200,14 +200,14 @@ namespace Nexus
 		vButtonOffset.x += vPosition.x;
 		vButtonOffset.y += vPosition.y;
 
-		Texture* pTextureButtonUp = pMan->textures->get2DTexture(pTheme->strTexturenameButton[0], "default");
+		Texture* pTextureButtonUp = pMan->textures->get(pTheme->strTexturenameButton[0], "default");
 		Vector2 vTextureButtonUpDims((float)pTextureButtonUp->getWidth(), (float)pTextureButtonUp->getHeight());
 		Vector2 vTextureButtonUpDimsDiv3 = vTextureButtonUpDims;
 		vTextureButtonUpDimsDiv3.multiply(0.3333333f);
 
 		VertexBuffer vertexBuffer;
 		vertexBuffer.reset();
-		Shader* pShader = pMan->shaders->getShader("default");
+		Shader* pShader = pMan->shaders->get("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 
@@ -302,7 +302,7 @@ namespace Nexus
 		vertexBuffer.draw();
 
 
-		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameButton);
+		TextFont* pTextFont = pMan->textFonts->get(pTheme->strFontnameButton);
 		Vector2 vButtonTextPosition;
 		vButtonTextPosition.x = vButtonOffset.x;
 		vButtonTextPosition.x += pTheme->vButtonTextOffset.x;

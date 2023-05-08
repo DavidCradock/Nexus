@@ -27,7 +27,7 @@ namespace Nexus
 		const std::string& getGroupName(unsigned int iGroupIndex);
 
 		// Adds a new resource group with the given name which resources can be put into
-		// If the named group already exists, an exception occurs.
+		// If the named group already exists, this simply returns
 		void addNewGroup(const std::string& strNewGroupName);
 
 		// Returns true if the named group exists, else false
@@ -56,19 +56,19 @@ namespace Nexus
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		void addShader(const std::string& strNewResourceName, const std::string& strVertexProgram, const std::string& strFragmentProgram, const std::string& strGroupName = "default");
+		void add(const std::string& strNewResourceName, const std::string& strVertexProgram, const std::string& strFragmentProgram, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs
 		// Also, if the resource is in the unloaded state, it is loaded here
-		Shader* getShader(const std::string& strResourceName, const std::string& strGroupName = "default");
+		Shader* get(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Returns true if the named resource exists in the named group, else false
-		bool getExistsShader(const std::string& strResourceName, const std::string& strGroupName = "default");
+		bool getExists(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Removes the named resource from the named group
 		// If either the resource or the group that it's in doesn't exist, an exception occurs
-		void removeShader(const std::string& strResourceName, const std::string& strGroupName);
+		void remove(const std::string& strResourceName, const std::string& strGroupName);
 
 		// Unbind shaders
 		void unbind(void);
@@ -77,7 +77,7 @@ namespace Nexus
 		class Group
 		{
 		public:
-			std::map<std::string, Shader*>	_mmapResource;		// Hash map holding named textures
+			std::map<std::string, Shader*> resource;		// Hash map holding named textures
 		};
 		std::map<std::string, Group*> group;	// Hash map holding named resource groups
 	};

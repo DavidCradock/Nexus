@@ -1,15 +1,15 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "../graphics/texture.h"
+#include "../graphics/geometry.h"
 
 namespace Nexus
 {
-	// Is responsible for geometry
-	class TextureManager : public Singleton<TextureManager>
+	// Is responsible for textures.
+	class GeometryManager : public Singleton<GeometryManager>
 	{
 	public:
-		TextureManager();
+		GeometryManager();
 
 		// Return the number of resource groups which currently exist in the manager
 		unsigned int getNumGroups(void);
@@ -52,16 +52,16 @@ namespace Nexus
 		// If the named group doesn't exist, an exception occurs
 		void unloadGroup(const std::string& strGroupName);
 
-		// Adds a new resource to the named group
+		// Adds a new 2d texture resource to the named group
 		// If the group name doesn't exist, an exception occurs.
 		// If the resource name already exists, the resource's reference count is increased
 		// If the resource doesn't previously exist and it's newly created, it'll be in it's unloaded state
-		void add(const std::string& strNewResourceName, const std::string& strTextureFilename, const std::string& strGroupName = "default", bool bImageFlipOnLoad = true, TextureFiltering filter = mipmaps);
+		void add(const std::string& strNewResourceName, const std::string& strGroupName = "default");
 
 		// Returns a pointer to the named resource in it's named group
 		// If either the group given doesn't exist, or the named resource doesn't exist, an exception occurs
 		// Also, if the resource is in the unloaded state, it is loaded here
-		Texture* get(const std::string& strResourceName, const std::string& strGroupName = "default");
+		Geometry* get(const std::string& strResourceName, const std::string& strGroupName = "default");
 
 		// Returns true if the named resource exists in the named group, else false
 		bool getExists(const std::string& strResourceName, const std::string& strGroupName = "default");
@@ -72,13 +72,16 @@ namespace Nexus
 
 		// Disables texturing
 		void disableTexturing(void);
+
+		// Converts an .obj file to our custom geometry file format and saves to disk
+		void convertObj(const std::string filename);
 	private:
 
 		// A resource group holding resources
 		class Group
 		{
 		public:
-			std::map<std::string, Texture*>	resource;		// Hash map holding named textures
+			std::map<std::string, Geometry*> resource;		// Hash map holding named textures
 		};
 
 		std::map<std::string, Group*> group;	// Hash map holding named resource groups

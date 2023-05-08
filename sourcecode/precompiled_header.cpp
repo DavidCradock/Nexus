@@ -18,6 +18,3 @@
 // DirectX for input
 #pragma comment(lib, "dinput8.lib")	// DirectX input lib
 #pragma comment(lib, "dxguid.lib")	// DirectX global ID thing so I can use GUID_keyboard etc for creating standard devices
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include "graphics/tiny_obj_loader.h"

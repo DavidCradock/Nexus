@@ -7,7 +7,6 @@ namespace Nexus
 {
 	RenderTextureManager::RenderTextureManager()
 	{
-		addNewGroup("default");
 	}
 
 	unsigned int RenderTextureManager::getNumGroups(void)
@@ -25,7 +24,7 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
-		return (unsigned int)itg->second->_mmapResource.size();
+		return (unsigned int)itg->second->resource.size();
 	}
 
 	const std::string& RenderTextureManager::getGroupName(unsigned int iGroupIndex)
@@ -53,6 +52,10 @@ namespace Nexus
 	{
 		if (groupExists(strNewGroupName))
 		{
+			return;
+		}
+		if (groupExists(strNewGroupName))
+		{
 			std::string err("RenderTextureManager::addNewGroup() has been given the new group name of \"");
 			err.append(strNewGroupName);
 			err.append("\" but it already exists! Only new groups can be added.");
@@ -70,12 +73,12 @@ namespace Nexus
 		return true;
 	}
 
-	void RenderTextureManager::addRenderTexture(const std::string& strNewResourceName, int iWidth, int iHeight, const std::string& strGroupName)
+	void RenderTextureManager::add(const std::string& strNewResourceName, int iWidth, int iHeight, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("RenderTextureManager::addRenderTexture(\"");
+			std::string err("RenderTextureManager::add(\"");
 			err.append(strNewResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -87,8 +90,8 @@ namespace Nexus
 
 		// Resource already exists in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);										// Get iterator to the group (we know it exists)
-		std::map<std::string, RenderTexture*>::iterator itr = itg->second->_mmapResource.find(strNewResourceName);	// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() != itr)
+		std::map<std::string, RenderTexture*>::iterator itr = itg->second->resource.find(strNewResourceName);	// Try to find the named resource in the group
+		if (itg->second->resource.end() != itr)
 		{
 			// Increase reference count of the resource
 			itr->second->refCount++;
@@ -97,15 +100,15 @@ namespace Nexus
 
 		// If we get here, we have got to create, then add the resource to the existing named group
 		RenderTexture* pNewRes = new RenderTexture(iWidth, iHeight);
-		itg->second->_mmapResource[strNewResourceName] = pNewRes;
+		itg->second->resource[strNewResourceName] = pNewRes;
 	}
 
-	RenderTexture* RenderTextureManager::getRenderTexture(const std::string& strResourceName, const std::string& strGroupName)
+	RenderTexture* RenderTextureManager::get(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("RenderTextureManager::getRenderTexture(\"");
+			std::string err("RenderTextureManager::get(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -117,10 +120,10 @@ namespace Nexus
 
 		// Resource doesn't exist in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);										// Get iterator to the group (we know it exists)
-		std::map<std::string, RenderTexture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, RenderTexture*>::iterator itr = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->resource.end() == itr)
 		{
-			std::string err("RenderTextureManager::getRenderTexture(\"");
+			std::string err("RenderTextureManager::get(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -132,23 +135,23 @@ namespace Nexus
 		return (RenderTexture*)itr->second;
 	}
 
-	bool RenderTextureManager::getExistsRenderTexture(const std::string& strResourceName, const std::string& strGroupName)
+	bool RenderTextureManager::getExists(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 		if (itg == group.end())
 			return false;
-		std::map<std::string, RenderTexture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);
-		if (itr == itg->second->_mmapResource.end())
+		std::map<std::string, RenderTexture*>::iterator itr = itg->second->resource.find(strResourceName);
+		if (itr == itg->second->resource.end())
 			return false;
 		return true;
 	}
 
-	void RenderTextureManager::removeRenderTexture(const std::string& strResourceName, const std::string& strGroupName)
+	void RenderTextureManager::remove(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("RenderTextureManager::removeRenderTexture(\"");
+			std::string err("RenderTextureManager::remove(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -160,10 +163,10 @@ namespace Nexus
 
 		// Resource doesn't exist in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);										// Get iterator to the group (we know it exists)
-		std::map<std::string, RenderTexture*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, RenderTexture*>::iterator itr = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->resource.end() == itr)
 		{
-			std::string err("RenderTextureManager::removeRenderTexture(\"");
+			std::string err("RenderTextureManager::remove(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -181,7 +184,7 @@ namespace Nexus
 		{
 			// Destroy the resource
 			delete itr->second;
-			itg->second->_mmapResource.erase(itr);
+			itg->second->resource.erase(itr);
 		}
 	}
 

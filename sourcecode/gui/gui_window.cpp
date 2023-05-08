@@ -117,7 +117,7 @@ namespace Nexus
 		Managers* pMan = Managers::getPointer();
 		
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		Texture* pTexture = pMan->textures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Texture* pTexture = pMan->textures->get(pTheme->strTexturenameWindow, "default");
 		Vector2 vWindowTextureDims((float)pTexture->getWidth(), (float)pTexture->getHeight());
 		Vector2 vWndTexDimsDiv3 = vWindowTextureDims;
 		vWndTexDimsDiv3.multiply(0.3333333f);
@@ -212,18 +212,19 @@ namespace Nexus
 		RenderDevice* pRenderDevice = RenderDevice::getPointer();
 
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow, "default");
+		Texture* pTextureWindow = pMan->textures->get(pTheme->strTexturenameWindow, "default");
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
-		Shader* pShader = pMan->shaders->getShader("default");
+		Shader* pShader = pMan->shaders->get("default");
 		Vector2 vFinalPos;
 		Vector2 vFinalDims;
 
 		// Prepare rendering of background
 		pTextureWindow->bind();
-		pShader->setInt("texture1", pTextureWindow->getID());
+		
 		pShader->use();
+		pShader->setInt("texture1", pTextureWindow->getID());
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
@@ -307,7 +308,7 @@ namespace Nexus
 		// Now render the text for the titlebar
 		if (strTitlebarText.length())
 		{
-			TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameWindowTitlebar);
+			TextFont* pTextFont = pMan->textFonts->get(pTheme->strFontnameWindowTitlebar);
 			pTextFont->print(strTitlebarText,
 				(int)vPosition.x + (int)vTextureWindowDimsDiv3.x + (int)pTheme->vWindowTitlebarTextOffset.x,
 				(int)vPosition.y + (int)pTheme->vWindowTitlebarTextOffset.y,

@@ -33,7 +33,7 @@ namespace Nexus
 
 		// Add textures to texture manager
 		Managers* pMan = Managers::getPointer();
-		pMan->textures->add2DTexture(fontTypes.strTextureName, fontTypes.strTextureName, "fonts", false, TextureFiltering::nearest);
+		pMan->textures->add(fontTypes.strTextureName, fontTypes.strTextureName, "fonts", false, TextureFiltering::nearest);
 
 		// Load in font data
 		ArchiveData archiveData;
@@ -63,7 +63,7 @@ namespace Nexus
 			return;
 
 		Managers* pMan = Managers::getPointer();
-		pMan->textures->remove2DTexture(fontTypes.strTextureName, "fonts");
+		pMan->textures->remove(fontTypes.strTextureName, "fonts");
 		bLoaded = false;
 	}
 
@@ -74,9 +74,9 @@ namespace Nexus
 
 		RenderDevice* pRD = RenderDevice::getPointer();
 		Managers* pMan = Managers::getPointer();
-		Texture* pTexture = pMan->textures->get2DTexture(fontTypes.strTextureName, "fonts");
+		Texture* pTexture = pMan->textures->get(fontTypes.strTextureName, "fonts");
 		pTexture->bind();
-		Shader* pShader = pMan->shaders->getShader("default");
+		Shader* pShader = pMan->shaders->get("default");
 		pShader->use();
 		pShader->setInt("texture1", pTexture->getID());
 		//glDisable(GL_BLEND);

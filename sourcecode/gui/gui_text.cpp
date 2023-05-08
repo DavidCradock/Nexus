@@ -18,7 +18,7 @@ namespace Nexus
 	{
 		Managers* pMan = Managers::getPointer();
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
+		Texture* pTextureWindow = pMan->textures->get(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -49,7 +49,7 @@ namespace Nexus
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
-		Shader* pShader = pMan->shaders->getShader("default");
+		Shader* pShader = pMan->shaders->get("default");
 		pShader->use();
 		pShader->setInt("texture1", pRenderTexture->getTextureID());
 		pRenderTexture->bindTexture();
@@ -78,7 +78,7 @@ namespace Nexus
 		// If we get here, we need to render the text to the render texture
 		Managers* pMan = Managers::getPointer();
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameText);
+		TextFont* pTextFont = pMan->textFonts->get(pTheme->strFontnameText);
 		
 		// Bind the render texture as render target
 		pRenderTexture->bindFramebuffer(true, Vector4(0.0f, 0.0f, 0.0f, 0.0f));

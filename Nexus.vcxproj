@@ -103,6 +103,7 @@
     <ClCompile Include="sourcecode\core\timing.cpp" />
     <ClCompile Include="sourcecode\core\utils.cpp" />
     <ClCompile Include="sourcecode\graphics\camera.cpp" />
+    <ClCompile Include="sourcecode\graphics\geometry.cpp" />
     <ClCompile Include="sourcecode\graphics\image.cpp" />
     <ClCompile Include="sourcecode\graphics\imagePacker.cpp" />
     <ClCompile Include="sourcecode\graphics\renderDevice.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="sourcecode\managers\applicationManager.cpp" />
     <ClCompile Include="sourcecode\managers\archivesManager.cpp" />
     <ClCompile Include="sourcecode\managers\audioManager.cpp" />
+    <ClCompile Include="sourcecode\managers\geometryManager.cpp" />
     <ClCompile Include="sourcecode\managers\GUIManager.cpp" />
     <ClCompile Include="sourcecode\managers\inputDeviceManager.cpp" />
     <ClCompile Include="sourcecode\managers\renderTextureManager.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="sourcecode\core\utils.h" />
     <ClInclude Include="sourcecode\graphics\camera.h" />
     <ClInclude Include="sourcecode\graphics\colour.h" />
+    <ClInclude Include="sourcecode\graphics\geometry.h" />
     <ClInclude Include="sourcecode\graphics\image.h" />
     <ClInclude Include="sourcecode\graphics\imagePacker.h" />
     <ClInclude Include="sourcecode\graphics\renderDevice.h" />
@@ -192,7 +195,6 @@
     <ClInclude Include="sourcecode\graphics\sprites\sprites.h" />
     <ClInclude Include="sourcecode\graphics\textFont.h" />
     <ClInclude Include="sourcecode\graphics\texture.h" />
-    <ClInclude Include="sourcecode\graphics\tiny_obj_loader.h" />
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h" />
     <ClInclude Include="sourcecode\gui\gui_button.h" />
     <ClInclude Include="sourcecode\gui\gui_linegraph.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="sourcecode\managers\applicationManager.h" />
     <ClInclude Include="sourcecode\managers\archiveManager.h" />
     <ClInclude Include="sourcecode\managers\audioManager.h" />
+    <ClInclude Include="sourcecode\managers\geometryManager.h" />
     <ClInclude Include="sourcecode\managers\GUIManager.h" />
     <ClInclude Include="sourcecode\managers\inputDeviceManager.h" />
     <ClInclude Include="sourcecode\managers\renderTextureManager.h" />
@@ -230,6 +233,8 @@
     <None Include="README.md" />
     <None Include="shaders\default.fs" />
     <None Include="shaders\default.vs" />
+    <None Include="shaders\vert_texcoord_normal.fs" />
+    <None Include="shaders\vert_texcoord_normal.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

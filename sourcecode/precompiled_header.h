@@ -74,5 +74,3 @@ int main() {
 #include <xaudio2fx.h>
 //#include <hrtfapoapi.h>
 //#include <mmdeviceapi.h>
-
-#include "graphics/tiny_obj_loader.h"

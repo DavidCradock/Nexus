@@ -23,7 +23,7 @@ namespace Nexus
 		// Get dims of the texture this sprite is using
 		Managers* pMan = Managers::getPointer();
 
-		Texture* pResTex = pMan->textures->get2DTexture(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = pMan->textures->get(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getRenderDims() failed to acquire texture from resource manager: ");
@@ -42,7 +42,7 @@ namespace Nexus
 	{
 		Managers* pMan = Managers::getPointer();
 
-		Texture* pResTex = pMan->textures->get2DTexture(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
+		Texture* pResTex = pMan->textures->get(pMan->sprites->getDescription(strSpriteDescName)->getFrameTextureName(0), "sprites");
 		if (!pResTex)
 		{
 			std::string err("SpriteEntity::getSpriteDescDims() failed to acquire texture from resource manager: ");

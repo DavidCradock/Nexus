@@ -255,7 +255,7 @@ namespace Nexus
 				std::string err("SpriteLayer::_renderEntities() failed!");
 				Log::getPointer()->exception(err);
 			}
-			Texture* pTex = pMan->textures->get2DTexture(pDesc->getFrameTextureName(0), "sprites");
+			Texture* pTex = pMan->textures->get(pDesc->getFrameTextureName(0), "sprites");
 
 			// Set description's dimensions to the size of the diffuse texture map
 			if (pDesc->nonScaledDims.x == 0 || pDesc->nonScaledDims.y == 0)
@@ -269,7 +269,7 @@ namespace Nexus
 			// Render stuff
 //			pSR->begin(vCameraPosition, fCameraZoom);
 
-			Shader* pShader = ShaderManager::getPointer()->getShader("sprites");
+			Shader* pShader = ShaderManager::getPointer()->get("sprites");
 			Matrix matrixOrtho;
 			matrixOrtho.setOrthographic();
 			Matrix matrixTranslation;
@@ -334,7 +334,7 @@ namespace Nexus
 				vSpriteDims.y *= renderDims.y;
 
 				// Get texture of sprite entity
-				pTex = pMan->textures->get2DTexture(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
+				pTex = pMan->textures->get(pDesc->getFrameTextureName(itse->second->getCurrentFrameNumber()), "sprites");
 				pTex->bind();
 				matrixTranslation.setTranslation(v2SpritePos.x - (0.5f * renderDims.x), v2SpritePos.y - (0.5f * renderDims.y), 0.0f);
 				matrixRotation.setFromAxisAngle(Vector3(0, 0, -1), fSpriteRotRad);

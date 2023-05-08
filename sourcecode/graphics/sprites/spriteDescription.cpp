@@ -19,7 +19,7 @@ namespace Nexus
 		if (fTimeToShowThisFrameMS < 1.0f)
 			fTimeToShowThisFrameMS = 1.0f;
 		vfFrameDelay.push_back(fTimeToShowThisFrameMS);
-		pMan->textures->add2DTexture(strTextureFilename, strTextureFilename, "sprites", true);
+		pMan->textures->add(strTextureFilename, strTextureFilename, "sprites", true);
 		nonScaledDims.setZero();	// So it's re-calculated (In case the diffuse texture has changed
 	}
 
@@ -28,7 +28,7 @@ namespace Nexus
 		Managers* pMan = Managers::getPointer();
 		for (int i = 0; i < (int)vstrFrameTextures.size(); ++i)
 		{
-			pMan->textures->remove2DTexture(vstrFrameTextures[i], "sprites");
+			pMan->textures->remove(vstrFrameTextures[i], "sprites");
 		}
 		for (int i = 0; i < (int)vstrFrameTextures.size(); ++i)
 		{

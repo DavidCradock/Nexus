@@ -23,7 +23,7 @@ namespace Nexus
 			Log::getPointer()->exception(err);
 		}
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
-		size_t iTotal = itg->second->_mmapResource.size();
+		size_t iTotal = itg->second->resource.size();
 		//	iTotal += itg->second->_mmapResFont.size();
 		return (unsigned int)iTotal;
 	}
@@ -40,8 +40,8 @@ namespace Nexus
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		unsigned int iResLoadedTotal = 0;
-		std::map<std::string, Shader*>::iterator it0 = itg->second->_mmapResource.begin();
-		while (it0 != itg->second->_mmapResource.end())
+		std::map<std::string, Shader*>::iterator it0 = itg->second->resource.begin();
+		while (it0 != itg->second->resource.end())
 		{
 			if (it0->second->getLoaded())
 				++iResLoadedTotal;
@@ -74,6 +74,10 @@ namespace Nexus
 
 	void ShaderManager::addNewGroup(const std::string& strNewGroupName)
 	{
+		if (groupExists(strNewGroupName))
+		{
+			return;
+		}
 		if (groupExists(strNewGroupName))
 		{
 			std::string err("ShaderManager::addNewGroup() has been given the new group name of \"");
@@ -109,8 +113,8 @@ namespace Nexus
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each 2d texture resource in this group...
-		std::map<std::string, Shader*>::iterator itShader = itg->second->_mmapResource.begin();
-		while (itShader != itg->second->_mmapResource.end())
+		std::map<std::string, Shader*>::iterator itShader = itg->second->resource.begin();
+		while (itShader != itg->second->resource.end())
 		{
 			if (!itShader->second->loaded)
 			{
@@ -136,8 +140,8 @@ namespace Nexus
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each resource in this group...
-		std::map<std::string, Shader*>::iterator itShader = itg->second->_mmapResource.begin();
-		while (itShader != itg->second->_mmapResource.end())
+		std::map<std::string, Shader*>::iterator itShader = itg->second->resource.begin();
+		while (itShader != itg->second->resource.end())
 		{
 			if (!itShader->second->loaded)
 			{
@@ -164,8 +168,8 @@ namespace Nexus
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 
 		// For each 2d texture resource in this group...
-		std::map<std::string, Shader*>::iterator itShader = itg->second->_mmapResource.begin();
-		while (itShader != itg->second->_mmapResource.end())
+		std::map<std::string, Shader*>::iterator itShader = itg->second->resource.begin();
+		while (itShader != itg->second->resource.end())
 		{
 			if (itShader->second->loaded)
 			{
@@ -176,12 +180,12 @@ namespace Nexus
 		}
 	}
 
-	void ShaderManager::addShader(const std::string& strNewResourceName, const std::string& strVertexProgram, const std::string& strFragmentProgram, const std::string& strGroupName)
+	void ShaderManager::add(const std::string& strNewResourceName, const std::string& strVertexProgram, const std::string& strFragmentProgram, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ShaderManager::addShader(\"");
+			std::string err("ShaderManager::add(\"");
 			err.append(strNewResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -193,8 +197,8 @@ namespace Nexus
 
 		// Resource already exists in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);								// Get iterator to the group (we know it exists)
-		std::map<std::string, Shader*>::iterator itr = itg->second->_mmapResource.find(strNewResourceName);	// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() != itr)
+		std::map<std::string, Shader*>::iterator itr = itg->second->resource.find(strNewResourceName);	// Try to find the named resource in the group
+		if (itg->second->resource.end() != itr)
 		{
 			// Increase reference count of the resource
 			itr->second->refCount++;
@@ -203,15 +207,15 @@ namespace Nexus
 
 		// If we get here, we have got to create, then add the resource to the existing named group
 		Shader* pNewRes = new Shader(strVertexProgram, strFragmentProgram);
-		itg->second->_mmapResource[strNewResourceName] = pNewRes;
+		itg->second->resource[strNewResourceName] = pNewRes;
 	}
 
-	Shader* ShaderManager::getShader(const std::string& strResourceName, const std::string& strGroupName)
+	Shader* ShaderManager::get(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ShaderManager::getShader(\"");
+			std::string err("ShaderManager::get(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -223,10 +227,10 @@ namespace Nexus
 
 		// Resource doesn't exist in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);									// Get iterator to the group (we know it exists)
-		std::map<std::string, Shader*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, Shader*>::iterator itr = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->resource.end() == itr)
 		{
-			std::string err("ShaderManager::getShader(\"");
+			std::string err("ShaderManager::get(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -247,23 +251,23 @@ namespace Nexus
 		return (Shader*)itr->second;
 	}
 
-	bool ShaderManager::getExistsShader(const std::string& strResourceName, const std::string& strGroupName)
+	bool ShaderManager::getExists(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);
 		if (itg == group.end())
 			return false;
-		std::map<std::string, Shader*>::iterator itr = itg->second->_mmapResource.find(strResourceName);
-		if (itr == itg->second->_mmapResource.end())
+		std::map<std::string, Shader*>::iterator itr = itg->second->resource.find(strResourceName);
+		if (itr == itg->second->resource.end())
 			return false;
 		return true;
 	}
 
-	void ShaderManager::removeShader(const std::string& strResourceName, const std::string& strGroupName)
+	void ShaderManager::remove(const std::string& strResourceName, const std::string& strGroupName)
 	{
 		// Group doesn't exist?
 		if (!groupExists(strGroupName))
 		{
-			std::string err("ShaderManager::removeShader(\"");
+			std::string err("ShaderManager::remove(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -275,10 +279,10 @@ namespace Nexus
 
 		// Resource doesn't exist in the group?
 		std::map<std::string, Group*>::iterator itg = group.find(strGroupName);				// Get iterator to the group (we know it exists)
-		std::map<std::string, Shader*>::iterator itr = itg->second->_mmapResource.find(strResourceName);		// Try to find the named resource in the group
-		if (itg->second->_mmapResource.end() == itr)
+		std::map<std::string, Shader*>::iterator itr = itg->second->resource.find(strResourceName);		// Try to find the named resource in the group
+		if (itg->second->resource.end() == itr)
 		{
-			std::string err("ShaderManager::removeShader(\"");
+			std::string err("ShaderManager::remove(\"");
 			err.append(strResourceName);
 			err.append("\", \"");
 			err.append(strGroupName);
@@ -303,7 +307,7 @@ namespace Nexus
 
 			// Destroy the resource
 			delete itr->second;
-			itg->second->_mmapResource.erase(itr);
+			itg->second->resource.erase(itr);
 		}
 	}
 

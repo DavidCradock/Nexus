@@ -54,10 +54,10 @@ namespace Nexus
 	{
 		RenderDevice* pRD = RenderDevice::getPointer();
 		Managers* pMan = Managers::getPointer();
-		Shader* pShader = pMan->shaders->getShader("default");
+		Shader* pShader = pMan->shaders->get("default");
 		GUITheme* pTheme = pMan->gui->getCurrentTheme();
-		TextFont* pTextFont = pMan->textFonts->getTextFont(pTheme->strFontnameLinegraph);
-		Texture* pTextureWindow = pMan->textures->get2DTexture(pTheme->strTexturenameWindow);
+		TextFont* pTextFont = pMan->textFonts->get(pTheme->strFontnameLinegraph);
+		Texture* pTextureWindow = pMan->textures->get(pTheme->strTexturenameWindow);
 		Vector2 vTextureWindowDims((float)pTextureWindow->getWidth(), (float)pTextureWindow->getHeight());
 		Vector2 vTextureWindowDimsDiv3 = vTextureWindowDims;
 		vTextureWindowDimsDiv3.multiply(0.3333333f);
@@ -75,7 +75,7 @@ namespace Nexus
 		vb.upload();
 		vb.draw();
 
-		Texture* pTextureWhite = pMan->textures->get2DTexture("white_32x32", "default");
+		Texture* pTextureWhite = pMan->textures->get("white_32x32", "default");
 		pTextureWhite->bind();
 		pShader->use();
 		pShader->setInt("texture1", pTextureWhite->getID());

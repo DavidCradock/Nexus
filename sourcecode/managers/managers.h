@@ -4,6 +4,7 @@
 #include "applicationManager.h"
 #include "archiveManager.h"
 #include "audioManager.h"
+#include "geometryManager.h"
 #include "guiManager.h"
 #include "inputDeviceManager.h"
 #include "renderTextureManager.h"
@@ -15,6 +16,7 @@
 namespace Nexus
 {
 	// Holds pointers to each of the various managers
+	// Also initialises stuff, adds some "core" resources and creates some default groups for managers which have them
 	class Managers : public Singleton<Managers>
 	{
 	public:
@@ -24,6 +26,7 @@ namespace Nexus
 		ApplicationManager* applications;
 		ArchiveManager* archives;
 		AudioManager* audio;
+		GeometryManager* geometry;
 		GUIManager* gui;
 		InputDeviceManager* input;
 		RenderTextureManager* renderTextures;

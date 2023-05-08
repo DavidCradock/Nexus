@@ -26,3 +26,13 @@ ManagerShaders::getShader("gui", "default") failed. Although the given named gro
 ManagerAudio::addSample() failed to create source voice.
 ManagerAudio::addSample() failed to create source voice.
 ManagerAudio::stopSample() failed to play sample as it doesn't exist.
+ShaderManager::addNewGroup() has been given the new group name of "default" but it already exists! Only new groups can be added.
+ShaderManager::addNewGroup() has been given the new group name of "default" but it already exists! Only new groups can be added.
+ShaderManager::addShader("default", "default") failed. As the given named group of "default" which the new resource was to be placed into, doesn't exist!
+Geometry::load() failed whilst reading file geometry/blender_default_cube.obj
+Geometry::load() failed whilst reading file geometry/blender_default_cube.obj
+Shader::compile() failed. ERROR: 0:14: 'assign' :  cannot convert from 'layout( location=2) in 2-component vector of float' to ' smooth out 3-component vector of float'
+ERROR: 0:14: '' : compilation terminated 
+ERROR: 2 compilation errors.  No code generated.
+
+

@@ -261,6 +261,12 @@
     <ClCompile Include="sourcecode\graphics\texture.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\managers\geometryManager.cpp">
+      <Filter>sourcecode\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\graphics\geometry.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -479,13 +485,16 @@
     <ClInclude Include="sourcecode\graphics\camera.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\tiny_obj_loader.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\managers\managers.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\graphics\texture.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\geometryManager.h">
+      <Filter>sourcecode\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\geometry.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -502,5 +511,11 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="README.md" />
+    <None Include="shaders\vert_texcoord_normal.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\vert_texcoord_normal.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

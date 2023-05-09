@@ -27,7 +27,15 @@ namespace Nexus
 		pButton->setText("VSync");
 		pButton->setPosition(0, 60);
 
-		GUIText *pText = pWindow->addText("Text1");
+		GUIText* pText = pWindow->addText("VSYNC_TEXT");
+		RenderDevice* pRD = RenderDevice::getPointer();
+		if (pRD->getVsync())
+			pText->setText("ON");
+		else
+			pText->setText("OFF");
+		pText->setPosition(Vector2(105, 63));
+
+		pText = pWindow->addText("Text1");
 		pText->setText("Hello world! This is lots of text to test the word wrapping code of TextFont with a call to some method or something lol. Umm, let's type some more texxt so that the text is rendered onto a few lines along the horizontal, no wait, I meant vertical.");
 		pText->setPosition(Vector2(0, 100));
 		pText->setDimensions(Vector2(640, 100));
@@ -39,6 +47,9 @@ namespace Nexus
 		pMan->geometry->add("geometry/blender_monkey.geom");
 		pMan->geometry->loadGroup("default");
 
+		// Camera
+		camera.setProjection(1.0f, 10000.0f, 55.0f, (float)pRD->getWindowWidth(), (float)pRD->getWindowHeight());
+		camera.setView(Vector3(10, 10, 10), Vector3(0, 0, 0));
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -81,28 +92,24 @@ namespace Nexus
 		{
 			RenderDevice* pRD = RenderDevice::getPointer();
 			pRD->setVsync(!pRD->getVsync());
+			if (pRD->getVsync())
+				pMan->gui->getWindow("Test Window2")->getText("VSYNC_TEXT")->setText("ON");
+			else
+				pMan->gui->getWindow("Test Window2")->getText("VSYNC_TEXT")->setText("OFF");
 		}
 
 		// Test rendering of geometry
-		static float fRot = 0.0f;
-		fRot += (float)timing.getSecPast();
-		Matrix matView;
-		Matrix matProjection;
-		matView.setView(Vector3(sinf(fRot) * 5.0f, sinf(fRot) * 5.0f, cosf(fRot) * 5.0f),	// Eye pos
-						Vector3(0.1f, 0.2f, 0.3f),	// Target pos
-						Vector3(0, 1, 0));	// Up vector
-		matProjection.setProjection(
-			85.0f,	// FOV degrees
-			(float)pRD->getWindowWidth(),
-			(float)pRD->getWindowHeight(),
-			0.1f,	// Near
-			1000);	// Far
+		// First deal with camera
+		camera.setProjection(1.0f, 10000.0f, 55.0f, (float)pRD->getWindowWidth(), (float)pRD->getWindowHeight());
+		if (pMan->input->key.pressed(KC_W))
+			camera.move((float)timing.getSecPast() * 10.0f, 0, 0, true);
+		if (pMan->input->key.pressed(KC_S))
+			camera.move((float)-timing.getSecPast() * 10.0f, 0, 0, true);
 
-		Matrix matViewProjection = matProjection * matView;
 		Shader* pShader = pMan->shaders->get("vert_texcoord_normal", "default");
 
 		pShader->bind();
-		pShader->setMat4("transform", matViewProjection);
+		pShader->setMat4("transform", camera.getViewProjection());
 		Texture* pTexture = pMan->textures->get("checker");
 		pTexture->bind();
 		pShader->setInt("texture1", pTexture->getID());

@@ -27,10 +27,16 @@ namespace Nexus
 		// Returns a pointer to the combined view and projection matrix
 		Matrix getViewProjection(void);
 
+		// Moves the camera by the given amount based on it's current transformation.
+		void move(float fForward, float fUp, float fRight, bool bMoveTargetToo);
 	private:
 		Matrix viewMatrix;
 		Matrix projectionMatrix;
 		Matrix viewProjectionMatrix;	// Both view and projection combined
 		bool bViewProjectionMatrixNeedsUpdating;
+
+		Vector3 vViewEyePosition;		// Value given to setView()
+		Vector3 vViewTargetPosition;	// Value given to setView()
+		Vector3 vViewUpVector;			// Value given to setView()
 	};
 }

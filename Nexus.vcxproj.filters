@@ -10,9 +10,6 @@
     <Filter Include="sourcecode\math">
       <UniqueIdentifier>{95bfd03a-48c0-436c-8617-eb0dd26e40eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sourcecode\input">
-      <UniqueIdentifier>{7a0a0c2f-552d-4aab-90c0-e24265d2978a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sourcecode\AI">
       <UniqueIdentifier>{f83261dd-8242-461d-892d-bab3ecccd325}</UniqueIdentifier>
     </Filter>
@@ -49,8 +46,8 @@
     <Filter Include="sourcecode\managers">
       <UniqueIdentifier>{81a46966-d654-4105-825c-7e0320aeeea6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sourcecode\audio">
-      <UniqueIdentifier>{61ad8dd8-50af-413a-8aa4-99eaab77109a}</UniqueIdentifier>
+    <Filter Include="sourcecode\managers\managedObjects">
+      <UniqueIdentifier>{f7fe4cf9-5743-416b-a32c-19b648e744ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -132,15 +129,6 @@
     <ClCompile Include="sourcecode\math\vector4.cpp">
       <Filter>sourcecode\math</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\input\inputJoystick.cpp">
-      <Filter>sourcecode\input</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\input\inputKeyboard.cpp">
-      <Filter>sourcecode\input</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\input\inputMouse.cpp">
-      <Filter>sourcecode\input</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\AI\neuralNetworks\neuralNetwork.cpp">
       <Filter>sourcecode\AI\NeuralNetworks</Filter>
     </ClCompile>
@@ -160,15 +148,6 @@
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\graphics\renderDevice.cpp">
-      <Filter>sourcecode\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\graphics\renderTexture.cpp">
-      <Filter>sourcecode\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\graphics\shader.cpp">
-      <Filter>sourcecode\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="sourcecode\graphics\textFont.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\graphics\vertexBuffer.cpp">
@@ -249,26 +228,41 @@
     <ClCompile Include="sourcecode\managers\audioManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\audio\audioSample.cpp">
-      <Filter>sourcecode\audio</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\graphics\camera.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
     <ClCompile Include="sourcecode\managers\managers.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\graphics\texture.cpp">
-      <Filter>sourcecode\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="sourcecode\managers\geometryManager.cpp">
       <Filter>sourcecode\managers</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\graphics\geometry.cpp">
-      <Filter>sourcecode\graphics</Filter>
+    <ClCompile Include="sourcecode\managers\managedObjects\geometry.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
     </ClCompile>
-    <ClCompile Include="sourcecode\graphics\compositor.cpp">
-      <Filter>sourcecode\graphics</Filter>
+    <ClCompile Include="sourcecode\managers\managedObjects\renderTexture.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\shader.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\textFont.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\texture.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\audioSample.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\inputJoystick.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\inputKeyboard.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="sourcecode\managers\managedObjects\inputMouse.cpp">
+      <Filter>sourcecode\managers\managedObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,15 +344,6 @@
     <ClInclude Include="sourcecode\math\vector4.h">
       <Filter>sourcecode\math</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\input\inputJoystick.h">
-      <Filter>sourcecode\input</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\input\inputKeyboard.h">
-      <Filter>sourcecode\input</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\input\inputMouse.h">
-      <Filter>sourcecode\input</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\AI\neuralNetworks\neuralNetwork.h">
       <Filter>sourcecode\AI\NeuralNetworks</Filter>
     </ClInclude>
@@ -387,15 +372,6 @@
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\graphics\renderDevice.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\graphics\renderTexture.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\graphics\shader.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="sourcecode\graphics\textFont.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\graphics\vertexBuffer.h">
@@ -482,26 +458,41 @@
     <ClInclude Include="sourcecode\managers\audioManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\audio\audioSample.h">
-      <Filter>sourcecode\audio</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\graphics\camera.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\managers\managers.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\texture.h">
-      <Filter>sourcecode\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="sourcecode\managers\geometryManager.h">
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\geometry.h">
-      <Filter>sourcecode\graphics</Filter>
+    <ClInclude Include="sourcecode\managers\managedObjects\geometry.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
     </ClInclude>
-    <ClInclude Include="sourcecode\graphics\compositor.h">
-      <Filter>sourcecode\graphics</Filter>
+    <ClInclude Include="sourcecode\managers\managedObjects\renderTexture.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\shader.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\textFont.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\texture.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\audioSample.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\inputJoystick.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\inputKeyboard.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\managers\managedObjects\inputMouse.h">
+      <Filter>sourcecode\managers\managedObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

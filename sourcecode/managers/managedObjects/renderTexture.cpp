@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "renderTexture.h"
-#include "../core/log.h"
-#include "renderDevice.h"
+#include "../../core/log.h"
+#include "../../graphics/renderDevice.h"
 
 namespace Nexus
 {

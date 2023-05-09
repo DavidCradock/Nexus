@@ -71,7 +71,7 @@ namespace Nexus
 		void setView(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& upVector);
 
 		// Get translation
-		Vector3 getTranslation(void) const;
+		void getTranslation(Vector3 &translation) const;
 
 		// Fills this matrix with the current OpenGL model view matrix
 		void getGLModelview(void);
@@ -93,11 +93,18 @@ namespace Nexus
 		// Rotate the given vector using the matrix inverse
 		void rotateVecInv(Vector3& vector) const;
 
+		// Get right vector
 		void getRightVector(Vector3& vec);
+
+		// Get up vector
 		void getUpVector(Vector3& vec);
+
+		// Get forward vector
 		void getForwardVector(Vector3& vec);
 
+		// Given a glm::mat4 matrix, sets this matrix as that.
 		void convertFromGLM(const glm::mat4 &glm);
+
 		float matrix[16];
 	};
 

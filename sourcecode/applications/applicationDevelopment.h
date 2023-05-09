@@ -1,10 +1,11 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "applicationBase.h"
+#include "../graphics/camera.h"
 #include "../graphics/vertexBuffer.h"
 #include "../core/timing.h"
 #include "../graphics/sprites/sprites.h"
-#include "../graphics/textFont.h"
+
 
 namespace Nexus
 {
@@ -36,6 +37,7 @@ namespace Nexus
 		bool onUpdate(void);
 	private:
 		Timing timing;
+		Camera camera;
 
 	};
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../precompiled_header.h"
+#include "../../precompiled_header.h"
 
 #ifdef _XBOX //Big-Endian
 #define fourccRIFF 'RIFF'

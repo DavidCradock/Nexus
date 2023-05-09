@@ -20,8 +20,8 @@ namespace Nexus
 	class Managers : public Singleton<Managers>
 	{
 	public:
-		// Obtains pointers to each of the managers
-		Managers();
+
+		void init(void);
 
 		ApplicationManager* applications;
 		ArchiveManager* archives;

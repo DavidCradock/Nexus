@@ -23,6 +23,9 @@ namespace Nexus
 	{
 		viewMatrix.setView(vEyePosition, vTargetPosition, vUpVector);
 		bViewProjectionMatrixNeedsUpdating = true;
+		vViewEyePosition = vEyePosition;
+		vViewTargetPosition = vTargetPosition;
+		vViewUpVector = vUpVector;
 	}
 
 	Matrix Camera::getView(void) const
@@ -40,9 +43,46 @@ namespace Nexus
 		if (bViewProjectionMatrixNeedsUpdating)
 		{
 			bViewProjectionMatrixNeedsUpdating = false;
-			viewProjectionMatrix = viewMatrix * projectionMatrix;
+			viewProjectionMatrix = projectionMatrix * viewMatrix;
 		}
 		return viewProjectionMatrix;
+	}
+
+	void Camera::move(float fForward, float fUp, float fRight, bool bMoveTargetToo)
+	{
+		Vector3 vecForward;
+		Vector3 vecRight;
+		Vector3 vecUp;
+		Vector3 vecTranslation;
+
+		viewMatrix.getForwardVector(vecForward);
+		viewMatrix.getRightVector(vecRight);
+		viewMatrix.getUpVector(vecUp);
+		viewMatrix.getTranslation(vecTranslation);
+
+		// Multiply vectors by given values to compute amount to move
+		vecForward.multiply(fForward);
+		vecRight.multiply(fRight);
+		vecUp.multiply(fUp);
+
+		// Compute new position
+		vViewEyePosition += vecForward;
+		vViewEyePosition += vecRight;
+		vViewEyePosition += vecUp;
+
+		if (bMoveTargetToo)
+		{
+			vViewTargetPosition += vecForward;
+			vViewTargetPosition += vecRight;
+			vViewTargetPosition += vecUp;
+
+		}
+
+		// Recalculate view matrix
+		viewMatrix.setView(vViewEyePosition, vViewTargetPosition, vViewUpVector);
+		
+		// Recalculate combined view and project matrices...
+		viewProjectionMatrix = projectionMatrix * viewMatrix;
 	}
 }
 

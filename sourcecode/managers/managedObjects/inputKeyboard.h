@@ -1,6 +1,6 @@
 #pragma once
-#include "../precompiled_header.h"
-#include "../core/timing.h"
+#include "../../precompiled_header.h"
+#include "../../core/timing.h"
 
 namespace Nexus
 {

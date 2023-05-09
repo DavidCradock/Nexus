@@ -1,7 +1,7 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../math/vector2.h"
-#include "../graphics/renderTexture.h"
+#include "../managers/managedObjects/renderTexture.h"
 
 namespace Nexus
 {

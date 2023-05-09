@@ -36,3 +36,6 @@ ERROR: 0:14: '' : compilation terminated
 ERROR: 2 compilation errors.  No code generated.
 
 
+GUIManager::addTheme("default" failed. As the named object already exists.
+GUIManager::addTheme("default" failed. As the named object already exists.
+GUIManager::addTheme("default" failed. As the named object already exists.

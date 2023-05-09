@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "inputJoystick.h"
-#include "../managers/inputDeviceManager.h"
+#include "../inputDeviceManager.h"
 
 namespace Nexus
 {

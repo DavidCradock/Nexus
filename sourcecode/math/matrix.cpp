@@ -175,10 +175,11 @@ namespace Nexus
 		matrix[14] = z;
 	}
 
-	Vector3 Matrix::getTranslation(void) const
+	void Matrix::getTranslation(Vector3 &translation) const
 	{
-		Vector3 v(matrix[12], matrix[13], matrix[14]);
-		return v;
+		translation.x = matrix[12];
+		translation.y = matrix[13];
+		translation.z = matrix[14];
 	}
 
 	void Matrix::setTranslation(Vector3 translation)

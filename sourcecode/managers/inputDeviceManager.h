@@ -1,9 +1,9 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "../input/inputJoystick.h"
-#include "../input/inputKeyboard.h"
-#include "../input/inputMouse.h"
+#include "managedObjects/inputJoystick.h"
+#include "managedObjects/inputKeyboard.h"
+#include "managedObjects/inputMouse.h"
 
 namespace Nexus
 {

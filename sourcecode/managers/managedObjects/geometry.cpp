@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "geometry.h"
-#include "../core/log.h"
+#include "../../core/log.h"
 
 namespace Nexus
 {

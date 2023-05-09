@@ -1,7 +1,7 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../graphics/colour.h"
-#include "../graphics/textFont.h"
+#include "managedObjects/textFont.h"
 #include "../math/vector2.h"
 #include "../graphics/vertexBuffer.h"
 #include "../core/singleton.h"

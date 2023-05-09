@@ -3,7 +3,7 @@
 
 namespace Nexus
 {
-	Managers::Managers()
+	void Managers::init(void)
 	{
 		applications = ApplicationManager::getPointer();
 		archives = ArchiveManager::getPointer();
@@ -37,5 +37,7 @@ namespace Nexus
 
 		// Input initialisation. Needs the window to be created otherwise all hell breaks loose :)
 		input->init(RenderDevice::getPointer()->getWindowHandle());
+
+
 	}
 }

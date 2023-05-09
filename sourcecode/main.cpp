@@ -12,6 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pRD->createWindow("Nexus");
             
             Nexus::Managers* pManagers = Nexus::Managers::getPointer();
+            pManagers->init();
 
             pManagers->gui->loadAllThemes();
             pManagers->textFonts->loadAll();
@@ -26,6 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpStr, IN
             pManagers->textures->loadGroup("fonts");
             pManagers->textFonts->loadAll();
 
+            
             // Main loop
             while (pRD->updateWindow())
             {

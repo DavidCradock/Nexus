@@ -1,10 +1,10 @@
 #include "precompiled_header.h"
 #include "textFont.h"
-#include "../managers/managers.h"
-#include "../core/log.h"
-#include "renderDevice.h"
-#include "image.h"
-#include "vertexBuffer.h"
+#include "../managers.h"
+#include "../../core/log.h"
+#include "../../graphics/renderDevice.h"
+#include "../../graphics/image.h"
+#include "../../graphics/vertexBuffer.h"
 
 namespace Nexus
 {

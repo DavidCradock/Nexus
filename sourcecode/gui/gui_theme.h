@@ -1,6 +1,6 @@
 #pragma once
 #include "../precompiled_header.h"
-#include "../graphics/textFont.h"
+#include "../managers/managedObjects/textFont.h"
 
 namespace Nexus
 {

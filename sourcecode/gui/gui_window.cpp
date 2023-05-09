@@ -2,7 +2,7 @@
 #include "gui_window.h"
 #include "../core/log.h"
 #include "../managers/managers.h"
-#include "../graphics/shader.h"
+#include "../managers/managedObjects/shader.h"
 #include "../graphics/renderDevice.h"
 
 namespace Nexus

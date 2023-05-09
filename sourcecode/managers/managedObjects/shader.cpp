@@ -1,6 +1,6 @@
 #include "precompiled_header.h"
 #include "shader.h"
-#include "../core/log.h"
+#include "../../core/log.h"
 
 namespace Nexus
 {

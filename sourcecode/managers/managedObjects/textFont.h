@@ -1,8 +1,8 @@
 #pragma once
-#include "../precompiled_header.h"
-#include "colour.h"
-#include "../math/vector2.h"
-#include "vertexBuffer.h"
+#include "../../precompiled_header.h"
+#include "../../graphics/colour.h"
+#include "../../math/vector2.h"
+#include "../../graphics/vertexBuffer.h"
 
 namespace Nexus
 {

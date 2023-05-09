@@ -5,7 +5,7 @@
 #include "../graphics/renderDevice.h"
 #include "../graphics/image.h"
 #include "../graphics/vertexBuffer.h"
-#include "../graphics/shader.h"
+#include "managedObjects/shader.h"
 
 namespace Nexus
 {
@@ -310,7 +310,7 @@ namespace Nexus
 		}
 
 		// Save final font data file
-		FILE* f;
+		FILE* f = 0;
 		strOutputNameBase.append(".fnt");
 		fopen_s(&f, strOutputNameBase.c_str(), "wb");
 		if (!f)

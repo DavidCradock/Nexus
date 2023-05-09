@@ -1,7 +1,7 @@
 #pragma once
 #include "../precompiled_header.h"
 #include "../core/singleton.h"
-#include "../graphics/shader.h"
+#include "managedObjects/shader.h"
 #include "../math/matrix.h"
 
 namespace Nexus

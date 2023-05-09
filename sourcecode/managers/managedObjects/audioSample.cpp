@@ -1,7 +1,7 @@
 #include "precompiled_header.h"
 #include "audioSample.h"
-#include "../core/log.h"
-#include "../managers/audioManager.h"
+#include "../../core/log.h"
+#include "../audioManager.h"
 
 namespace Nexus
 {

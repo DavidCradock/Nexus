@@ -1,6 +1,6 @@
 #pragma once
-#include "../precompiled_header.h"
-#include "..\math\vector2.h"
+#include "../../precompiled_header.h"
+#include "../../math/vector2.h"
 
 namespace Nexus
 {

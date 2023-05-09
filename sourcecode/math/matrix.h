@@ -97,6 +97,7 @@ namespace Nexus
 		void getUpVector(Vector3& vec);
 		void getForwardVector(Vector3& vec);
 
+		void convertFromGLM(const glm::mat4 &glm);
 		float matrix[16];
 	};
 

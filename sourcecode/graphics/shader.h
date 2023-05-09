@@ -33,19 +33,19 @@ namespace Nexus
 		// Unbind the shader
 		void unbind(void);
 
-		// Set uniform
+		// Set uniform (call after use())
 		void setBool(const std::string& name, bool value);
 		
-		// Set uniform
+		// Set uniform (call after use())
 		void setInt(const std::string& name, int value);
 		
-		// Set uniform
+		// Set uniform (call after use())
 		void setFloat(const std::string& name, float value);
 		
-		// Set named matrix
+		// Set named matrix (call after use())
 		void setMat4(const std::string& name, const glm::mat4x4 &matrix);
 
-		// Set named matrix
+		// Set named matrix (call after use())
 		void setMat4(const std::string& name, const Matrix& matrix);
 
 		bool getLoaded(void);

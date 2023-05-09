@@ -17,7 +17,7 @@ namespace Nexus
 		GUIWindow *pWindow = pMan->gui->addWindow("Test Window2");
 		pWindow->setWindowPosition(Vector2(640 + 110, 0));
 		pWindow->setWindowDimensions(640, 480);
-		pWindow->setWindowEnabled(false);
+//		pWindow->setWindowEnabled(false);
 
 		GUIButton *pButton = pWindow->addButton("Exit button");
 		pButton->setText("Exit");
@@ -84,10 +84,12 @@ namespace Nexus
 		}
 
 		// Test rendering of geometry
+		static float fRot = 0.0f;
+		fRot += timing.getSecPast();
 		Matrix matView;
 		Matrix matProjection;
-		matView.setView(Vector3(0, 0, -10),	// Eye pos
-						Vector3(0, 0, 0),	// Target pos
+		matView.setView(Vector3(sinf(fRot) * 5.0f, sinf(fRot) * 5.0f, cosf(fRot) * 5.0f),	// Eye pos
+						Vector3(0.1f, 0.2f, 0.3f),	// Target pos
 						Vector3(0, 1, 0));	// Up vector
 		matProjection.setProjection(
 			85.0f,	// FOV degrees
@@ -95,28 +97,17 @@ namespace Nexus
 			pRD->getWindowHeight(),
 			0.1f,	// Near
 			1000);	// Far
-		Matrix matViewProjection = matProjection;
-//		matViewProjection *= matView;
+
+		Matrix matViewProjection = matProjection * matView;
 		Shader* pShader = pMan->shaders->get("vert_texcoord_normal", "default");
 
-		// Temp, use glm
-		static float fRot = 0.0f;
-		fRot += timing.getSecPast();
-		glm::mat4x4 matrix(1.0f);
-		glm::mat4 view;
-		view = glm::lookAt(glm::vec3(sinf(fRot)*5.0f, sinf(fRot)*5.0f, cosf(fRot) * 5.0f),	//eye
-			glm::vec3(0.0f, 1.5f, 0.0f),//target
-			glm::vec3(0.0f, 1.0f, 0.0f));//up
-		glm::mat4 projection = glm::perspective(glm::radians(70.0f), float((float)pRD->getWindowWidth() / (float)pRD->getWindowHeight()), 0.1f, 1000.0f);
-		glm::mat4 model(1.0f);
-		matrix = projection * view;
 		pShader->use();
-		pShader->setMat4("transform", matrix);
+		pShader->setMat4("transform", matViewProjection);
 		Texture* pTexture = pMan->textures->get("checker");
 		pTexture->bind();
 		pShader->setInt("texture1", pTexture->getID());
-//		Geometry* pGeometry = pMan->geometry->get("geometry/blender_default_cube.geom");
-		Geometry* pGeometry = pMan->geometry->get("geometry/blender_monkey.geom");
+		Geometry* pGeometry = pMan->geometry->get("geometry/blender_default_cube.geom");
+//		Geometry* pGeometry = pMan->geometry->get("geometry/blender_monkey.geom");
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		pGeometry->draw(false);

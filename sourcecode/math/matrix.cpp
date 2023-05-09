@@ -209,6 +209,9 @@ namespace Nexus
 
 	void Matrix::setProjection(float fFOVdegrees, float fWidth, float fHeight, float fNear, float fFar)
 	{
+		glm::mat4 matProjectionGLM = glm::perspective(glm::radians(fFOVdegrees), float(fWidth / (float)fHeight), fNear, fFar);
+		convertFromGLM(matProjectionGLM);
+		/*
 		// Compute aspect ratio
 		float fAspect = fWidth / fHeight;
 
@@ -233,10 +236,18 @@ namespace Nexus
 		matrix[13] = 0.0f;
 		matrix[14] = -2.0f * fFar * fNear / (fFar - fNear);
 		matrix[15] = 0.0f;
+		*/
 	}
 
 	void Matrix::setView(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& upVector)
 	{
+		glm::mat4 matViewGLM;
+		matViewGLM = glm::lookAt(
+			glm::vec3(eyePosition.x, eyePosition.y, eyePosition.z),
+			glm::vec3(targetPosition.x, targetPosition.y, targetPosition.z),
+			glm::vec3(upVector.x, upVector.y, upVector.z));
+		convertFromGLM(matViewGLM);
+/*
 		// Calculate the view matrix.
 		matrix[0] = eyePosition.x;
 		matrix[1] = eyePosition.y;
@@ -257,6 +268,27 @@ namespace Nexus
 		matrix[13] = 0.0f;
 		matrix[14] = 0.0f;
 		matrix[15] = 1.0f;
+		*/
+	}
+
+	void Matrix::convertFromGLM(const glm::mat4 &glm)
+	{
+		matrix[0] = glm[0][0];
+		matrix[1] = glm[0][1];
+		matrix[2] = glm[0][2];
+		matrix[3] = glm[0][3];
+		matrix[4] = glm[1][0];
+		matrix[5] = glm[1][1];
+		matrix[6] = glm[1][2];
+		matrix[7] = glm[1][3];
+		matrix[8] = glm[2][0];
+		matrix[9] = glm[2][1];
+		matrix[10] = glm[2][2];
+		matrix[11] = glm[2][3];
+		matrix[12] = glm[3][0];
+		matrix[13] = glm[3][1];
+		matrix[14] = glm[3][2];
+		matrix[15] = glm[3][3];
 
 	}
 

@@ -280,7 +280,7 @@ namespace Nexus
 
 			//pShader->setInt("texture1", pTexture->getID());
 			//pShader->setMat4("transform", matrixOrtho * matrixTransform);
-			pShader->use();
+			pShader->bind();
 			VertexBuffer vertexBuffer;
 
 			// For each sprite entity of this sprite description

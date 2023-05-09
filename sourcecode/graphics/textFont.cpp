@@ -77,7 +77,7 @@ namespace Nexus
 		Texture* pTexture = pMan->textures->get(fontTypes.strTextureName, "fonts");
 		pTexture->bind();
 		Shader* pShader = pMan->shaders->get("default");
-		pShader->use();
+		pShader->bind();
 		pShader->setInt("texture1", pTexture->getID());
 		//glDisable(GL_BLEND);
 		glEnable(GL_BLEND);

@@ -28,7 +28,7 @@ namespace Nexus
 		void unload(void);
 
 		// Bind the shader
-		void use(void);
+		void bind(void);
 
 		// Unbind the shader
 		void unbind(void);

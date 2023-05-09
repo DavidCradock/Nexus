@@ -85,7 +85,7 @@ namespace Nexus
 
 		// Test rendering of geometry
 		static float fRot = 0.0f;
-		fRot += timing.getSecPast();
+		fRot += (float)timing.getSecPast();
 		Matrix matView;
 		Matrix matProjection;
 		matView.setView(Vector3(sinf(fRot) * 5.0f, sinf(fRot) * 5.0f, cosf(fRot) * 5.0f),	// Eye pos
@@ -93,15 +93,15 @@ namespace Nexus
 						Vector3(0, 1, 0));	// Up vector
 		matProjection.setProjection(
 			85.0f,	// FOV degrees
-			pRD->getWindowWidth(),
-			pRD->getWindowHeight(),
+			(float)pRD->getWindowWidth(),
+			(float)pRD->getWindowHeight(),
 			0.1f,	// Near
 			1000);	// Far
 
 		Matrix matViewProjection = matProjection * matView;
 		Shader* pShader = pMan->shaders->get("vert_texcoord_normal", "default");
 
-		pShader->use();
+		pShader->bind();
 		pShader->setMat4("transform", matViewProjection);
 		Texture* pTexture = pMan->textures->get("checker");
 		pTexture->bind();

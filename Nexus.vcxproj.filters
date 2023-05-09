@@ -267,6 +267,9 @@
     <ClCompile Include="sourcecode\graphics\geometry.cpp">
       <Filter>sourcecode\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="sourcecode\graphics\compositor.cpp">
+      <Filter>sourcecode\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sourcecode\precompiled_header.h">
@@ -495,6 +498,9 @@
       <Filter>sourcecode\managers</Filter>
     </ClInclude>
     <ClInclude Include="sourcecode\graphics\geometry.h">
+      <Filter>sourcecode\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sourcecode\graphics\compositor.h">
       <Filter>sourcecode\graphics</Filter>
     </ClInclude>
   </ItemGroup>

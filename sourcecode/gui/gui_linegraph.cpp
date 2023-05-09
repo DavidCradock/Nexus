@@ -77,7 +77,7 @@ namespace Nexus
 
 		Texture* pTextureWhite = pMan->textures->get("white_32x32", "default");
 		pTextureWhite->bind();
-		pShader->use();
+		pShader->bind();
 		pShader->setInt("texture1", pTextureWhite->getID());
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

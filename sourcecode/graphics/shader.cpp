@@ -100,7 +100,7 @@ namespace Nexus
 		ID = 0;
 	}
 
-    void Shader::use(void)
+    void Shader::bind(void)
     {
         glUseProgram(ID);
     }

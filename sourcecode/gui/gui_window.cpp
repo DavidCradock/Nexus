@@ -223,7 +223,7 @@ namespace Nexus
 		// Prepare rendering of background
 		pTextureWindow->bind();
 		
-		pShader->use();
+		pShader->bind();
 		pShader->setInt("texture1", pTextureWindow->getID());
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

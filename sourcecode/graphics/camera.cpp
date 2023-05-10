@@ -48,7 +48,7 @@ namespace Nexus
 		return viewProjectionMatrix;
 	}
 
-	void Camera::move(float fForward, float fUp, float fRight, bool bMoveTargetToo)
+	void Camera::moveLocal(float fForward, float fRight, float fUp, bool bMoveTargetToo)
 	{
 		Vector3 vecForward;
 		Vector3 vecRight;
@@ -82,7 +82,13 @@ namespace Nexus
 		viewMatrix.setView(vViewEyePosition, vViewTargetPosition, vViewUpVector);
 		
 		// Recalculate combined view and project matrices...
-		viewProjectionMatrix = projectionMatrix * viewMatrix;
+//		viewProjectionMatrix = projectionMatrix * viewMatrix;
+		viewProjectionMatrix = viewMatrix * projectionMatrix;
+	}
+
+	void Camera::moveWorld(float fX, float fY, float fZ, bool bMoveTargetToo)
+	{
+
 	}
 }
 

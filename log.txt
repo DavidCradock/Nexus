@@ -39,3 +39,4 @@ ERROR: 2 compilation errors.  No code generated.
 GUIManager::addTheme("default" failed. As the named object already exists.
 GUIManager::addTheme("default" failed. As the named object already exists.
 GUIManager::addTheme("default" failed. As the named object already exists.
+GeometryManager::convertObj() failed to open file geometry/rusty_cube.obj

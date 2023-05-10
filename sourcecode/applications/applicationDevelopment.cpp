@@ -15,7 +15,7 @@ namespace Nexus
 		// GUI
 		Managers* pMan = Managers::getPointer();
 		GUIWindow *pWindow = pMan->gui->addWindow("Test Window2");
-		pWindow->setWindowPosition(Vector2(640 + 110, 0));
+		pWindow->setWindowPosition(Vector2(0, 0));
 		pWindow->setWindowDimensions(640, 480);
 //		pWindow->setWindowEnabled(false);
 
@@ -41,15 +41,14 @@ namespace Nexus
 		pText->setDimensions(Vector2(640, 100));
 
 		// Geometry
-		pMan->geometry->convertObj("geometry/blender_default_cube.obj");	// Load, convert and save
-		pMan->geometry->add("geometry/blender_default_cube.geom");
-		pMan->geometry->convertObj("geometry/blender_monkey.obj");	// Load, convert and save
-		pMan->geometry->add("geometry/blender_monkey.geom");
+		pMan->geometry->convertObj("geometry/rusty_cube.obj");	// Load, convert and save
+		pMan->geometry->add("geometry/rusty_cube.geom");
 		pMan->geometry->loadGroup("default");
 
+		pMan->textures->add("textures/rusty_cube_diffuse.png", "textures/rusty_cube_diffuse.png");
 		// Camera
 		camera.setProjection(1.0f, 10000.0f, 55.0f, (float)pRD->getWindowWidth(), (float)pRD->getWindowHeight());
-		camera.setView(Vector3(10, 10, 10), Vector3(0, 0, 0));
+		camera.setView(Vector3(0, 0, 5), Vector3(0, 0, 0));
 	}
 
 	void ApplicationDevelopment::onStart(void)
@@ -101,19 +100,31 @@ namespace Nexus
 		// Test rendering of geometry
 		// First deal with camera
 		camera.setProjection(1.0f, 10000.0f, 55.0f, (float)pRD->getWindowWidth(), (float)pRD->getWindowHeight());
+		float fMovementScale = 10.0f;
+		if (pMan->input->key.pressed(KC_LSHIFT))
+			fMovementScale = 100.0f;
 		if (pMan->input->key.pressed(KC_W))
-			camera.move((float)timing.getSecPast() * 10.0f, 0, 0, true);
+			camera.moveLocal((float)timing.getSecPast() * fMovementScale, 0, 0, false);
 		if (pMan->input->key.pressed(KC_S))
-			camera.move((float)-timing.getSecPast() * 10.0f, 0, 0, true);
-
+			camera.moveLocal((float)timing.getSecPast() * -fMovementScale, 0, 0, false);
+		if (pMan->input->key.pressed(KC_A))
+			camera.moveLocal(0, (float)timing.getSecPast() * -fMovementScale, 0, false);
+		if (pMan->input->key.pressed(KC_D))
+			camera.moveLocal(0, (float)timing.getSecPast() * fMovementScale, 0, false);
+		if (pMan->input->key.pressed(KC_R))
+			camera.moveLocal(0, 0, (float)timing.getSecPast() * fMovementScale, false);
+		if (pMan->input->key.pressed(KC_F))
+			camera.moveLocal(0, 0, (float)timing.getSecPast() * -fMovementScale, false);
 		Shader* pShader = pMan->shaders->get("vert_texcoord_normal", "default");
 
 		pShader->bind();
 		pShader->setMat4("transform", camera.getViewProjection());
-		Texture* pTexture = pMan->textures->get("checker");
+		Texture* pTexture = pMan->textures->get("textures/rusty_cube_diffuse.png");
 		pTexture->bind();
 		pShader->setInt("texture1", pTexture->getID());
-		Geometry* pGeometry = pMan->geometry->get("geometry/blender_default_cube.geom");
+		//Geometry* pGeometry = pMan->geometry->get("geometry/blender_default_cube.geom");
+		Geometry* pGeometry = pMan->geometry->get("geometry/rusty_cube.geom");
+		
 //		Geometry* pGeometry = pMan->geometry->get("geometry/blender_monkey.geom");
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);

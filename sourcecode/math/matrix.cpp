@@ -247,29 +247,7 @@ namespace Nexus
 			glm::vec3(eyePosition.x, eyePosition.y, eyePosition.z),
 			glm::vec3(targetPosition.x, targetPosition.y, targetPosition.z),
 			glm::vec3(upVector.x, upVector.y, upVector.z));
-		convertFromGLM(matViewGLM);
-/*
-		// Calculate the view matrix.
-		matrix[0] = eyePosition.x;
-		matrix[1] = eyePosition.y;
-		matrix[2] = eyePosition.z;
-		matrix[3] = 0.0f;
-
-		matrix[4] = upVector.x;
-		matrix[5] = upVector.x;
-		matrix[6] = upVector.x;
-		matrix[7] = 0.0f;
-
-		matrix[8] = -(targetPosition.x - eyePosition.x);
-		matrix[9] = -(targetPosition.y - eyePosition.y);
-		matrix[10] = -(targetPosition.z - eyePosition.z);
-		matrix[11] = 1.0f;
-
-		matrix[12] = 0.0f;
-		matrix[13] = 0.0f;
-		matrix[14] = 0.0f;
-		matrix[15] = 1.0f;
-		*/
+		convertFromGLM(matViewGLM);		
 	}
 
 	void Matrix::convertFromGLM(const glm::mat4 &glm)
@@ -290,7 +268,6 @@ namespace Nexus
 		matrix[13] = glm[3][1];
 		matrix[14] = glm[3][2];
 		matrix[15] = glm[3][3];
-
 	}
 
 	void Matrix::getGLModelview(void)
@@ -411,23 +388,39 @@ namespace Nexus
 
 	void Matrix::getRightVector(Vector3& vec)
 	{
-		vec.x = matrix[0];
-		vec.y = matrix[1];
-		vec.z = matrix[2];
+		Matrix matrixTransposed = *this;
+		matrixTransposed.transpose();
+		vec.x = matrixTransposed[0];
+		vec.y = matrixTransposed[1];
+		vec.z = matrixTransposed[2];
+		vec.normalise();	// Normalise it
 	}
 
 	void Matrix::getUpVector(Vector3& vec)
 	{
-		vec.x = matrix[4];
-		vec.y = matrix[5];
-		vec.z = matrix[6];
+		Matrix matrixTransposed = *this;
+		matrixTransposed.transpose();
+		vec.x = matrixTransposed[4];
+		vec.y = matrixTransposed[5];
+		vec.z = matrixTransposed[6];
+		vec.normalise();	// Normalise it
 	}
 
 	void Matrix::getForwardVector(Vector3& vec)
 	{
-		vec.x = matrix[8];
-		vec.y = matrix[9];
-		vec.z = matrix[10];
+		Vector3 vUp;
+		Matrix matrixTransposed = *this;
+		matrixTransposed.transpose();
+		vUp.x = matrixTransposed[4];
+		vUp.y = matrixTransposed[5];
+		vUp.z = matrixTransposed[6];
+		Vector3 vRight;
+		vRight.x = matrixTransposed[0];
+		vRight.y = matrixTransposed[1];
+		vRight.z = matrixTransposed[2];
+
+		vec = vUp.getCross(vRight);
+		vec.normalise();	// Normalise it
 	}
 
 }

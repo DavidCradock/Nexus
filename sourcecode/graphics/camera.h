@@ -28,7 +28,10 @@ namespace Nexus
 		Matrix getViewProjection(void);
 
 		// Moves the camera by the given amount based on it's current transformation.
-		void move(float fForward, float fUp, float fRight, bool bMoveTargetToo);
+		void moveLocal(float fForward, float fRight, float fUp, bool bMoveTargetToo);
+
+		// Moves the camera by the given amount using the given world translations
+		void moveWorld(float fX, float fY, float fZ, bool bMoveTargetToo);
 	private:
 		Matrix viewMatrix;
 		Matrix projectionMatrix;
